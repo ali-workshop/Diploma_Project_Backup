@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('reservation_status_events', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('reservation_id')->constrained('reservations','id')->onDelete('cascade');
+            $table->foreignId('reservation_status_catlog_id')->constrained('reservation_status_catlogs','id')->onDelete('cascade');
             $table->timestamps();
         });
     }

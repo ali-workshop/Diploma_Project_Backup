@@ -11,7 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //
+       
+        Schema::create('guest_reservation', function (Blueprint $table) {
+            $table->id();
+             $table->foreignId('guest_id')->constrained('guests','id')->onDelete('cascade');
+             $table->foreignId('reservation_id')->constrained('reservations','id')->onDelete('cascade');
+            $table->timestamps();
+
+           
+        });
     }
 
     /**
@@ -19,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('guest_reservation');
     }
 };

@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('contact_id')->constrained('contacts','id');
+            $table->multiLineString('title');
+            $table->text('body');
             $table->timestamps();
         });
     }
