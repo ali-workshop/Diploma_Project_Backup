@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class ReservationStatusCatlog extends Model
 {
     use HasFactory;
+    public function reservationStatusEvents()
+    {
+        return $this->belongsToMany(ReservationStatusEvent::class);
+    }
 }
