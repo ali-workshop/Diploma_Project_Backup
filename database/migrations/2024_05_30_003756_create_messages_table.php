@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('contact_id')->constrained('contacts','id');
-            $table->multiLineString('title');
+            $table->foreignId('contact_id')->constrained('contacts','id')->onDelete('cascade');
+            $table->string('title');
             $table->text('body');
             $table->timestamps();
         });

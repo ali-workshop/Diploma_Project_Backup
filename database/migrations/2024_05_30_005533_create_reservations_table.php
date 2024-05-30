@@ -17,8 +17,8 @@ return new class extends Migration
             $table->foreignId('room_id')->constrained('rooms','id')->onDelete('cascade');
             $table->date('start_date');
             $table->date('end_date');
-            $table->tinyInteger('guestNumber');
-            $table->float('totalPrice');
+            $table->smallInteger('guestNumber');;
+            $table->decimal('totalPrice', 8, 2);
             $table->timestamps();
         });
     }

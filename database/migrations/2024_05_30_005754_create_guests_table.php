@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->date('birthData');
-            $table->smallInteger('identificationNumber');
+            $table->integer('identificationNumber');
             $table->timestamps();
         });
     }

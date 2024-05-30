@@ -18,11 +18,8 @@ return new class extends Migration
             $table->integer('floorNumber');
             $table->text('description');
             $table->text('img');
-            $table->string('status');
-
-            $table->float('price');
-
-
+            $table->enum('status', ['available', 'booked'])->default('available');
+            $table->decimal('price', 8, 2);
             $table->timestamps();
         });
     }
