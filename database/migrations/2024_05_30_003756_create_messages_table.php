@@ -15,8 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('contact_id')->constrained('contacts','id')->onDelete('cascade');
             $table->string('title');
-            $table->enum('status', ['Unread', 'Read'])->default('Unread');
-            $table->text('body');
+            $table->text('body')->notNull();
             $table->enum('status', ['done', 'unread'])->default('unread');
             $table->timestamps();
         });

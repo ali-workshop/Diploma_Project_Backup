@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\ContactController;
+use App\Http\Controllers\Api\MessageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\AuthController;
@@ -29,4 +31,6 @@ Route::group(['prefix'=>'v1'],function(){
     Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
     
     });
+Route::post('/contacts',[ContactController::class,'store']);
+Route::post('/messages',[MessageController::class,'store']);
 
