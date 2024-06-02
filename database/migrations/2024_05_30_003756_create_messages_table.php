@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('title');
             $table->enum('status', ['Unread', 'Read'])->default('Unread');
             $table->text('body');
+            $table->enum('status', ['done', 'unread'])->default('unread');
             $table->timestamps();
         });
     }

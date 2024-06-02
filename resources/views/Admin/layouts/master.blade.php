@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -115,14 +114,13 @@
 
             <!-- Nav Item - Messages Collapse Menu -->
             <li class="nav-item ">
-                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages_2" aria-expanded="true" aria-controls="collapsePages">
+                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseMessages" aria-expanded="true" aria-controls="collapseMessages">
                     <i class="fa-solid fa-envelope"></i>
                     <span>Messages</span>
                 </a>
-                <div id="collapsePages_2" class="collapse show2" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div id="collapseMessages" class="collapse show" aria-labelledby="headingMessages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="#">Show Messages</a>
-                        <a class="collapse-item" href="#">edit Messages</a>
+                        <a class="collapse-item" href="{{ route('messages.index') }}">All Messages</a>
                     </div>
                 </div>
             </li>
@@ -164,6 +162,8 @@
                             </div>
                         </div>
                     </form>
+                    
+
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -348,6 +348,9 @@
                     @yield('create.services')
                     @yield('edit.services')
                     @yield('show.services')
+                    @yield('index.messages')
+                    @yield('edit.messages')
+                    @yield('show.messages')
                 </div>
                 <!-- /.container-fluid -->
 
