@@ -53,6 +53,7 @@
                                 @method ('DELETE')
                                 <button type="submit" class="btn btn-outline-danger mx-2">DELETE</button>
                             </form>
+                            <a href='mailto:{{ $message->contact->email }}' class="btn btn-outline-info mx-2">REPLY</a>
                         </td>
                     </tr>
                     @endforeach
