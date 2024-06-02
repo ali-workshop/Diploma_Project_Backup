@@ -18,14 +18,11 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'admin',
         //     'email' => 'admin@example.com',
         // ]);
-<<<<<<< HEAD
         //$this->call(RoleSeeder::class);
         //$this->call(AdminSeeder::class);
         //$this->call(ContactSeeder::class);
-=======
         $this->call(RoleSeeder::class);
         $this->call(AdminSeeder::class);
->>>>>>> 8a5a86fbb37074c588792b8e2d5364ca96145fa8
         $this->call(ContactSeeder::class);
         $this->call(MessageSeeder::class);
     }
