@@ -2,10 +2,11 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\adminController;
-use App\Http\Controllers\MessageController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\RoomController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ServicesController;
+use App\Http\Controllers\Admin\adminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,4 +31,5 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
 Route::get('/dashboard', [adminController::class, 'index'])->name('dashboard');
 Route::resource('/services', ServicesController::class);
 Route::resource('/messages', MessageController::class);
+Route::resource('/rooms', RoomController::class);
 });
