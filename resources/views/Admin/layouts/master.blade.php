@@ -66,10 +66,9 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Rooms:</h6>
-                        <a class="collapse-item" href="#">Create New Room</a>
-                        <a class="collapse-item" href="#">edit Room</a>
-                        <a class="collapse-item" href="#">Show Rooms</a>
-                        <a class="collapse-item" href="#">Book Room</a>
+                        <a class="collapse-item" href="{{ route('rooms.create') }}">Create New Room</a>
+                        <a class="collapse-item" href="{{ route('rooms.index') }}">all rooms</a>
+                        <a class="collapse-item" href="#">Reservations List</a>
                     </div>
                 </div>
             </li>
@@ -351,6 +350,11 @@
                     @yield('index.messages')
                     @yield('edit.messages')
                     @yield('show.messages')
+                    @yield('index.rooms')
+                    @yield('create.rooms')
+                    @yield('edit.rooms')
+                    @yield('show.rooms')
+                    @yield('index.reservations')
                 </div>
                 <!-- /.container-fluid -->
 

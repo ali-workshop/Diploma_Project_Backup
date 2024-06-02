@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Service;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreServicesRequest;
 use App\Http\Requests\UpdateServicesRequest;
 
@@ -30,6 +31,7 @@ class ServicesController extends Controller
      */
     public function store(StoreServicesRequest $request)
     {
+        
         $request->validated();
 
         $new_service = new Service();
@@ -39,7 +41,9 @@ class ServicesController extends Controller
         $new_service->img = $request->img;
 
         $new_service->save();
+
         return redirect()->route('services.index');
+        
     }
 
     /**
