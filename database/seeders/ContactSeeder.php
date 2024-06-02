@@ -14,9 +14,8 @@ class ContactSeeder extends Seeder
     public function run(): void
     {
         Contact::create([
-            'user_id'=>'1',
-            'name'=>'admin',
-            'email'=>'admin@gmail.com',
+            'name'=>'user',
+            'email'=>'user@gmail.com',
             'phone'=>'01234567'
         ]);
     }
