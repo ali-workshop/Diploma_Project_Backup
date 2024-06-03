@@ -36,7 +36,7 @@ class RoomController extends Controller
         $request->validated();
 
         $Room = new Room();
-        $Room->room_type_id = $request->room_type_id;
+        $Room->room_type_id =RoomType::find($request->room_type)->id;
         $Room->code = $request->code;
         $Room->floorNumber = $request->floorNumber;
         $Room->description = $request->description;
@@ -53,7 +53,7 @@ class RoomController extends Controller
      */
     public function show(Room $room)
     {
-        return view('Admin.pages.dashboard.services.show', compact('room'));
+        return view('Admin.pages.dashboard.rooms.show', compact('room'));
     }
 
     /**
