@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Service;
 use Illuminate\Database\Seeder;
 use Database\Seeders\RoleSeeder;
 use Database\Seeders\AdminSeeder;
@@ -21,10 +22,19 @@ class DatabaseSeeder extends Seeder
         //$this->call(RoleSeeder::class);
         //$this->call(AdminSeeder::class);
         //$this->call(ContactSeeder::class);
-        $this->call(RoleSeeder::class);
-        $this->call(AdminSeeder::class);
-        $this->call(ContactSeeder::class);
-        $this->call(MessageSeeder::class);
+
+        // $this->call(RoleSeeder::class);
+        // $this->call(AdminSeeder::class);
+        // $this->call(ContactSeeder::class);
+        // $this->call(MessageSeeder::class);
+
+        $this->call([
+            RoleSeeder::class,
+            AdminSeeder::class,
+            ContactSeeder::class,
+            MessageSeeder::class,
+            Service::class,
+        ]);
     }
 }
 
