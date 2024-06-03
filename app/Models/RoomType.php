@@ -8,13 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 class RoomType extends Model
 {
     use HasFactory;
+    protected $fillable =[
+        'name',
+        'price',
+        'capacity',
+        'description',
+    ];
+
     public function rooms()
     {
-        return $this->hasMany(Room::class);
+        return $this->hasMany(Room::class,'roomtype_service','roomtype_id', 'service_id'); 
     }
 
     public function services()
     {
-        return $this->belongsToMany(Service::class);
+        return $this->belongsToMany(Service::class,'roomtype_service','roomtype_id', 'service_id');
     }
 }

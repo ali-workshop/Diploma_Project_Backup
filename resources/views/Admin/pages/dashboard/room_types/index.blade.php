@@ -18,6 +18,7 @@
                         <th>Price</th>
                         <th>capacity</th>
                         <th>description</th>
+                        <th>service list</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -30,6 +31,11 @@
                         <td>{{ $roomType->price}}</td>
                         <td>{{ $roomType->capacity}}</td>
                         <td>{{ $roomType->description}}</td>
+                        <td>
+                            @foreach($roomType->services as $service)
+                            {{ $loop->iteration }}. {{ $service->name }}<br>
+                        @endforeach
+                        </td>
                       
                         <td><a href='{{route("roomType.edit", $roomType->id)}}' class="btn btn-outline-success">EDIT</a></td>
                         <td>

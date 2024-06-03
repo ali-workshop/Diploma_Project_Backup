@@ -39,7 +39,7 @@ class ContactController extends Controller
                 } else {
                     $contact->user_id = null;
                 }
-                $contact->name = $request->name;
+                $contact->name = $request->name; 
                 $contact->email = $request->email; 
                 $contact->phone = $request->phone;
             }

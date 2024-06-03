@@ -49,7 +49,6 @@ class RoomTypeController extends Controller
      */
     public function show(RoomType $roomType)
     {
-        return view('Admin.pages.dashboard.Room_type.show', compact('roomType'));
     }
 
     /**

@@ -83,7 +83,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Types:</h6>
                         <a class="collapse-item" href={{ route('roomType.create') }} >Create Room Type</a>
-                        <a class="collapse-item" href={{ route('roomType.index') }}>Show Room Types</a>
+                        <a class="collapse-item" href={{ route('roomType.index') }}>All Room Types</a>
                         {{-- <a class="collapse-item" href="#">Update Room Type</a> --}}
                     </div>
                 </div>

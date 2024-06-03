@@ -15,7 +15,7 @@ trait ApiResponserTrait{
             'data'       => $data ?? null ,
             'errors'     => null,
         ], $httpResponseCode);
-    }
+    } 
 
     protected function errorResponse(string $message, ? array $errors = [], int $httpResponseCode = 401): JsonResponse {
         return response()->json([
@@ -24,6 +24,15 @@ trait ApiResponserTrait{
             'data'       => null,
             'errors'     => $errors ?? null,
         ], $httpResponseCode);
+    }
+    
+    public function notFound($message){
+
+        return response()->json([
+            'success'  =>false,
+            'message'  =>$message,
+            'code'     =>404
+        ]);
     }
 }
 

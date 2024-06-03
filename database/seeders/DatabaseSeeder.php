@@ -35,6 +35,7 @@ class DatabaseSeeder extends Seeder
             MessageSeeder::class,
             ServicesSeeder::class,
             RoomTypeSeeder::class,
+            RoomTypeServiceSeeder::class,
         ]);
     }
 }
