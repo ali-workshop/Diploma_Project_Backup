@@ -33,7 +33,7 @@ class ContactController extends Controller
                     $contact->user_id = null;
                 }
                 $contact->name = $request->name;
-                $contact->email = $request->email;
+                $contact->email = $request->email; 
                 $contact->phone = $request->phone;
             }
             $contact->save();

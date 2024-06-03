@@ -14,7 +14,7 @@ class MessageController extends Controller
     public function store(StoreMessageRequest $request)
     {
         try {
-            $message = new Message();
+            $message = new Message(); 
             $message->contact_id = $request->contact_id;
             $message->title = $request->title;
             $message->body = $request->body;
