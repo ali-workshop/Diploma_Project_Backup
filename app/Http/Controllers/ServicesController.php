@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Service;
+use App\Http\Traits\UploadImageTrait;
 use App\Http\Requests\StoreServicesRequest;
 use App\Http\Requests\UpdateServicesRequest;
-use App\Traits\UploadImageTrait;
 
 class ServicesController extends Controller
 {
-    use UploadImageTrait;
+   use UploadImageTrait;
     /**
      * Display a listing of the resource.
      */
