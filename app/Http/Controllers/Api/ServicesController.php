@@ -24,12 +24,12 @@ class ServicesController extends Controller
     public function show(Service $service)
     {
         try {
-            if ($service) {
+            if (!$service) {
                 return $this->errorResponse('Service does not exist', [], 404);
             }
             return $this->successResponse(['service' => new ServiceResource($service)], 'This is the service you requested', 200);
         } catch (\Exception $e) {
-            Log::error('Service not available ' . $e->getMessage());
+            Log::error('Error in ServicesController@show' . $e->getMessage());
             return $this->errorResponse('An error occurred: ' . $e->getMessage(), [], 500);
         }
     }
