@@ -22,7 +22,10 @@ class StoreServicesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string|max:100',
+            'price' => 'required|numeric|between:0,9999.99',
+            'description' => 'required|string|max:800',
+            'img' => 'required|image|mimes:jpg,png,jpeg,gif',
         ];
     }
 }
