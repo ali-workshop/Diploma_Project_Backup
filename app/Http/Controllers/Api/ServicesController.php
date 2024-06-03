@@ -13,7 +13,7 @@ class ServicesController extends Controller
     public function index()
     {
         $services = Service::all();
-        return $this->successResponse(ServiceResource::collection($services)->toArray(request()), 'All available categories', 200);
+        return $this->successResponse(ServiceResource::collection($services)->toArray(request()), 'All available services', 200);
     }
     public function show(Service $service)
     {
