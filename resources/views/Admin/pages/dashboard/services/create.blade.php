@@ -11,6 +11,7 @@
             <form method="POST" action="{{ route('services.store') }}" enctype="multipart/form-data">
                 @csrf
 
+                <!-- Name Field -->
                 <div class="row mb-3">
                     <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
                     <div class="col-md-6">
@@ -23,6 +24,7 @@
                     </div>
                 </div>
 
+                <!-- Price Field -->
                 <div class="row mb-3">
                     <label for="price" class="col-md-4 col-form-label text-md-end">{{ __('Price') }}</label>
                     <div class="col-md-6">
@@ -35,6 +37,7 @@
                     </div>
                 </div>
 
+                <!-- Description Field -->
                 <div class="row mb-3">
                     <label for="description" class="col-md-4 col-form-label text-md-end">{{ __('Description') }}</label>
                     <div class="col-md-6">
@@ -47,6 +50,7 @@
                     </div>
                 </div>
 
+                <!-- Image Field -->
                 <div class="row mb-3">
                     <label for="img" class="col-md-4 col-form-label text-md-end">{{ __('Image') }}</label>
                     <div class="col-md-6">
@@ -58,7 +62,7 @@
                         @enderror
                     </div>
                 </div>
-
+                <!-- Save Button -->
                 <div class="row mb-0">
                     <div class="col-md-6 offset-md-4">
                         <button type="submit" class="btn btn-primary">
@@ -66,6 +70,7 @@
                         </button>
                     </div>
                 </div>
+
             </form>
             <br>
             <br>
@@ -73,5 +78,4 @@
         </div>
     </div>
 </div>
-
 @endsection

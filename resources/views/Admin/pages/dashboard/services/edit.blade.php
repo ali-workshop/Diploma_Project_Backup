@@ -12,10 +12,11 @@
                 @csrf
                 @method('PUT')
 
+                <!-- Name Field -->
                 <div class="row mb-3">
                     <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
                     <div class="col-md-6">
-                        <input value='{{$service->name}}' id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" required autocomplete="name" autofocus>
+                        <input value="{{$service->name}}" id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" required autocomplete="name" autofocus>
                         @error('name')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -24,10 +25,11 @@
                     </div>
                 </div>
 
+                <!-- Price Field -->
                 <div class="row mb-3">
                     <label for="price" class="col-md-4 col-form-label text-md-end">{{ __('Price') }}</label>
                     <div class="col-md-6">
-                        <input value='{{$service->price}}' id="price" type="number" step="0.01" class="form-control @error('price') is-invalid @enderror" name="price" required>
+                        <input value="{{ $service->price }}" id="price" type="number" step="0.01" class="form-control @error('price') is-invalid @enderror" name="price" required>
                         @error('price')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -36,6 +38,7 @@
                     </div>
                 </div>
 
+                <!-- Description Field -->
                 <div class="row mb-3">
                     <label for="description" class="col-md-4 col-form-label text-md-end">{{ __('Description') }}</label>
                     <div class="col-md-6">
@@ -48,6 +51,7 @@
                     </div>
                 </div>
 
+                <!-- Image Field -->
                 <div class="row mb-3">
                     <label for="img" class="col-md-4 col-form-label text-md-end">{{ __('Image') }}</label>
                     <div class="col-md-6">
@@ -57,9 +61,16 @@
                             <strong>{{ $message }}</strong>
                         </span>
                         @enderror
+                        <!-- Display current image
+                        @if ($service->img)
+                            <div class="mt-2">
+                                <img src="{{ asset('storage/' . $service->img) }}" alt="Current Image" width="100">
+                            </div>
+                        @endif -->
                     </div>
                 </div>
 
+                <!-- Save Button -->
                 <div class="row mb-0">
                     <div class="col-md-6 offset-md-4">
                         <button type="submit" class="btn btn-primary">

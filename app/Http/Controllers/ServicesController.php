@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Service;
 use App\Http\Requests\StoreServicesRequest;
 use App\Http\Requests\UpdateServicesRequest;
+use App\Traits\UploadImageTrait;
 
 class ServicesController extends Controller
 {
+    use UploadImageTrait;
     /**
      * Display a listing of the resource.
      */
@@ -31,17 +33,19 @@ class ServicesController extends Controller
     public function store(StoreServicesRequest $request)
     {
         $request->validated();
+        $path = $this->storeImage($request->file('img'), 'services');
 
-        $new_service = new Service();
-        $new_service->name = $request->name;
-        $new_service->price = $request->price;
-        $new_service->description = $request->description;
-        $new_service->img = $request->img;
-
-        $new_service->save();
-        return redirect()->route('services.index');
+        if ($path) {
+            Service::create([
+                'name' => $request->name,
+                'price' => $request->price,
+                'description' => $request->description,
+                'img' => $path,
+            ]);
+            return redirect()->route('services.index');
+        }
+        return redirect()->back();
     }
-
     /**
      * Display the specified resource.
      */
@@ -68,7 +72,17 @@ class ServicesController extends Controller
         $service->name = $request->name;
         $service->price = $request->price;
         $service->description = $request->description;
-        $service->img = $request->img;
+  
+        if ($request->hasFile('img')) {
+            $path = $this->storeImage($request->file('img'), 'services');
+
+            if ($path) {
+                $this->deleteImage($service->img);
+                $service->img = $path;
+            } else {
+                return redirect()->back();
+            }
+        }
 
         $service->save();
         return redirect()->route('services.index');
@@ -79,7 +93,9 @@ class ServicesController extends Controller
      */
     public function destroy(Service $service)
     {
+        $this->deleteImage($service->img);
         $service->delete();
+
         return redirect()->route('services.index');
     }
 }

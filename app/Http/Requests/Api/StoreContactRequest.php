@@ -29,8 +29,8 @@ class StoreContactRequest extends FormRequest
         $rules = [
             'phone' => 'required|numeric|unique:contacts,phone',
         ];
-    
-        if (!auth()->check()) {
+        # determine the type of authentication for consider the gurad api which is sanctum.
+        if (!auth('sanctum')->check()) {
             $rules['name'] = 'required|max:30';
             $rules['email'] = 'required|email|unique:contacts,email';
         }

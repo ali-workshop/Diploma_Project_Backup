@@ -1,11 +1,13 @@
 <?php
 
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ContactController;
 use App\Http\Controllers\Api\MessageController;
 use App\Http\Controllers\Api\RoomTypeContoller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\ServicesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +36,9 @@ Route::group(['prefix'=>'v1'],function(){
     });
 Route::post('/contacts',[ContactController::class,'store']);
 Route::post('/messages',[MessageController::class,'store']);
+
+Route::get('/services', [ServicesController::class, 'index']);
+Route::get('/services/{service}', [ServicesController::class, 'show']);
 
 
 Route::get('/roomType',[RoomTypeContoller::class,'index']);

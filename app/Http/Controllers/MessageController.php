@@ -62,6 +62,7 @@ class MessageController extends Controller
     
             return redirect()->route('messages.index')->with('success', 'Message status updated successfully');
         } catch (\Exception $e) {
+            Log::error('Error in MessageController@update: ' . $e->getMessage());
             return redirect()->route('messages.index')->with('error', 'Failed to update message status: ' . $e->getMessage());
         }
     }

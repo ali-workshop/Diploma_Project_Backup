@@ -2,21 +2,28 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\StoreContactRequest;
-use App\Http\Traits\ApiResponserTrait;
-use App\Models\Contact;
 use App\Models\User;
+use App\Models\Contact;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Traits\ApiResponserTrait;
+use App\Http\Requests\Api\StoreContactRequest;
+
 class ContactController extends Controller
 {
     use ApiResponserTrait;
     public function store(StoreContactRequest $request)
-    {
+    {  
+        // $user=auth('sanctum')->user();
+        // return $user;
+
         // $request->validated();
         try {
-            if (auth()->check()) {
-                $user = auth()->user();
+            if (auth('sanctum')->check()) {
+                $user = auth('sanctum')->user();
+                // return $user;
                 $contact = new Contact();
                 $contact->user_id = $user->id; 
                 $contact->name = $user->name; 
