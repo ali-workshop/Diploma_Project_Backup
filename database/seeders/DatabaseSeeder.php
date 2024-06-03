@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
             AdminSeeder::class,
             ContactSeeder::class,
             MessageSeeder::class,
-            Service::class,
+            ServicesSeeder::class,
             RoomTypeSeeder::class,
         ]);
     }
