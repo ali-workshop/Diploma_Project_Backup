@@ -21,9 +21,10 @@ class ServicesController extends Controller
             return $this->errorResponse('An error occurred: ' . $e->getMessage(), [], 500);
         }
     }
-    public function show(Service $service)
+    public function show(string $id)
     {
         try {
+            $service = Service::find($id);
             if (!$service) {
                 return $this->errorResponse('Service does not exist', [], 404);
             }
