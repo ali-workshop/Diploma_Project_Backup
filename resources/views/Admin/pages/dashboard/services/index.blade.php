@@ -7,7 +7,19 @@
 <!-- DataTable -->
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <a href="{{ route('services.create') }}" class="btn btn-primary">New Service</a>
+        <form action="{{ route('services.index') }}" method="GET">
+            <div class="row mb-3">
+                <div>
+                    <a href="{{ route('services.create') }}" class="btn btn-primary">New Service</a>
+                </div>
+                <div>
+                    <input type="name" name="name" class="form-control" placeholder="Search by name" value="{{ request()->name }}">
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-outline-secondary">Filter</button>
+                </div>
+            </div>
+        </form>
     </div>
     <div class="card-body">
         <div class="table-responsive">

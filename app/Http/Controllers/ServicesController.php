@@ -18,7 +18,7 @@ class ServicesController extends Controller
     public function index(Request $request)
     {
         try {
-            if ($request->has('name')) {
+            if ($request->has('name') && $request->name != '') {
                 $services = Service::where('name', 'like', '%' . $request->name . '%')->get();
             } else {
                 $services = Service::all();
