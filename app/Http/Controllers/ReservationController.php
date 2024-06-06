@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Reservation;
+use Illuminate\Support\Facades\Log;
 use App\Http\Requests\StoreReservationRequest;
 use App\Http\Requests\UpdateReservationRequest;
 
@@ -13,7 +14,14 @@ class ReservationController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $reservations = Reservation::all();
+            return view('Admin.pages.dashboard.reservation.index', compact('reservations'));
+        } catch (\Exception $e) {
+
+            Log::error('Error in RoomsController@index: ' . $e->getMessage());
+            return redirect()->route('Admin.pages.dashboard.reservation.index')->with('error', 'An error occurred: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -37,7 +45,7 @@ class ReservationController extends Controller
      */
     public function show(Reservation $reservation)
     {
-        //
+        return view('Admin.pages.dashboard.reservation.show', compact('reservation'));
     }
 
     /**
