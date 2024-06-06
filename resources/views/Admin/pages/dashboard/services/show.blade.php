@@ -18,6 +18,9 @@
                 <p><strong>Name:</strong> {{ $service->name }}</p>
                 <p><strong>Price:</strong> {{ $service->price }}</p>
                 <p><strong>Description:</strong> {{ $service->description }}</p>
+                <div class="pull-right ">
+                    <a class="btn btn-outline-primary" href="{{ route('services.index') }}">Back</a>
+                </div>
             </div>
         </div>
     </div>
