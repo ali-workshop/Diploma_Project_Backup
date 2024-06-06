@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Contact;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,11 @@ class ContactSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Contact::create([
+            'user_id'=>null,
+            'name'=>'user',
+            'email'=>'user@gmail.com',
+            'phone'=>'01234567'
+        ]);
     }
 }

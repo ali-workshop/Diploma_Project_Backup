@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -21,6 +20,9 @@
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('assets/css/sb-admin-2.css') }}" rel="stylesheet">
+    <!-- Custom styles for this page -->
+    <link href="{{ asset('assets/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+
 
 </head>
 
@@ -35,7 +37,8 @@
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('dashboard') }}">
                 <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fa-solid fa-user-tie"></i>                </div>
+                    <i class="fa-solid fa-user-tie"></i>
+                </div>
                 <div class="sidebar-brand-text mx-3">Admin Panel</div>
             </a>
 
@@ -62,19 +65,33 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fa-solid fa-door-open"></i>
-                    <span>Rooms Section</span>
+                    <span>Manage Rooms</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Rooms:</h6>
-                        <a class="collapse-item" href="#">Create New Room</a>
-                        <a class="collapse-item" href="#">edit Room</a>
-                        <a class="collapse-item" href="#">Show Rooms</a>
-                        <a class="collapse-item" href="#">Book Room</a>
+                        <a class="collapse-item" href="{{ route('rooms.create') }}">Create New Room</a>
+                        <a class="collapse-item" href="{{ route('rooms.index') }}">all rooms</a>
                     </div>
                 </div>
             </li>
-
+            
+            <!-- Nav Item - Booking section Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBooking"
+                    aria-expanded="true" aria-controls="collapseUtilities">
+                    <i class="fa-solid fa-file-invoice-dollar"></i>                    
+                    <span>Booking Section</span>
+                </a>
+                <div id="collapseBooking" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Booking:</h6>
+                        <a class="collapse-item" href="{{route('reservation.index')}}">Reservations List</a>
+                        <a class="collapse-item" href="#"></a>
+                    </div>
+                </div>
+            </li>
             <!-- Nav Item - Room Types Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
@@ -86,13 +103,12 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Types:</h6>
-                        <a class="collapse-item" href="#">Create Room Type</a>
-                        <a class="collapse-item" href="#">Show Room Types</a>
-                        <a class="collapse-item" href="#">Update Room Type</a>
+                        <a class="collapse-item" href={{ route('roomType.create') }}>Create Room Type</a>
+                        <a class="collapse-item" href={{ route('roomType.index') }}>All Room Types</a>
+                        {{-- <a class="collapse-item" href="#">Update Room Type</a> --}}
                     </div>
                 </div>
             </li>
-           
             <!-- Divider -->
             {{-- <hr class="sidebar-divider"> --}}
 
@@ -111,30 +127,28 @@
                 <div id="collapsePages" class="collapse show" aria-labelledby="headingPages"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="#">assign services to Room</a>
-                        <a class="collapse-item" href="#">update services to Room</a>
-                        <a class="collapse-item" href="#">Show rooms with services</a>
+                        <a class="collapse-item" href="{{ route('services.index') }}">All Services</a>
+                        <a class="collapse-item" href="{{ route('services.create') }}">Add Service</a>
                     </div>
                 </div>
             </li>
 
             <!-- Nav Item - Messages Collapse Menu -->
             <li class="nav-item ">
-                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages_2"
-                    aria-expanded="true" aria-controls="collapsePages">
+                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseMessages"
+                    aria-expanded="true" aria-controls="collapseMessages">
                     <i class="fa-solid fa-envelope"></i>
                     <span>Messages</span>
                 </a>
-                <div id="collapsePages_2" class="collapse show2" aria-labelledby="headingPages"
+                <div id="collapseMessages" class="collapse show" aria-labelledby="headingMessages"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="#">Show Messages</a>
-                        <a class="collapse-item" href="#">edit Messages</a>                        
+                        <a class="collapse-item" href="{{ route('messages.index') }}">All Messages</a>
                     </div>
                 </div>
             </li>
 
-           
+
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
@@ -161,11 +175,9 @@
                     </button>
 
                     <!-- Topbar Search -->
-                    <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                    {{-- <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small"
-                                placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
                             <div class="input-group-append">
                                 <button class="btn btn-primary" type="button">
                                     <i class="fas fa-search fa-sm"></i>
@@ -173,6 +185,8 @@
                             </div>
                         </div>
                     </form>
+                     --}}
+
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -351,7 +365,8 @@
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     {{ __('Logout') }}
                                 </a>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                    class="d-none">
                                     @csrf
                                 </form>
 
@@ -367,8 +382,22 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">Blank Page</h1>
-
+                    @yield('index.services')
+                    @yield('create.services')
+                    @yield('edit.services')
+                    @yield('show.services')
+                    @yield('index.messages')
+                    @yield('edit.messages')
+                    @yield('show.messages')
+                    @yield('index.rooms')
+                    @yield('create.rooms')
+                    @yield('edit.rooms')
+                    @yield('show.rooms')
+                    @yield('index.reservations')
+                    @yield('index.roomType')
+                    @yield('create.roomType')
+                    @yield('edit.roomType')
+                    @yield('show.roomType')
                 </div>
                 <!-- /.container-fluid -->
 
@@ -425,6 +454,13 @@
 
     <!-- Custom scripts for all pages-->
     <script src="{{ asset('assets/js/sb-admin-2.min.js') }}"></script>
+
+    <!-- Page level plugins -->
+    <script src="{{ asset('assets/vendor/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="{{ asset('assets/js/demo/datatables-demo.js') }}"></script>
 
 </body>
 
