@@ -35,7 +35,7 @@
                         <td>{{ $room->floorNumber}}</td>
                         <td>{{ $room->description}}</td>
                         <td>{{ $room->status}}</td>
-                        <td>{{ $room->img}}</td>
+                        <td><img src="{{ asset('images/' . $room->img) }}" alt="{{ $room->code }}" style="max-width: 100px;"></td>
                         <td>{{ $room->price}}</td>
                         <td><a href='{{route("rooms.edit", $room->id)}}' class="btn btn-outline-success">EDIT</a></td>
                         <td>
