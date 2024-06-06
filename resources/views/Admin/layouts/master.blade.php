@@ -87,7 +87,7 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Booking:</h6>
-                        <a class="collapse-item" href="#">Reservations List</a>
+                        <a class="collapse-item" href="{{route('reservation.index')}}">Reservations List</a>
                         <a class="collapse-item" href="#"></a>
                     </div>
                 </div>
