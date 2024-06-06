@@ -23,9 +23,9 @@ class UpdateRoomTypeRequest extends FormRequest
     {
         return [
             'name'        => ['string', 'required'],
-            'price'       => ['integer', 'required','between:1,99999999.99'],
+            'price'       => ['numeric', 'required','between:1,99999999.99'],
             'capacity'    => ['integer', 'required', 'between:2,6'],
-            'description' => ['string', 'required', 'max:50']
+            'description' => ['string', 'required', 'max:200']
         ];
     }
 }
