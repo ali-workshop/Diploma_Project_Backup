@@ -11,7 +11,7 @@ class StoreReservationRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,13 @@ class StoreReservationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+             //'user_id' => ['required', 'numeric', ], 
+             'room_id' => ['required', 'numeric', ],
+             'code' => ['required', 'numeric', 'unique' , 'max:3'],
+             'guestNumber' => ['required', ],
+             'start_date'=>['required', 'DateTime'],
+             'end_date'=>['required', 'DateTime'],
+             'totalPrice' => ['required', 'numeric', 'between:0,9999.99'],
         ];
     }
 }
