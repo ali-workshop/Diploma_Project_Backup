@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\RoomType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,8 +17,12 @@ class RoomFactory extends Factory
      */
     public function definition(): array
     {
+        // room_type_id,code,,floorNumber,,description,img,status,price
+        $room_type_id=RoomType::factory();
+        // $description=make the sdescription related to the name of the room type using some code 
         return [
-            //
+            'room_type_id'=>RoomType::factory(),
+                
         ];
     }
 }

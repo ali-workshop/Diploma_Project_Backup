@@ -16,8 +16,24 @@ class RoomTypeFactory extends Factory
      */
     public function definition(): array
     {
+        // Standard Single Room,Standard Suite,VIP Single Room,VIP Suite
+        $RoomData=[
+            'name'=>['$'],
+             'price'=>[''],
+             'capacity'=>[''],
+             'description'=>[''],
+
+        ];
+        $roomType=$this->faker->randomElement(array_keys($RoomData));
+        $roomOtherInfo=$RoomData[$roomType];
+
         return [
-            //
+            
+            'name'=>$roomType,
+            'price'=>$roomOtherInfo['price'],
+            'capacity'=>$roomOtherInfo['capacity'],
+            'description'=>$roomOtherInfo['description'],
+
         ];
     }
 }

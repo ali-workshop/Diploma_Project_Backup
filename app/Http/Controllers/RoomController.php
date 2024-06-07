@@ -91,4 +91,53 @@ class RoomController extends Controller
         $room->delete();
         return redirect()->route('rooms.index');
     }
+
+
+        public function showAvaliableRoom(){
+            // logic1
+            // get all avaliable room now as follow:
+            // get all rooms that the status for it  is not booked,
+            // retreive it simply in the same index.vewi
+            // 
+            // Logic2
+            // reseive date start date 10   /   endDate20(could be nullable) 
+            // get all reservationetions that interacte in this data
+            //get the room_ids for those reservations 
+            // get the rooms that not in this room_ids
+            // 
+            // 
+            // logic three get all
+            // 
+            // 
+            // ask gpt for more logics to buil 
+            // 
+            // 
+            // 
+            // 
+       } 
+
+
+        
+        public function showReservedRoom(){
+
+
+            
+        }
+
+        public function showReservedRoomUsingQuery(){
+
+
+            
+
+
+        }
+
+        public function showAvaliableRoomusingQuery(){
+
+
+            
+        }
 }
+
+
+       
