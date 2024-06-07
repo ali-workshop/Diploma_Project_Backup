@@ -21,6 +21,9 @@
                 <p><strong>Image of the Room:</strong> {{ $room->img }}</p>
                 <p><strong>Description:</strong> {{ $room->description }}</p>
                 <p><strong>Price:</strong> {{ $room->price }}</p>
+                <div class="pull-right ">
+                    <a class="btn btn-outline-primary" href="{{ route('rooms.index') }}">Back</a>
+                </div>
             </div>
         </div>
     </div>

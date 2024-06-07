@@ -8,6 +8,7 @@ use App\Http\Requests\StoreRoomRequest;
 use App\Http\Requests\UpdateRoomRequest;
 use App\Http\Traits\UploadImageTrait;
 use App\Models\RoomType;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class RoomController extends Controller
@@ -16,12 +17,22 @@ class RoomController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $rooms = Room::with('roomType')
-            ->orderBy('floorNumber', 'asc')
-            ->paginate(10);
-        return view('Admin.pages.dashboard.rooms.index', compact('rooms'));
+        try {
+            $rooms = Room::with('roomType')
+                ->whereHas('roomType', function ($query) use ($request) {
+                    if ($request->has('name')) {
+                        $query->where('name', 'like', '%' . $request->name . '%');
+                    }
+                })
+                ->orderBy('floorNumber', 'asc')
+                ->paginate(10);
+            return view('Admin.pages.dashboard.rooms.index', compact('rooms'));
+        } catch (\Exception $e) {
+            Log::error('Error in RoomController@index: ' . $e->getMessage());
+            return redirect()->route('rooms.index')->with('error', 'An error occurred: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -112,7 +123,7 @@ class RoomController extends Controller
         try {
             $this->deleteImage($room->img);
             $room->delete();
-            return redirect()->route('rooms.index')->with('success', 'Service deleted successfully.');
+            return redirect()->route('rooms.index')->with('success', 'Room deleted successfully.');
         } catch (\Exception $e) {
             Log::error('Error in RoomController@destroy: ' . $e->getMessage());
             return redirect()->route('Admin.pages.dashboard.rooms.index')->with('error',$e->getMessage());
