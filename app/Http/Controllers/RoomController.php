@@ -39,6 +39,8 @@ class RoomController extends Controller
     public function store(StoreRoomRequest $request)
     {   
         $validatedData=$request->validated();
+        $typeOThisRoom=RoomType::find($request->room_type);
+        $sumOfAllAvailableServices=$typeOThisRoom->services->sum('price');
         $room=Room::create([
             "room_type_id" => $request->room_type,
             "code" => $validatedData['code'],
@@ -46,7 +48,7 @@ class RoomController extends Controller
             "description" => $validatedData['description'],
             "img" => $this->verifyAndUpload($validatedData['img'],'rooms'),
             "status" => $validatedData['status'],
-            "price" => $validatedData['price'],
+            "price" => $typeOThisRoom->price +$sumOfAllAvailableServices,
         ]);
 
         return redirect()->route('rooms.index');
