@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateMessageRequest;
-use App\Models\Message;;
+use App\Models\Message;
 use App\Models\Contact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -13,9 +13,30 @@ class MessageController extends Controller
     /**
      * Display a listing of the resource.
      */
+    // public function index(Request $request)
+    // {
+    //     try {
+    //         // dd($request->all());
+    //         if ($request->has('contact_id') && $request->contact_id != '') {
+    //             $messages = Message::where('contact_id', 'like', '%' . $request->contact_id . '%')->paginate(10);
+    //         } elseif ($request->has('title') && $request->title != '') {
+    //             $messages = Message::where('title', 'like', '%' . $request->title . '%')->paginate(10);
+    //         } else {
+    //             $messages = Message::paginate(10);
+    //         }
+    //         $contacts = Contact::all();
+    //         return view('Admin.pages.dashboard.messages.index', compact('messages', 'contacts'));
+    //     } catch (\Exception $e) {
+    //         Log::error('Error in MessageController@index: ' . $e->getMessage());
+    //         return redirect()->route('messages.index')->with('error', 'An error occurred: ' . $e->getMessage());
+    //     }
+    // }
+
+    
     public function index(Request $request)
     {
         try {
+            // dd($request->all()); 
             $query = Message::query();
             if ($request->has('contact_id') && $request->contact_id != '') {
                 $query->where('contact_id', $request->contact_id);
@@ -23,12 +44,12 @@ class MessageController extends Controller
             if ($request->has('title') && $request->title != '') {
                 $query->where('title', 'like', '%' . $request->title . '%');
             }
-            $messages = $query->latest()->get();
+            $messages = $query->paginate(10);
             $contacts = Contact::all();
             return view('Admin/pages/dashboard/messages.index', compact('messages', 'contacts'));
         } catch (\Exception $e) {
             Log::error('Error in MessageController@index: ' . $e->getMessage());
-            return redirect()->route('Admin/pages/dashboard/messages.index')->with('error', 'An error occurred: ' . $e->getMessage());
+            return redirect()->route('messages.index')->with('error', 'An error occurred: ' . $e->getMessage());
         }
     }
 

@@ -12,21 +12,21 @@
 <!-- DataTales -->
 <div class="card shadow mb-4">
     <div class="card-body">
+        <form action="{{ route('messages.index') }}" method="GET">
+            <div class="row mb-3 my-1">
+                <div class="col-md-3">
+                    <input type="text" name="contact_id" class="form-control" placeholder="Search by contact_id" value="{{ request()->contact_id }}">
+                </div>
+                <div class="col-md-3">
+                    <input type="text" name="title" class="form-control" placeholder="Search by title" value="{{ request()->title }}">
+                </div>
+                <div >
+                    <button type="submit" class="btn btn-outline-secondary">Filter</button>
+                </div>
+            </div>
+        </form> 
         <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <form action="{{ route('messages.index') }}" method="GET">
-                    <div class="row mb-3">
-                        <div class="col-md-3">
-                            <input type="text" name="contact_id" class="form-control" placeholder="Search by contact_id" value="{{ request()->contact_id }}">
-                        </div>
-                        <div class="col-md-3">
-                            <input type="text" name="title" class="form-control" placeholder="Search by title" value="{{ request()->title }}">
-                        </div>
-                        <div >
-                            <button type="submit" class="btn btn-outline-secondary">Filter</button>
-                        </div>
-                    </div>
-                </form> 
                 <thead>
                     <tr>
                         <th>#</th>

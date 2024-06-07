@@ -10,6 +10,16 @@
     <a href="{{ route('rooms.create') }}" class="btn btn-primary">New Room</a>
     </div>
     <div class="card-body">
+        <form action="{{ route('rooms.index') }}" method="GET">
+            <div class="row mb-3 my-1">
+                <div class="col-md-3">
+                    <input type="text" name="name" id="name" class="form-control" placeholder="Search by Room Type" value="{{ request()->name }}">
+                </div>
+                <div >
+                    <button type="submit" class="btn btn-outline-secondary">Filter</button>
+                </div>
+            </div>
+        </form> 
         <div class="table-responsive">
             <table class="table table-bordered table-striped"  id="dataTable">
                 <thead>
