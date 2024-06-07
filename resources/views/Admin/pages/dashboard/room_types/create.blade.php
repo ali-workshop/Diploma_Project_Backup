@@ -65,6 +65,21 @@
                         @enderror
                     </div>
                 </div>
+                <div class="row mb-3">
+                    <label for="service" class="col-md-4 col-form-label text-md-end">{{ __('Service') }}</label>
+                    <div class="col-md-6">
+                        <select id="service"  step="0.01" class="form-control @error('service') is-invalid @enderror" name="service_id[]"  required multiple>
+                            @foreach ($services as $service)
+                                    <option value="{{$service->id}}">{{$service->name}}</option>
+                            @endforeach
+                        </select>    
+                        @error('service')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+                </div>
 
              
 

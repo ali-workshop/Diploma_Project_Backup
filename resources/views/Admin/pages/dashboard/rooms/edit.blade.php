@@ -13,13 +13,19 @@
                 @method('PUT')
 
                 <div class="row mb-3">
-                    <label for="room_type" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
+                    <label for="room_type" class="col-md-4 col-form-label text-md-end">{{ __('Room Type') }}</label>
                     <div class="col-md-6">
-                        <input value='{{$room->RoomType->name}}' id="room_type" type="text" class="form-control @error('room_type') is-invalid @enderror" name="room_type" required autocomplete="room_type" autofocus>
-                        @error('room_type')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
+                        <select name="room_type" id="room_type"
+                            class="form-control @error('room_type') is-invalid @enderror"
+                            name="name">{{ old('status') }}
+                            @foreach ($roomTypes as $roomType)
+                                <option value="{{ $roomType->id }}">{{ $roomType->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('status')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
                         @enderror
                     </div>
                 </div>

@@ -2,16 +2,16 @@
 @section('index.rooms')
 
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Room Services</h1>
+<h1 class="h3 mb-2 text-gray-800">Hotel Rooms</h1>
 
 <!-- DataTales -->
-<div class="card shadow mb-4">
-    <div class="card-header py-3">
+<div class="card shadow mb-1" >
+    <div class="card-header py-2">
     <a href="{{ route('rooms.create') }}" class="btn btn-primary">New Room</a>
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <table class="table table-bordered table-striped"  id="dataTable">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -26,16 +26,16 @@
                         <th>Delete</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody >
                     @foreach($rooms as $room)
                     <tr>
                         <td>{{ $loop->iteration}}</td>
                         <td>{{ $room->roomType->name}}</td>
-                        <td>{{ $room->code}}</td>
+                        <td><a href='{{route("rooms.show", $room->id)}}'>{{ $room->code}}</a></td>
                         <td>{{ $room->floorNumber}}</td>
                         <td>{{ $room->description}}</td>
                         <td>{{ $room->status}}</td>
-                        <td>{{ $room->img}}</td>
+                        <td><img src="{{ asset('images/' . $room->img) }}" alt="{{ $room->code }}" style="max-width: 100px;"></td>
                         <td>{{ $room->price}}</td>
                         <td><a href='{{route("rooms.edit", $room->id)}}' class="btn btn-outline-success">EDIT</a></td>
                         <td>

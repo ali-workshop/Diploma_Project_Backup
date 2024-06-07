@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\RoomType;
 use App\Http\Requests\StoreRoomTypeRequest;
 use App\Http\Requests\UpdateRoomTypeRequest;
+use App\Models\Service;
 
 class RoomTypeController extends Controller
 {
@@ -22,7 +23,8 @@ class RoomTypeController extends Controller
      */
     public function create()
     {
-        return view('Admin.pages.dashboard.room_types.create');
+        $services = Service::all();
+        return view('Admin.pages.dashboard.room_types.create', compact('services'));
     }
 
     /**
@@ -32,12 +34,9 @@ class RoomTypeController extends Controller
     {
         try {
             $request->validated();
-            $new_room_type = new RoomType();
-            $new_room_type->name = $request->name;
-            $new_room_type->price = $request->price;
-            $new_room_type->capacity = $request->capacity;
-            $new_room_type->description = $request->description;
-            $new_room_type->save();
+
+            $new_room_type = RoomType::create($request->only(['name', 'price', 'capacity', 'description']));
+            $new_room_type->services()->attach($request->service_id);
             return redirect()->route('roomType.index');
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['error' => $e->getMessage()]);
@@ -56,7 +55,8 @@ class RoomTypeController extends Controller
      */
     public function edit(RoomType $roomType)
     {
-        return view('Admin.pages.dashboard.room_types.edit', compact('roomType'));
+        $services = Service::all();
+        return view('Admin.pages.dashboard.room_types.edit', compact('roomType','services'));
     }
 
     /**
@@ -66,11 +66,9 @@ class RoomTypeController extends Controller
     {
         try {
             $request->validated();
-            $roomType->name = $request->name;
-            $roomType->price = $request->price;
-            $roomType->capacity = $request->capacity;
-            $roomType->description = $request->description;
-            $roomType->save();
+            $roomType->update($request->only(['name', 'price', 'capacity', 'description']));
+            $roomType->services()->sync($request->service_id);
+           
             return redirect()->route('roomType.index');
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['error' => $e->getMessage()]);

@@ -17,25 +17,25 @@ class RoomTypeSeeder extends Seeder
     {
         RoomType::create([
             'name'         => 'Standard Single Room',
-            'price'        => '3',
+            'price'        => '75',
             'capacity'     => '1',
             'description'  => 'The room area is two square meters and contains a small bed',
         ]);
         RoomType::create([
             'name'         => 'Standard Suite',
-            'price'        => '5',
+            'price'        => '100',
             'capacity'     => '3',
             'description'  => 'The room area is two square meters and has a large bed',
         ]);
         RoomType::create([
             'name'         => 'VIP Single Room',
-            'price'        => '5',
+            'price'        => '150',
             'capacity'     => '2',
             'description'  => 'The room area is two square meters and contains two beds',
         ]);
         RoomType::create([
             'name'         => 'VIP Suite',
-            'price'        => '7',
+            'price'        => '250',
             'capacity'     => '5',
             'description'  => 'The room area is three square meters and contains two large beds',
         ]);

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('code');
             $table->date('start_date');
             $table->date('end_date');
-            $table->smallInteger('guestNumber');;
+            $table->smallInteger('guestNumber');
             $table->decimal('totalPrice', 8, 2);
             $table->timestamps();
         });
