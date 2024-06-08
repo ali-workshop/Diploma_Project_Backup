@@ -18,5 +18,10 @@ class MessageSeeder extends Seeder
             'title'=>'Room Availability Inquiry',
             'body'=>"I hope you're doing well. I'm interested in booking a room for a two-night stay from July 15th to July 17th. Could you please confirm availability and provide rates?"
         ]);
+        Message::create([
+            'contact_id'=>'1',
+            'title'=>'Availability',
+            'body'=>"Hi, I hope you're doing well. I'm interested in booking a room for a two-night stay from July 15th to July 17th. Could you please confirm availability and provide rates?"
+        ]);
     }
 }

@@ -38,7 +38,7 @@ Route::group(['prefix'=>'v1'],function(){
     });
 Route::post('/contacts',[ContactController::class,'store']);
 Route::post('/messages',[MessageController::class,'store']);
-Route::post('/reservation',[ReservationController::class,'store']);
+Route::post('/reservation',[ReservationController::class,'store'])->middleware('auth:sanctum');
 Route::get('/services', [ServicesController::class, 'index']);
 Route::get('/services/{service}', [ServicesController::class, 'show']);
 
