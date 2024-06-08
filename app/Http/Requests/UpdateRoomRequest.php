@@ -23,7 +23,7 @@ class UpdateRoomRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'code' => 'string','max:100',Rule::unique('rooms')->ignore($this->room),
+            'code' =>['string','max:100',Rule::unique('rooms')->ignore($this->room)],
             'floorNumber' => 'numeric|integer|max:15',
             'description' => 'string|max:800',
             'img' => 'image',
