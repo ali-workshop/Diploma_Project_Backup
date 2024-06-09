@@ -9,6 +9,8 @@ use App\Http\Controllers\RoomTypeController;
 use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\Admin\adminController;
 use App\Http\Controllers\ReservationController;
+use Illuminate\Support\Facades\Mail;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -37,3 +39,5 @@ Route::resource('/rooms', RoomController::class);
 Route::resource('/roomType', RoomTypeController::class);
 Route::resource('/reservation', ReservationController::class);
 });
+
+
