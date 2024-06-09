@@ -71,4 +71,14 @@ class ReservationController extends Controller
     {
         //
     }
+
+    public function reservationDetail(){
+
+        # return the reservation details 
+
+
+    }
+
+
+
 }

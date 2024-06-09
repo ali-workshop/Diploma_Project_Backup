@@ -72,6 +72,7 @@
                         <h6 class="collapse-header">Rooms:</h6>
                         <a class="collapse-item" href="{{ route('rooms.create') }}">Create New Room</a>
                         <a class="collapse-item" href="{{ route('rooms.index') }}">all rooms</a>
+                        {{-- <a class="collapse-item" href="{{ route('rooms.available') }}">filer</a> --}}
                     </div>
                 </div>
             </li>

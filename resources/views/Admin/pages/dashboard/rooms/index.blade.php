@@ -9,7 +9,12 @@
     <div class="card-header py-2">
     <a href="{{ route('rooms.create') }}" class="btn btn-primary">New Room</a>
     </div>
-    <div class="card-body">
+    
+    <div class="card shadow mb-1">
+        <div class="card-header py-2">
+            <a href="{{ route('rooms.availablealolaa') }}" class="btn btn-primary">Get The Current Available Rooms</a>
+        </div> 
+        <div class="card-body">
         <form action="{{ route('rooms.index') }}" method="GET">
             <div class="row mb-3 my-1">
                 <div class="col-md-3">

@@ -36,4 +36,18 @@ Route::resource('/messages', MessageController::class);
 Route::resource('/rooms', RoomController::class);
 Route::resource('/roomType', RoomTypeController::class);
 Route::resource('/reservation', ReservationController::class);
+// Route::get('rooms/avaliable', [RoomController::class,'showAvaliableRoom'])->name('rooms.avaliable');
+// Route::get('rooms/available', [RoomController::class, 'showAvailableRoom'])->name('rooms.available');
+// Route::get('test', function () {
+//     return 'Test Route is working!';
+// })->name('room.test');
+ // Ensure this route is correct
+ Route::get('test', [RoomController::class, 'showAvailableRoom'])->name('rooms.availablealolaa');
+
+ // Test rout
 });
+// Route::get('/rooms/avaliable', [RoomController::class,'showAvaliableRoom'])->name('rooms.avaliable');
+// Route::get('rooms/available', [RoomController::class, 'showAvailableRoom'])->name('rooms.available');
+// Route::get('test', function () {
+//     return 'Test Route is working!';
+// })->name('room.test');

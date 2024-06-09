@@ -16,24 +16,49 @@ class RoomTypeFactory extends Factory
      */
     public function definition(): array
     {
-        // Standard Single Room,Standard Suite,VIP Single Room,VIP Suite
         $RoomData=[
-            'name'=>['$'],
-             'price'=>[''],
-             'capacity'=>[''],
-             'description'=>[''],
+            'Standard Single Room' => [
+                'descriptions' => [
+                    'The room area is two square meters and contains a small bed',
+                    
+                'alollaaa test The room area is two square meters and contains two beds',
+                ],
+                'prices' => [50, 60, 70], 
+                'capacities' => [1] 
+            ],
+            'Standard Suite' => [
+                'descriptions' => [
+                   'The room area is two square meters and has a large bed',
+                   'alollaaa test The room area is two square meters and contains two beds',
+                ],
+                'prices' => [100, 120, 140], 
+                'capacities' => [2, 3] 
+            ],
+            'VIP Single Room' => [
+                'descriptions' => [
+                'The room area is two square meters and contains two beds',
+                'alollaaa test The room area is two square meters and contains two beds',
+                ],
+                'prices' => [150, 180, 200],
+                'capacities' => [1, 2] 
+            ],
+            'VIP Suite' => [
+                'descriptions' => [
+                   'The room area is three square meters and contains two large beds'
+                ],
+                'prices' => [300, 350, 400], 
+                'capacities' => [2, 4, 5] 
+            ]
 
         ];
-        $roomType=$this->faker->randomElement(array_keys($RoomData));
+        $roomType=$this->faker->randomElement(array_keys($RoomData)); 
         $roomOtherInfo=$RoomData[$roomType];
 
         return [
-            
-            'name'=>$roomType,
-            'price'=>$roomOtherInfo['price'],
-            'capacity'=>$roomOtherInfo['capacity'],
-            'description'=>$roomOtherInfo['description'],
-
+            'name' => $roomType,
+            'description' => implode(" ",$roomOtherInfo['descriptions']),
+            'price' => $this->faker->randomElement($roomOtherInfo['prices']),
+            'capacity' => $this->faker->randomElement($roomOtherInfo['capacities']),
         ];
     }
 }

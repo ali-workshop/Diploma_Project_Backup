@@ -35,7 +35,12 @@ class DatabaseSeeder extends Seeder
             MessageSeeder::class,
             ServicesSeeder::class,
             RoomTypeSeeder::class,
+            RoomSeeder::class,
             RoomTypeServiceSeeder::class,
+            ReservationStatusCatlogSeeder::class,
+            ReservationSeeder::class,
+            ReservationStatusEventSeeder::class,
+
         ]);
     }
 }

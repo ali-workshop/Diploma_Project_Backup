@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 
 use App\Models\Room;
-use App\Http\Requests\StoreRoomRequest;
-use App\Http\Requests\UpdateRoomRequest;
-use App\Http\Traits\UploadImageTrait;
 use App\Models\RoomType;
+use App\Models\Reservation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use App\Http\Traits\UploadImageTrait;
+use App\Http\Requests\StoreRoomRequest;
+use App\Http\Requests\UpdateRoomRequest;
+use Illuminate\Database\Eloquent\Collection;
 
 class RoomController extends Controller
 {   
@@ -28,6 +30,7 @@ class RoomController extends Controller
                 })
                 ->orderBy('floorNumber', 'asc')
                 ->paginate(10);
+                
             return view('Admin.pages.dashboard.rooms.index', compact('rooms'));
         } catch (\Exception $e) {
             Log::error('Error in RoomController@index: ' . $e->getMessage());
@@ -129,52 +132,20 @@ class RoomController extends Controller
             return redirect()->route('Admin.pages.dashboard.rooms.index')->with('error',$e->getMessage());
         }
     }
+    public function showCurrnetAvailableRoom()
+        {  
+        }
 
+        public function showAvailableRoomsInSpecificTime(Request $request)
+        {  
+        }
 
-        public function showAvaliableRoom(){
-            // logic1
-            // get all avaliable room now as follow:
-            // get all rooms that the status for it  is not booked,
-            // retreive it simply in the same index.vewi
-            // 
-            // Logic2
-            // reseive date start date 10   /   endDate20(could be nullable) 
-            // get all reservationetions that interacte in this data
-            //get the room_ids for those reservations 
-            // get the rooms that not in this room_ids
-            // 
-            // 
-            // logic three get all
-            // 
-            // 
-            // ask gpt for more logics to buil 
-            // 
-            // 
-            // 
-            // 
-       } 
-
-
+        public function showAvailableRoomsInPeriod(Request $request)
+        {  
+        }
         
-        public function showReservedRoom(){
+        
 
-
-            
-        }
-
-        public function showReservedRoomUsingQuery(){
-
-
-            
-
-
-        }
-
-        public function showAvaliableRoomusingQuery(){
-
-
-            
-        }
 }
 
 
