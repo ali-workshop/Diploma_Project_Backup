@@ -11,6 +11,12 @@ use App\Http\Controllers\Controller;
 
 class RoomController extends Controller
 {
+
+     
+//     return $this->successResponse($reservationStatusOverTime, 'Reservation Events Returned Successfully');
+// } catch (Throwable $th) {
+//     return $this->errorResponse('Server error probably.', [$th->getMessage()], 500);
+// }
    
     public function showCurrnetAvailableRooms()
         {
