@@ -21,7 +21,6 @@ class RoomTypeFactory extends Factory
                 'descriptions' => [
                     'The room area is two square meters and contains a small bed',
                     
-                'alollaaa test The room area is two square meters and contains two beds',
                 ],
                 'prices' => [50, 60, 70], 
                 'capacities' => [1] 
@@ -29,7 +28,6 @@ class RoomTypeFactory extends Factory
             'Standard Suite' => [
                 'descriptions' => [
                    'The room area is two square meters and has a large bed',
-                   'alollaaa test The room area is two square meters and contains two beds',
                 ],
                 'prices' => [100, 120, 140], 
                 'capacities' => [2, 3] 
@@ -37,7 +35,6 @@ class RoomTypeFactory extends Factory
             'VIP Single Room' => [
                 'descriptions' => [
                 'The room area is two square meters and contains two beds',
-                'alollaaa test The room area is two square meters and contains two beds',
                 ],
                 'prices' => [150, 180, 200],
                 'capacities' => [1, 2] 
