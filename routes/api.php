@@ -35,7 +35,10 @@ Route::group(['prefix'=>'v1'],function(){
 
     Route::post('/auth/register', [AuthController::class, 'register']);
     Route::post('/auth/login', [AuthController::class, 'login']);
-    Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+    
+    Route::group(['middleware' => ['auth:sanctum']], function () {
+    
+    Route::post('/auth/logout', [AuthController::class, 'logout']);
     
     Route::get('/reservation/events/{reservation}', [ReservationEventController::class, 'reservationEvents']);
     
@@ -46,7 +49,7 @@ Route::group(['prefix'=>'v1'],function(){
     Route::get('/reserved/rooms/specificTime',[RoomController::class,'showReservedRoomsInSpecificTime']);
     Route::get('/reserved/rooms/specificPeriod',[RoomController::class,'showReservedRoomsInPeriod']);
 
-    
+    });
     });
 Route::post('/contacts',[ContactController::class,'store']);
 Route::post('/messages',[MessageController::class,'store']);
