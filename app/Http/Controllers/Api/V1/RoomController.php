@@ -29,26 +29,22 @@ class RoomController extends Controller
         try {
             $availableRooms = [];
             $rooms = Room::all();
-
-
+    
             $specificDate = Carbon::parse($request->input('specificDate'));
             foreach ($rooms as $room) {
                 $reservations = Reservation::where('room_id', $room->id)->get();
-                $available = True;
+                $available = true;
                 foreach ($reservations as $reservation) {
                     if ($specificDate->between($reservation->start_date, $reservation->end_date)) {
-
-                        $available = False;
+                        $available = false;
                         break;
                     }
-
                 }
                 if ($available) {
-                    $avaliableRooms[] = $room;
+                    $availableRooms[] = $room;
                 }
-
             }
-            return $this->successResponse($avaliableRooms, 'Availabe Rooms Returned Successfully');
+            return $this->successResponse($availableRooms, 'Available Rooms Returned Successfully');
         } catch (\Throwable $th) {
             return $this->errorResponse('Server error probably.', [$th->getMessage()], 500);
         }
@@ -119,7 +115,7 @@ class RoomController extends Controller
 
             $reservedRooms = [];
             $rooms = Room::all();
-            $specificDate = Carbon::createFromFormat('Y-m-d', $request->input('specificDate'));
+            $specificDate = Carbon::parse( $request->input('specificDate'));
             foreach ($rooms as $room) {
                 $reservations = Reservation::where('room_id', $room->id)->get();
                 $available = False;
