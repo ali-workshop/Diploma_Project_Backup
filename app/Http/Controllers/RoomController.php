@@ -10,6 +10,7 @@ use App\Models\Reservation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Traits\UploadImageTrait;
+use App\Http\Requests\DateRangeRequest;
 use App\Http\Requests\StoreRoomRequest;
 use App\Http\Requests\UpdateRoomRequest;
 use Illuminate\Database\Eloquent\Collection;
@@ -183,7 +184,7 @@ class RoomController extends Controller
 
         }
 
-        public function showAvailableRoomsInPeriod(Request $request)
+        public function showAvailableRoomsInPeriod(DateRangeRequest $request)
         {  
            #noura could use this time zone ( Asia/Dubai )
            # other members 'Asia/Damascus'
@@ -284,7 +285,7 @@ class RoomController extends Controller
         }
         }
         
-        public function showReservedRoomsInPeriod(Request $request)
+        public function showReservedRoomsInPeriod(DateRangeRequest $request)
         {  
         
          try{

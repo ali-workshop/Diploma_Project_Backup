@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Traits\ApiResponserTrait;
+use App\Http\Requests\DateRangeRequest;
 
 class RoomController extends Controller
 {
@@ -51,7 +52,7 @@ class RoomController extends Controller
 
     }
 
-    public function showAvailableRoomsInPeriod(Request $request)
+    public function showAvailableRoomsInPeriod(DateRangeRequest $request)
     {
         #noura could use this time zone ( Asia/Dubai )
         # other members 'Asia/Damascus'
@@ -138,7 +139,7 @@ class RoomController extends Controller
         }
     }
 
-    public function showReservedRoomsInPeriod(Request $request)
+    public function showReservedRoomsInPeriod(DateRangeRequest $request)
     {
 
         try {
