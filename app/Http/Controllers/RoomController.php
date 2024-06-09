@@ -152,9 +152,7 @@ class RoomController extends Controller
            try{
             $availableRooms=[];
             $rooms=Room::all();
-    
-
-            $specificDate = Carbon::createFromFormat('Y-m-d', $request->input('specificDate'));
+            $specificDate = Carbon::parse($request->input('specificDate'));
             foreach($rooms as $room)
             {
                 $reservations=Reservation::where('room_id',$room->id)->get();
@@ -163,19 +161,16 @@ class RoomController extends Controller
                 {   
                     if($specificDate->between($reservation->start_date,$reservation->end_date))
                     {
-
                         $available=False;
                         break;
-                    }
-                    
+                    }    
                 }
                 if($available)
                 {
                     $avaliableRooms[]=$room;
                 }
-  
             }
-            $rooms=collect($avaliableRooms);
+            $rooms=collect($avaliableRooms); # ali comment : i am just ensure convert it to collection before send it to view
             return view('Admin.pages.dashboard.rooms.index',['rooms'=>$rooms]);
         }catch(\Exception $e){
             Log::error('Error in RoomController@showAvailableRoomsInSpecificTime: ' . $e->getMessage());
@@ -183,19 +178,20 @@ class RoomController extends Controller
         }
 
         }
-
         public function showAvailableRoomsInPeriod(DateRangeRequest $request)
         {  
-           #noura could use this time zone ( Asia/Dubai )
+           #Noura could use this time zone ( Asia/Dubai )
            # other members 'Asia/Damascus'
            # Mr.Hashim Europe/Berlin
            try{
            $reservations_endDates = Reservation::pluck('end_date')->toArray();
             $latestEndDate = max($reservations_endDates);
             $latestEndDate =Carbon::parse($latestEndDate);
-            $startRange = Carbon::parse($request->input('start_range'), 'UTC')->setTimezone('Asia/Baghdad');
+            $startRange = Carbon::parse($request->input('start_range'), 'UTC')
+                                                ->setTimezone('Asia/Baghdad');
             $endRange=$request->has('end_range') ? 
-            Carbon::parse($request->input('end_range'), 'UTC')->setTimezone('Asia/Baghdad') : null;
+            Carbon::parse($request->input('end_range'), 'UTC')
+                                    ->setTimezone('Asia/Baghdad') : null;
             if(!$endRange)
             {
                $endRange= $latestEndDate;
@@ -210,14 +206,12 @@ class RoomController extends Controller
                 $available=True;
                 foreach($reservations as $reservation)
                 {   
-            
                     if
                     (
                     $reservation->start_date <= $endRange &&
                     $reservation->end_date   >= $startRange
                     ) 
                     {
-
                         $available=False;
                         break;
                     }
@@ -252,11 +246,10 @@ class RoomController extends Controller
         
         public function showReservedRoomsInSpecificTime(Request $request)
         {  
-         try{
-            
+         try{    
             $reservedRooms=[];
             $rooms=Room::all();
-            $specificDate = Carbon::createFromFormat('Y-m-d', $request->input('specificDate'));
+            $specificDate = Carbon::parse($request->input('specificDate'));
             foreach($rooms as $room)
             {
                 $reservations=Reservation::where('room_id',$room->id)->get();
@@ -265,17 +258,14 @@ class RoomController extends Controller
                 {   
                     if($specificDate->between($reservation->start_date,$reservation->end_date))
                     {
-
                         $available=True;
                         break;
-                    }
-                    
+                    }      
                 }
                 if($available)
                 {
                     $reservedRooms[]=$room;
                 }
-  
             }
             $rooms=collect($reservedRooms);
             return view('Admin.pages.dashboard.rooms.index',['rooms'=>$rooms]);
@@ -286,15 +276,16 @@ class RoomController extends Controller
         }
         
         public function showReservedRoomsInPeriod(DateRangeRequest $request)
-        {  
-        
+        {   
          try{
             $reservations_endDates = Reservation::pluck('end_date')->toArray();
             $latestEndDate = max($reservations_endDates);
             $latestEndDate =Carbon::parse($latestEndDate);
-            $startRange = Carbon::parse($request->input('start_range'), 'UTC')->setTimezone('Asia/Baghdad');
+            $startRange = Carbon::parse($request->input('start_range'), 'UTC')
+                                                ->setTimezone('Asia/Baghdad');
             $endRange=$request->has('end_range') ? 
-            Carbon::parse($request->input('end_range'), 'UTC')->setTimezone('Asia/Baghdad') : null;
+            Carbon::parse($request->input('end_range'), 'UTC')
+                                    ->setTimezone('Asia/Baghdad') : null;
             if(!$endRange)
             {
                $endRange= $latestEndDate;
@@ -307,14 +298,12 @@ class RoomController extends Controller
                 $available=False;
                 foreach($reservations as $reservation)
                 {   
-               
                     if
                     (
                     $reservation->start_date <= $endRange &&
                     $reservation->end_date   >= $startRange
                     ) 
                     {
-
                         $available=True;
                         break;
                     }
@@ -324,7 +313,6 @@ class RoomController extends Controller
                 {
                     $reservedRooms[]=$room;
                 }
-  
             }
             $rooms=collect($reservedRooms);
             return view('Admin.pages.dashboard.rooms.index',['rooms'=>$rooms]);
@@ -332,10 +320,7 @@ class RoomController extends Controller
             Log::error('Error in RoomController@showReservedRoomsInPeriod: ' . $e->getMessage());
             return redirect()->route('rooms.index')->with('error', $e->getMessage());
         }
-        }
-        
-        
-
+        }       
 }
 
 
