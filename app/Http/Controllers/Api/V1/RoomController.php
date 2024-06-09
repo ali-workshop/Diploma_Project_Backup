@@ -36,9 +36,10 @@ class RoomController extends Controller
                 $reservations = Reservation::where('room_id', $room->id)->get();
                 $available = true;
                 foreach ($reservations as $reservation) {
-                    if ($specificDate->between($reservation->start_date, $reservation->end_date)) {
-                        $available = false;
-                        break;
+                    if ($specificDate->between($reservation->start_date, $reservation->end_date))
+                    {
+                     $available = false;
+                     break;
                     }
                 }
                 if ($available) {
@@ -54,20 +55,21 @@ class RoomController extends Controller
 
     public function showAvailableRoomsInPeriod(DateRangeRequest $request)
     {
-        #noura could use this time zone ( Asia/Dubai )
+        #Noura could use this time zone ( Asia/Dubai )
         # other members 'Asia/Damascus'
         # Mr.Hashim Europe/Berlin
         try {
             $reservations_endDates = Reservation::pluck('end_date')->toArray();
             $latestEndDate = max($reservations_endDates);
             $latestEndDate = Carbon::parse($latestEndDate);
-            $startRange = Carbon::parse($request->input('start_range'), 'UTC')->setTimezone('Asia/Baghdad');
+            $startRange = Carbon::parse($request->input('start_range'), 'UTC')
+                                                ->setTimezone('Asia/Baghdad');
             $endRange = $request->has('end_range') ?
-                Carbon::parse($request->input('end_range'), 'UTC')->setTimezone('Asia/Baghdad') : null;
+                Carbon::parse($request->input('end_range'), 'UTC')
+                ->setTimezone('Asia/Baghdad') : null;
             if (!$endRange) {
                 $endRange = $latestEndDate;
             }
-
             $availableRooms = [];
             $rooms = Room::all();
 
@@ -121,17 +123,15 @@ class RoomController extends Controller
                 $reservations = Reservation::where('room_id', $room->id)->get();
                 $available = False;
                 foreach ($reservations as $reservation) {
-                    if ($specificDate->between($reservation->start_date, $reservation->end_date)) {
-
+                    if ($specificDate->between($reservation->start_date, $reservation->end_date))
+                     {
                         $available = True;
                         break;
                     }
-
                 }
                 if ($available) {
                     $reservedRooms[] = $room;
                 }
-
             }
             return $this->successResponse($reservedRooms, 'Booked Rooms Returned Successfully');
         } catch (\Throwable $th) {
@@ -141,14 +141,16 @@ class RoomController extends Controller
 
     public function showReservedRoomsInPeriod(DateRangeRequest $request)
     {
-
         try {
-            $reservations_endDates = Reservation::pluck('end_date')->toArray();
+            $reservations_endDates = Reservation::pluck('end_date')
+                                                ->toArray();
             $latestEndDate = max($reservations_endDates);
             $latestEndDate = Carbon::parse($latestEndDate);
-            $startRange = Carbon::parse($request->input('start_range'), 'UTC')->setTimezone('Asia/Baghdad');
+            $startRange = Carbon::parse($request->input('start_range'), 'UTC')
+                                                ->setTimezone('Asia/Baghdad');
             $endRange = $request->has('end_range') ?
-                Carbon::parse($request->input('end_range'), 'UTC')->setTimezone('Asia/Baghdad') : null;
+                Carbon::parse($request->input('end_range'), 'UTC')
+                                    ->setTimezone('Asia/Baghdad') : null;
             if (!$endRange) {
                 $endRange = $latestEndDate;
             }
@@ -158,13 +160,11 @@ class RoomController extends Controller
                 $reservations = Reservation::where('room_id', $room->id)->get();
                 $available = False;
                 foreach ($reservations as $reservation) {
-
                     if
                     (
                         $reservation->start_date <= $endRange &&
                         $reservation->end_date >= $startRange
                     ) {
-
                         $available = True;
                         break;
                     }
@@ -180,6 +180,5 @@ class RoomController extends Controller
             return $this->errorResponse('Server error probably.', [$th->getMessage()], 500);
         }
     }
-
 
 }
