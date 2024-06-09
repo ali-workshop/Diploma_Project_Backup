@@ -22,29 +22,29 @@ class RoomTypeFactory extends Factory
                     'The room area is two square meters and contains a small bed',
                     
                 ],
-                'prices' => [50, 60, 70], 
+                'prices' => [75], 
                 'capacities' => [1] 
             ],
             'Standard Suite' => [
                 'descriptions' => [
                    'The room area is two square meters and has a large bed',
                 ],
-                'prices' => [100, 120, 140], 
-                'capacities' => [2, 3] 
+                'prices' => [100], 
+                'capacities' => [3] 
             ],
             'VIP Single Room' => [
                 'descriptions' => [
                 'The room area is two square meters and contains two beds',
                 ],
-                'prices' => [150, 180, 200],
-                'capacities' => [1, 2] 
+                'prices' => [150],
+                'capacities' => [2] 
             ],
             'VIP Suite' => [
                 'descriptions' => [
                    'The room area is three square meters and contains two large beds'
                 ],
-                'prices' => [300, 350, 400], 
-                'capacities' => [2, 4, 5] 
+                'prices' => [250], 
+                'capacities' => [5] 
             ]
 
         ];
