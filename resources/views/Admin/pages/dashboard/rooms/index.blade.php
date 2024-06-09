@@ -20,7 +20,6 @@
                 </div>
             </div>
         </form> 
-
         <form action="{{ route('rooms.available.specificTime') }}" method="GET">
             <div class="row mb-3 my-1">
                 <div class="col-md-4">
@@ -34,7 +33,7 @@
         <form action="{{ route('rooms.reserved.specificTime') }}" method="GET">
             <div class="row mb-3 my-1">
                 <div class="col-md-4">
-                    <input type="text" name="specificDate" id="specificDate" class="form-control" placeholder="Reserved Rooms in Specific Date ">
+                    <input type="text" name="specificDate" id="specificDate" class="form-control" placeholder="Booked Rooms in Specific Date ">
                 </div>
                 <div >
                     <button type="submit" class="btn btn-outline-secondary">Filter</button>
@@ -47,7 +46,7 @@
                     <input type="text" name="start_range" id="start_range" class="form-control" placeholder="Enter Start Date For Available Rooms">
                 </div>
                 <div class="col-md-5">
-                    <input type="text" name="end_range" id="end_range" class="form-control" placeholder="Enter End Date For Available Rooms or NUll">
+                    <input type="text" name="end_range" id="end_range" class="form-control" placeholder="Enter End Date For Available Rooms // default:NUll">
                 </div>
                 <div >
                     <button type="submit" class="btn btn-outline-secondary">Filter</button>
@@ -60,7 +59,7 @@
                     <input type="text" name="start_range" id="start_range" class="form-control" placeholder="Enter Start Date For Reserved Rooms">
                 </div>
                 <div class="col-md-5">
-                    <input type="text" name="end_range" id="end_range" class="form-control" placeholder="Enter End Date For Reserved Rooms or NUll">
+                    <input type="text" name="end_range" id="end_range" class="form-control" placeholder="Enter End Date For Reserved Rooms  // default:NUll">
                 </div>
                 <div >
                     <button type="submit" class="btn btn-outline-secondary">Filter</button>
