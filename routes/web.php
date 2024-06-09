@@ -36,18 +36,10 @@ Route::resource('/messages', MessageController::class);
 Route::resource('/rooms', RoomController::class);
 Route::resource('/roomType', RoomTypeController::class);
 Route::resource('/reservation', ReservationController::class);
-// Route::get('rooms/avaliable', [RoomController::class,'showAvaliableRoom'])->name('rooms.avaliable');
-// Route::get('rooms/available', [RoomController::class, 'showAvailableRoom'])->name('rooms.available');
-// Route::get('test', function () {
-//     return 'Test Route is working!';
-// })->name('room.test');
- // Ensure this route is correct
- Route::get('test', [RoomController::class, 'showAvailableRoom'])->name('rooms.availablealolaa');
-
- // Test rout
+Route::get('/current/available/rooms',[RoomController::class,'showCurrnetAvailableRooms'])->name('rooms.available.current');
+Route::get('/available/rooms/specificTime',[RoomController::class,'showAvailableRoomsInSpecificTime'])->name('rooms.available.specificTime');
+Route::get('/available/rooms/specificPeriod',[RoomController::class,'showAvailableRoomsInPeriod'])->name('rooms.available.period');
+Route::get('/current/reserved/rooms',[RoomController::class,'showCurrnetReservedRooms'])->name('rooms.reserved.current');
+Route::get('/reserved/rooms/specificTime',[RoomController::class,'showReservedRoomsInSpecificTime'])->name('rooms.reserved.specificTime');
+Route::get('/reserved/rooms/specificPeriod',[RoomController::class,'showReservedRoomsInPeriod'])->name('rooms.reserved.period');
 });
-// Route::get('/rooms/avaliable', [RoomController::class,'showAvaliableRoom'])->name('rooms.avaliable');
-// Route::get('rooms/available', [RoomController::class, 'showAvailableRoom'])->name('rooms.available');
-// Route::get('test', function () {
-//     return 'Test Route is working!';
-// })->name('room.test');

@@ -6,6 +6,7 @@ use App\Models\Reservation;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\StoreReservationRequest;
 use App\Http\Requests\UpdateReservationRequest;
+use App\Models\ReservationStatusEvent;
 
 class ReservationController extends Controller
 {
@@ -71,14 +72,4 @@ class ReservationController extends Controller
     {
         //
     }
-
-    public function reservationDetail(){
-
-        # return the reservation details 
-
-
-    }
-
-
-
 }

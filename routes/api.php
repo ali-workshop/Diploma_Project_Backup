@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\RoomTypeContoller;
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\ServicesController;
 use App\Http\Controllers\Api\ReservationController;
+use App\Http\Controllers\Api\V1\ReservationEventController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +35,7 @@ Route::group(['prefix'=>'v1'],function(){
     Route::post('/auth/register', [AuthController::class, 'register']);
     Route::post('/auth/login', [AuthController::class, 'login']);
     Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+    Route::get('/reservation/events/{reservation}', [ReservationEventController::class, 'reservationEvents']);
     
     });
 Route::post('/contacts',[ContactController::class,'store']);
