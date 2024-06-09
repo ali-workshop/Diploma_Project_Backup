@@ -57,8 +57,9 @@ trait ApiReservationTrait
             'room_type' => $typeOThisRoom->name,
             'room_services' => $typeOThisRoom->services->pluck('name'),
             'bill_details' => [
-                'RoomServices'=>$typeOThisRoom->services->pluck('price') , 
-                'Room type Price'=> $room->price ,
+                'RoomServices'=>$typeOThisRoom->services->pluck('price') ,
+                'RoomTypePrice'=>$typeOThisRoom->price, 
+                'Room Price = (Room services price + Room Type price )'=> $room->price ,
                 'Nights of staying'=> $days 
             ],
             'total_price = (Room services + Room Type price)*(Nights of staying)' => $reservation->totalPrice,
