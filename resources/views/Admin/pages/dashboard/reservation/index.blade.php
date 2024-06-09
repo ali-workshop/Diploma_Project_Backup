@@ -36,8 +36,8 @@
                         <td>{{ $reservation->end_date}}</td>
                         <td>{{ $reservation->guestNumber}}</td>
                         <td>{{ $reservation->totalPrice}}</td>
-                        <td><a href="{{ route('rooms.show', $reservation->id) }}" class="btn btn-outline-dark">SHOW</a></td>
-                        <td><a href='{{route("rooms.edit", $reservation->id)}}' class="btn btn-outline-success">EDIT</a></td>
+                        <td><a href="{{ route('reservation.show', $reservation->id) }}" class="btn btn-outline-dark">DETAILS</a></td>
+                        <td><a href='{{route("reservation.edit", $reservation->id)}}' class="btn btn-outline-success">EDIT</a></td>
                         <td>
                             <form action="{{ route('rooms.destroy', $reservation->id) }}" method="POST">
                                 @csrf
