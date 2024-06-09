@@ -22,11 +22,9 @@ class RoomController extends Controller
         {
             try{
             $rooms=Room::where('status','available')->get();
-            // dd($rooms);
-            return view('Admin.pages.dashboard.rooms.index', ['rooms'=>$rooms]);
-            }catch(\Exception $e){
-                Log::error('Error in RoomController@showCurrnetAvailableRooms: ' . $e->getMessage());
-                return redirect()->route('rooms.index')->with('error', $e->getMessage());
+            return $this->successResponse($rooms,'Availabe Rooms Returned Successfully');
+            }catch(\Throwable $th){
+                return $this->errorResponse('Server error probably.', [$th->getMessage()], 500);
             }
 
         }
@@ -59,11 +57,9 @@ class RoomController extends Controller
                 }
   
             }
-            $rooms=collect($avaliableRooms);
-            return view('Admin.pages.dashboard.rooms.index',['rooms'=>$rooms]);
-        }catch(\Exception $e){
-            Log::error('Error in RoomController@showAvailableRoomsInSpecificTime: ' . $e->getMessage());
-            return redirect()->route('rooms.index')->with('error', $e->getMessage());
+            return $this->successResponse($rooms,'Availabe Rooms Returned Successfully');
+        }catch(\Throwable $th){
+            return $this->errorResponse('Server error probably.', [$th->getMessage()], 500);
         }
 
         }
@@ -113,11 +109,9 @@ class RoomController extends Controller
                 }
   
             }
-            $rooms=collect($avaliableRooms);
-            return view('Admin.pages.dashboard.rooms.index',['rooms'=>$rooms]);
-        }catch(\Exception $e){
-            Log::error('Error in RoomController@showAvailableRoomsInPeriod: ' . $e->getMessage());
-            return redirect()->route('rooms.index')->with('error', $e->getMessage());
+            return $this->successResponse($rooms,'Availabe Rooms Returned Successfully');
+        }catch(\Throwable $th){
+            return $this->errorResponse('Server error probably.', [$th->getMessage()], 500);
         }
 
 
@@ -127,11 +121,10 @@ class RoomController extends Controller
         { 
          try{
             $rooms=Room::where('status','booked')->get();
-            return view('Admin.pages.dashboard.rooms.index',['rooms'=>$rooms]);
-            }catch(\Exception $e){
-                Log::error('Error in RoomController@showCurrnetReservedRooms: ' . $e->getMessage());
-                return redirect()->route('rooms.index')->with('error', $e->getMessage());
-            } 
+            return $this->successResponse($rooms,'Booked Rooms Returned Successfully');
+            }catch(\Throwable $th){
+                return $this->errorResponse('Server error probably.', [$th->getMessage()], 500);
+            }
         }
         
         public function showReservedRoomsInSpecificTime(Request $request)
