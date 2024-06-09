@@ -22,8 +22,13 @@ class ReservationEventController extends Controller
             $reservationEvents = ReservationStatusEvent::where('reservation_id', $reservation->id)->get();
 
             foreach ($reservationEvents as $reservationEvent) {
-                $reservationCurrentStatus=ReservationStatusCatlog::where('id',$reservationEvent->reservation_status_catlog_id)->pluck('name')->first();
-                $reservationCurrentEventDate = $reservationEvent->created_at->format('d-m-Y H:i:s');
+                $reservationCurrentStatus=ReservationStatusCatlog::where(
+                    'id',$reservationEvent->reservation_status_catlog_id)
+                    ->pluck('name')
+                    ->first();
+                $reservationCurrentEventDate = $reservationEvent
+                ->created_at
+                ->format('d-m-Y H:i:s');
                 $reservationStatusOverTime[] = [
                     'currentStatus' => $reservationCurrentStatus,
                     'currentEventDate' => $reservationCurrentEventDate,
