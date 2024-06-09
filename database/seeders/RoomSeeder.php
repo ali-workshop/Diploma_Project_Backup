@@ -14,8 +14,6 @@ class RoomSeeder extends Seeder
      */
 
 
-    //  room_type_id,code,floorNumber,,description,img,status,price
-
     public function run(): void
     {
        Room::factory(5)->create();

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Service;
 use App\Models\RoomType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -48,10 +49,18 @@ class RoomFactory extends Factory
             : $roomType->description;
     }
     public function definition(): array
-    {
-        $roomTypeIds = RoomType::pluck('id')->toArray();        
+    {      
         
-        $randomRoomTypeId = $this->faker->randomElement($roomTypeIds);
+        $roomType_ids=RoomType::pluck('id')->toArray();
+        $roomType_id=$this->faker->randomElement($roomType_ids);
+        $roomTypePrice=RoomType::firstWhere('id',$roomType_id)->price;
+
+        $service_ids=Service::pluck('id')->toArray();
+        $service_id=$this->faker->randomElement($service_ids);
+        $servicePrice=Service::firstWhere('id',$service_id)->price;
+
+        $roomPrice= $roomTypePrice+$servicePrice;
+        $randomRoomTypeId = $this->faker->randomElement($roomType_ids);
         $roomTypeName=RoomType::firstWhere('id',$randomRoomTypeId)->name;
         return [
             
@@ -61,7 +70,7 @@ class RoomFactory extends Factory
             'description'=>$this->generateRoomDescription($roomTypeName),
             'img'=> $this->faker->imageUrl(),
             'status'=>$this->faker->randomElement(['booked','available']), 
-            'price'=>$this->faker->randomFloat(2, 0, 99.99), 
+            'price'=>$roomPrice, 
         ];
     }
 }

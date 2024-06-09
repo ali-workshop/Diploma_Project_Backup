@@ -7,13 +7,14 @@ use App\Models\Room;
 use App\Models\User;
 use App\Models\Service;
 use App\Models\RoomType;
+use App\Http\Traits\ApiReservationTrait;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Reservation>
  */
 class ReservationFactory extends Factory
-{
+{   use ApiReservationTrait;
     /**
      * Define the model's default state.
      *
@@ -33,8 +34,7 @@ class ReservationFactory extends Factory
         
         return $strings;
     }
-     //    user_id,room_id,code,start_date,end_date,guestNumber,totalPrice
-     
+
     public function definition(): array
     {
         
@@ -43,26 +43,16 @@ class ReservationFactory extends Factory
         $room_ids=Room::pluck('id')->toArray();
         $room_id=$this->faker->randomElement($room_ids);
         $roomPrice=Room::firstWhere('id',$room_id)->price;
-        
-        $roomType_ids=RoomType::pluck('id')->toArray();
-        $roomType_id=$this->faker->randomElement($roomType_ids);
-        $roomTypePrice=RoomType::firstWhere('id',$roomType_id)->price;
-
-        $service_ids=Service::pluck('id')->toArray();
-        $service_id=$this->faker->randomElement($service_ids);
-        $servicePrice=Service::firstWhere('id',$service_id)->price;
-
-        $totalPrice= $roomPrice+$roomTypePrice+$servicePrice;
-
-        $start_date = Carbon::instance($this->faker->dateTimeBetween('-1 week', 'now'));
-        $end_date = Carbon::instance($this->faker->dateTimeBetween($start_date, $start_date->copy()->addWeek()));
-       
+        $startDate = $this->faker->dateTimeBetween('-1 week', 'now');
+        $endDate = $this->faker->dateTimeBetween($startDate, Carbon::parse($startDate)->addWeek()->toDateTime());
+        $days = Carbon::parse($endDate)->diffInDays(Carbon::parse($startDate));
+        $totalPrice = $roomPrice * $days;
         return [
             'user_id'=>$user_id,
             'room_id'=>$room_id,
             'code'=>$this->faker->randomElement($this->generateRandomStrings(6)),
-            'start_date'=>$start_date,
-            'end_date'=>$end_date,
+            'start_date'=>$startDate,
+            'end_date'=>$endDate,
             'guestNumber'=>$this->faker->randomNumber(1,2),
             'totalPrice'=>$totalPrice,
 
