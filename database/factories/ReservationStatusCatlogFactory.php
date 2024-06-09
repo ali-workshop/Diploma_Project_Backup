@@ -15,9 +15,11 @@ class ReservationStatusCatlogFactory extends Factory
      * @return array<string, mixed>
      */
     public function definition(): array
-    {
-        return [
-            //
+    {   
+      $name=$this->faker->randomElement(['Pending ','confirmed','inprogress','checked_in','checked_out']);
+        
+      return [
+            'name'=>$name,
         ];
     }
 }
