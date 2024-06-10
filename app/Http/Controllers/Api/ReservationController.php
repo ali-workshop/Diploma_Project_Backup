@@ -9,8 +9,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Traits\ApiResponserTrait;
 use App\Http\Traits\ApiReservationTrait;
 use App\Http\Requests\StoreReservationRequest;
-
-
+use App\Notifications\Api\SuccessfulReservationNotification;
+use Illuminate\Support\Facades\Notification;
 
 
 class ReservationController extends Controller

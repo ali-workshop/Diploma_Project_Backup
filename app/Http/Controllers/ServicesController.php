@@ -6,8 +6,11 @@ use App\Models\Service;
 use App\Http\Traits\UploadImageTrait;
 use App\Http\Requests\StoreServicesRequest;
 use App\Http\Requests\UpdateServicesRequest;
+use App\Notifications\NewReservationByAdminNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Notification;
+use App\Models\User;
 
 class ServicesController extends Controller
 {
@@ -56,7 +59,7 @@ class ServicesController extends Controller
                 ]);
                 return redirect()->route('services.index')->with('success', 'Service created successfully!'); 
             }
-            return redirect()->back()->with('error', 'Failed!. Image was not stored');;
+            return redirect()->back()->with('error', 'Failed!. Image was not stored');
         } catch (\Exception $e) {
             Log::error('Error in ServicesController@store: ' . $e->getMessage());
             return redirect()->route('Admin.pages.dashboard.services.index')->with('error', 'An error occurred: ' . $e->getMessage());
