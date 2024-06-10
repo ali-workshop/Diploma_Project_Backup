@@ -118,14 +118,7 @@ class RoomController extends Controller
     }
     public function showCurrnetAvailableRooms()
         {
-            try{
-            $rooms=Room::where('status','available')->get();
-            // dd($rooms);
-            return view('Admin.pages.dashboard.rooms.index', ['rooms'=>$rooms]);
-            }catch(\Exception $e){
-                Log::error('Error in RoomController@showCurrnetAvailableRooms: ' . $e->getMessage());
-                return redirect()->route('rooms.index')->with('error', $e->getMessage());
-            }
+           #test one
 
         }
 }
