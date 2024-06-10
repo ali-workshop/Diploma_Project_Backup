@@ -6,11 +6,8 @@ use App\Models\Service;
 use App\Http\Traits\UploadImageTrait;
 use App\Http\Requests\StoreServicesRequest;
 use App\Http\Requests\UpdateServicesRequest;
-use App\Notifications\NewReservationByAdminNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Notification;
-use App\Models\User;
 
 class ServicesController extends Controller
 {
