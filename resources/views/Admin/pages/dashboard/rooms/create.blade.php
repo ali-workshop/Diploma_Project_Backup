@@ -44,7 +44,7 @@
                     <div class="row mb-3">
                         <label for="floorNumber" class="col-md-4 col-form-label text-md-end">{{ __('FloorNumber') }}</label>
                         <div class="col-md-6">
-                            <input id="floorNumber" type="number" step="0.01"
+                            <input id="floorNumber" type="number" 
                                 class="form-control @error('floorNumber') is-invalid @enderror" name="floorNumber"
                                 value="{{ old('floorNumber') }}" required>
                             @error('floorNumber')
@@ -92,21 +92,6 @@
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
-                            @enderror
-                        </div>
-                    </div>
-                    
-
-                    <div class="row mb-3">
-                        <label for="price" class="col-md-4 col-form-label text-md-end">{{ __('Price of Room') }}</label>
-                        <div class="col-md-6">
-                            <input id="price" type="number" step="0.01"
-                                class="form-control @error('price') is-invalid @enderror" name="price"
-                                value="{{ old('price') }}" required>
-                            @error('price')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
                             @enderror
                         </div>
                     </div>

@@ -21,9 +21,7 @@
     <!-- Custom styles for this template-->
     <link href="{{ asset('assets/css/sb-admin-2.css') }}" rel="stylesheet">
     <!-- Custom styles for this page -->
-    <link href="{{ asset('assets/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
-
-
+    <link href="{{ asset('assets/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet"> 
 </head>
 
 <body id="page-top">
@@ -72,6 +70,9 @@
                         <h6 class="collapse-header">Rooms:</h6>
                         <a class="collapse-item" href="{{ route('rooms.create') }}">Create New Room</a>
                         <a class="collapse-item" href="{{ route('rooms.index') }}">all rooms</a>
+                        <a class="collapse-item" href="{{ route('rooms.available.current') }}">Current Available Rooms</a>
+                        <a class="collapse-item" href="{{ route('rooms.reserved.current') }}">Current Reserved Rooms</a>
+                       
                     </div>
                 </div>
             </li>

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\ReservationStatusEvent;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,6 @@ class ReservationStatusEventSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        ReservationStatusEvent::factory(4)->create();
     }
 }

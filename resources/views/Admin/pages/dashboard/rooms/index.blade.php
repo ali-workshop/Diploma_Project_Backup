@@ -9,7 +9,63 @@
     <div class="card-header py-2">
     <a href="{{ route('rooms.create') }}" class="btn btn-primary">New Room</a>
     </div>
-    <div class="card-body">
+        <div class="card-body">
+        <form action="{{ route('rooms.index') }}" method="GET">
+            <div class="row mb-3 my-1">
+                <div class="col-md-3">
+                    <input type="text" name="name" id="name" class="form-control" placeholder="Search by Room Type" value="{{ request()->name }}">
+                </div>
+                <div >
+                    <button type="submit" class="btn btn-outline-secondary">Filter</button>
+                </div>
+            </div>
+        </form> 
+        <form action="{{ route('rooms.available.specificTime') }}" method="GET">
+            <div class="row mb-3 my-1">
+                <div class="col-md-4">
+                    <input type="text" name="specificDate" id="specificDate" class="form-control" placeholder="Available Rooms in Specific Date">
+                </div>
+                <div >
+                    <button type="submit" class="btn btn-outline-secondary">Filter</button>
+                </div>
+            </div>
+        </form> 
+        <form action="{{ route('rooms.reserved.specificTime') }}" method="GET">
+            <div class="row mb-3 my-1">
+                <div class="col-md-4">
+                    <input type="text" name="specificDate" id="specificDate" class="form-control" placeholder="Booked Rooms in Specific Date ">
+                </div>
+                <div >
+                    <button type="submit" class="btn btn-outline-secondary">Filter</button>
+                </div>
+            </div>
+        </form> 
+        <form action="{{ route('rooms.available.period') }}" method="GET">
+            <div class="row mb-3 my-1">
+                <div class="col-md-5">
+                    <input type="text" name="start_range" id="start_range" class="form-control" placeholder="Enter Start Date For Available Rooms">
+                </div>
+                <div class="col-md-5">
+                    <input type="text" name="end_range" id="end_range" class="form-control" placeholder="Enter End Date For Available Rooms // default:NUll">
+                </div>
+                <div >
+                    <button type="submit" class="btn btn-outline-secondary">Filter</button>
+                </div>
+            </div>
+        </form> 
+        <form action="{{ route('rooms.reserved.period') }}" method="GET">
+            <div class="row mb-3 my-1">
+                <div class="col-md-5">
+                    <input type="text" name="start_range" id="start_range" class="form-control" placeholder="Enter Start Date For Reserved Rooms">
+                </div>
+                <div class="col-md-5">
+                    <input type="text" name="end_range" id="end_range" class="form-control" placeholder="Enter End Date For Reserved Rooms  // default:NUll">
+                </div>
+                <div >
+                    <button type="submit" class="btn btn-outline-secondary">Filter</button>
+                </div>
+            </div>
+        </form> 
         <div class="table-responsive">
             <table class="table table-bordered table-striped"  id="dataTable">
                 <thead>

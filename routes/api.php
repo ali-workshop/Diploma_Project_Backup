@@ -8,8 +8,10 @@ use App\Http\Controllers\Api\ContactController;
 use App\Http\Controllers\Api\MessageController;
 use App\Http\Controllers\Api\RoomTypeContoller;
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\RoomController;
 use App\Http\Controllers\Api\ServicesController;
 use App\Http\Controllers\Api\ReservationController;
+use App\Http\Controllers\Api\V1\ReservationEventController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,12 +35,25 @@ Route::group(['prefix'=>'v1'],function(){
 
     Route::post('/auth/register', [AuthController::class, 'register']);
     Route::post('/auth/login', [AuthController::class, 'login']);
-    Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
     
+    Route::group(['middleware' => ['auth:sanctum']], function () {
+    
+    Route::post('/auth/logout', [AuthController::class, 'logout']);
+    
+    Route::get('/reservation/events/{reservation}', [ReservationEventController::class, 'reservationEvents']);
+    
+    Route::get('/current/available/rooms',[RoomController::class,'showCurrnetAvailableRooms']);
+    Route::get('/available/rooms/specificTime',[RoomController::class,'showAvailableRoomsInSpecificTime']);
+    Route::get('/available/rooms/specificPeriod',[RoomController::class,'showAvailableRoomsInPeriod']);
+    Route::get('/current/reserved/rooms',[RoomController::class,'showCurrnetReservedRooms']);
+    Route::get('/reserved/rooms/specificTime',[RoomController::class,'showReservedRoomsInSpecificTime']);
+    Route::get('/reserved/rooms/specificPeriod',[RoomController::class,'showReservedRoomsInPeriod']);
+
+    });
     });
 Route::post('/contacts',[ContactController::class,'store']);
 Route::post('/messages',[MessageController::class,'store']);
-Route::post('/reservation',[ReservationController::class,'store']);
+Route::post('/reservation',[ReservationController::class,'store'])->middleware('auth:sanctum');
 Route::get('/services', [ServicesController::class, 'index']);
 Route::get('/services/{service}', [ServicesController::class, 'show']);
 
