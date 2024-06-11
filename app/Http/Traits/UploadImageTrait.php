@@ -19,14 +19,10 @@ trait UploadImageTrait
     }
 
     public function verifyAndUpload($img, $directory,$disk='images') {
-        try{
             $nameWithoutLastExtension=explode('.',$img->getClientOriginalName())[0];
             $imageName=$nameWithoutLastExtension.time().'.'.$img->extension();
             $path=$img->storeAs($directory,$imageName,$disk);
             return $path;
-        }catch(\Exception $exception){
-            return redirect()->route('rooms.index')->with('error', $exception->getMessage());
-        }
     }
 
 

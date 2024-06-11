@@ -35,7 +35,12 @@ class RoomTypeController extends Controller
         try {
             $request->validated();
 
-            $new_room_type = RoomType::create($request->only(['name', 'price', 'capacity', 'description']));
+            $new_room_type = RoomType::create($request->only([
+                'name', 
+                'price', 
+                'capacity', 
+                'description'
+            ]));
             $new_room_type->services()->attach($request->service_id);
             return redirect()->route('roomType.index');
         } catch (\Exception $e) {
@@ -66,7 +71,12 @@ class RoomTypeController extends Controller
     {
         try {
             $request->validated();
-            $roomType->update($request->only(['name', 'price', 'capacity', 'description']));
+            $roomType->update($request->only([
+                'name', 
+                'price', 
+                'capacity', 
+                'description'
+            ]));
             $roomType->services()->sync($request->service_id);
            
             return redirect()->route('roomType.index');

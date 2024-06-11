@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateRoomRequest extends FormRequest
 {
@@ -22,8 +23,7 @@ class UpdateRoomRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'code' => 'string|max:100',
-            'price' => 'decimal:0,2|between:0,999999.99',
+            'code' =>['string','max:100',Rule::unique('rooms')->ignore($this->room)],
             'floorNumber' => 'numeric|integer|max:15',
             'description' => 'string|max:800',
             'img' => 'image',

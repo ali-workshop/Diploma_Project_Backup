@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Reservation;
 use Illuminate\Support\Facades\Log;
+use App\Models\ReservationStatusEvent;
 use App\Http\Requests\StoreReservationRequest;
 use App\Http\Requests\UpdateReservationRequest;
 
@@ -45,7 +47,21 @@ class ReservationController extends Controller
      */
     public function show(Reservation $reservation)
     {
-        return view('Admin.pages.dashboard.reservation.show', compact('reservation'));
+        try
+        {
+            $stayingNights = $this->CalculateDateTime($reservation->start_date, $reservation->end_date);
+            $services = $reservation->room->roomType->services->map(function($service) {
+                return [
+                    'name' => $service->name,
+                    'price' => $service->price,
+                ];
+            });
+            return view('Admin.pages.dashboard.reservation.show', compact('reservation' ,'stayingNights','services'));
+        }catch (\Exception $e) {
+
+            Log::error('Error in RoomsController@index: ' . $e->getMessage());
+            return redirect()->route('Admin.pages.dashboard.reservation.index')->with('error', 'An error occurred: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -70,5 +86,13 @@ class ReservationController extends Controller
     public function destroy(Reservation $reservation)
     {
         //
+    }
+
+    protected function CalculateDateTime($start_date, $end_date)
+    {
+        $start = Carbon::parse($start_date);
+        $end = Carbon::parse($end_date);
+        $daysDifference = $start->diffInDays($end);
+        return $daysDifference;
     }
 }
