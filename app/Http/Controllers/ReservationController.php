@@ -8,9 +8,11 @@ use Illuminate\Support\Facades\Log;
 use App\Models\ReservationStatusEvent;
 use App\Http\Requests\StoreReservationRequest;
 use App\Http\Requests\UpdateReservationRequest;
+use App\Http\Traits\ApiReservationTrait;
 
 class ReservationController extends Controller
 {
+    use ApiReservationTrait;
     /**
      * Display a listing of the resource.
      */
@@ -88,11 +90,5 @@ class ReservationController extends Controller
         //
     }
 
-    protected function CalculateDateTime($start_date, $end_date)
-    {
-        $start = Carbon::parse($start_date);
-        $end = Carbon::parse($end_date);
-        $daysDifference = $start->diffInDays($end);
-        return $daysDifference;
-    }
+    
 }
