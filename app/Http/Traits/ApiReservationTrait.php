@@ -5,6 +5,8 @@ namespace App\Http\Traits;
 use Carbon\Carbon;
 use App\Models\Reservation;
 use App\Http\Traits\ApiResponserTrait;
+use App\Notifications\Api\SuccessfulReservationNotification;
+use Illuminate\Support\Facades\Notification;
 
 trait ApiReservationTrait
 {
@@ -43,12 +45,17 @@ trait ApiReservationTrait
         $reservation->end_date = $request->end_date;
         $reservation->totalPrice = $total_price;
         $reservation->save();
-
         
+        //////// Prepare the notification if the reservation saved  ////////////
+        if($reservation){
+            $notificationData = (new SuccessfulReservationNotification($request->code))->toArray($user);
+            Notification::send($user, new SuccessfulReservationNotification($request->code));
+        }
 
         //////// Prepare successful reservation response ////////////
 
         $successfulReservationResponse = [
+            'notification' => $notificationData,
             'user_name' => $user->name,
             'reservation_code' => $reservation->code,
             'guest_number' => $reservation->guestNumber,
