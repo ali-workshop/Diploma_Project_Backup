@@ -10,6 +10,7 @@
             <div class="card-header py-3 d-flex justify-content-between align-items-center">
                 <h6 class="m-0 font-weight-bold text-primary">Reservation Bill Check</h6>
                 <div>
+                    <label class="m-3 font-weight-bold text-primary"> Date : {{now()}} </label>
                     <a class="btn btn-outline-primary" href="{{ route('reservation.index') }}">Back</a>
                     <a class="btn btn-outline-primary" href="{{ route('reservation.events',$reservation->id)}}">events</a>
                     <button class="btn btn-outline-info" onclick="printBill()">Print</button>
@@ -19,8 +20,14 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-6">
-                        <h4><strong>Reservation Details</strong></h4>
+                        <h4><strong>Reservation Details</strong></h4><br />
                         <table class="table table-bordered">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Reservation Elements</th>
+                                    <th>Details</th>
+                                </tr>
+                            </thead>
                             <tbody>
                                 <tr>
                                     <th>User Name</th>
@@ -58,7 +65,7 @@
                         </table>
                     </div>
                     <div class="col-md-6">
-                        <h4><strong>Bill Details</strong></h4>
+                        <h4><strong>Bill Details</strong></h4><br/>
                         <table class="table table-bordered">
                             <thead class="thead-dark">
                                 <tr>
@@ -90,19 +97,27 @@
                                     </tr>
                                 @endforeach
                             </tbody>
-                        </table>
-
-                        <table class="table table-bordered mt-5">
                             <thead class="thead-dark">
                                 <tr>
-                                    <th>Sum</th>
+                                    <th>Sum : Room Type + Room Services </th>
                                     <th>{{ $reservation->room->price }}</th>
                                 </tr>
+                            </thead>
+                        </table>
+                        <h5 class="mt-4"><strong>Total</strong></h5>
+                        <table class="table table-bordered">
+                            <thead class="thead-dark">
                                 <tr>
-                                    <th>Total = ({{ $reservation->room->price }}) * ({{ $stayingNights }})</th>
-                                    <th>{{ $reservation->totalPrice }}</th>
+                                    <th>Sum * Staying Nights</th>
+                                    <th>Price</th>
                                 </tr>
                             </thead>
+                            <tbody>
+                                <tr>
+                                    <th>({{ $reservation->room->price }}) * ({{ $stayingNights }})</th>
+                                    <th>{{ $reservation->totalPrice }}</th>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>
