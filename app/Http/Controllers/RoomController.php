@@ -136,9 +136,10 @@ class RoomController extends Controller
     }
     public function showCurrnetAvailableRooms()
         {
+            
             try{
-            $rooms=Room::where('status','available')->get();
-            // dd($rooms);
+            $bookedRooms = Reservation::pluck('room_id')->toArray();
+            $rooms=Room::whereNotIn('id',$bookedRooms)->get();
             return view('Admin.pages.dashboard.rooms.index', ['rooms'=>$rooms]);
             }catch(\Exception $e){
                 Log::error('Error in RoomController@showCurrnetAvailableRooms: ' . $e->getMessage());

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('floorNumber');
             $table->text('description');
             $table->string('img');
-            $table->enum('status', ['available', 'booked'])->default('available');
+            $table->enum('status', ['available', 'unavailable'])->default('available');
             $table->decimal('price', 8, 2);
             $table->timestamps();
         });

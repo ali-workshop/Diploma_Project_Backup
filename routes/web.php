@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RoomController;
@@ -9,7 +10,7 @@ use App\Http\Controllers\RoomTypeController;
 use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\Admin\adminController;
 use App\Http\Controllers\ReservationController;
-use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\ReservationStatusEventController;
 
 
 /*
@@ -45,4 +46,6 @@ Route::get('/available/rooms/specificPeriod',[RoomController::class,'showAvailab
 Route::get('/current/reserved/rooms',[RoomController::class,'showCurrnetReservedRooms'])->name('rooms.reserved.current');
 Route::get('/reserved/rooms/specificTime',[RoomController::class,'showReservedRoomsInSpecificTime'])->name('rooms.reserved.specificTime');
 Route::get('/reserved/rooms/specificPeriod',[RoomController::class,'showReservedRoomsInPeriod'])->name('rooms.reserved.period');
+Route::get('/reservations/{reservation}/events', [ReservationStatusEventController::class, 'reservationEvent'])->name('reservation.events');
+
 });

@@ -11,9 +11,11 @@
                 <h6 class="m-0 font-weight-bold text-primary">Reservation Bill Check</h6>
                 <div>
                     <a class="btn btn-outline-primary" href="{{ route('reservation.index') }}">Back</a>
+                    <a class="btn btn-outline-primary" href="{{ route('reservation.events',$reservation->id)}}">events</a>
                     <button class="btn btn-outline-info" onclick="printBill()">Print</button>
                 </div>
             </div>
+            {{-- {{$reservation}} --}}
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-6">
@@ -108,7 +110,25 @@
             </div>
         </div>
     </div>
-
+    <br>
+    {{-- <h1>Show Reservation Events</h1> 
+    <table>
+        <thead>
+            <tr>
+                <th>Status</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($events as $event)
+            <tr>
+                <td>{{ $event['currentStatus'] }}</td>
+                <td>{{ $event['currentEventDate'] }}</td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table> --}}
+    {{-- {{$events}} --}}
     <script>
         function printBill() {
             var printContents = document.getElementById('print-content').innerHTML;

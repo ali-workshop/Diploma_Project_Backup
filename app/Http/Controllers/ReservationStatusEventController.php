@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Reservation;
+use Illuminate\Support\Facades\Log;
 use App\Models\ReservationStatusEvent;
 use App\Http\Requests\StoreReservationStatusEventRequest;
 use App\Http\Requests\UpdateReservationStatusEventRequest;
@@ -63,4 +65,32 @@ class ReservationStatusEventController extends Controller
     {
         //
     }
+
+    public function reservationEvent(Reservation $reservation)
+    {
+        try {
+            $reservationEvents = ReservationStatusEvent::with('statusCatalog')
+                                ->where('reservation_id', $reservation->id)
+                                ->get();
+    
+            $reservationStatusOverTime = [];
+    
+            foreach ($reservationEvents as $reservationEvent) {
+                $reservationCurrentStatus = $reservationEvent->statusCatalog->name;
+                $reservationCurrentEventDate = $reservationEvent->created_at->format('d-m-Y H:i:s');
+    
+                $reservationStatusOverTime[] = [
+                    'currentStatus' => $reservationCurrentStatus,
+                    'currentEventDate' => $reservationCurrentEventDate,
+                ];
+            }
+            $aa=[11212];
+            return view('Admin.pages.dashboard.reservation.show', ['events' => $aa]);
+        } catch(\Exception $e){
+            Log::error('Error in RoomController@reservationEvent: ' . $e->getMessage());
+            return redirect()->route('reservation.index')->with('error', $e->getMessage());
+        }
+    }  
+
+
 }
