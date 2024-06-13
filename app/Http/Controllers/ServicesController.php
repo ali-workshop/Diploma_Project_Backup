@@ -56,7 +56,7 @@ class ServicesController extends Controller
                 ]);
                 return redirect()->route('services.index')->with('success', 'Service created successfully!'); 
             }
-            return redirect()->back()->with('error', 'Failed!. Image was not stored');;
+            return redirect()->back()->with('error', 'Failed!. Image was not stored');
         } catch (\Exception $e) {
             Log::error('Error in ServicesController@store: ' . $e->getMessage());
             return redirect()->route('Admin.pages.dashboard.services.index')->with('error', 'An error occurred: ' . $e->getMessage());

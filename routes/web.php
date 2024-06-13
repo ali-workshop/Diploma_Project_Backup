@@ -4,14 +4,16 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\MailController;
+
 use App\Http\Controllers\RoomController;
-use App\Http\Controllers\EmailController;
+
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\RoomTypeController;
 use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\Admin\adminController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\ReservationStatusEventController;
+
 
 
 /*
@@ -43,12 +45,11 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::resource('/roomType', RoomTypeController::class);
     Route::resource('/reservation', ReservationController::class);
 
-    Route::get('/current/available/rooms', [RoomController::class, 'showCurrnetAvailableRooms'])->name('rooms.available.current');
-    Route::get('/available/rooms/specificTime', [RoomController::class, 'showAvailableRoomsInSpecificTime'])->name('rooms.available.specificTime');
-    Route::get('/available/rooms/specificPeriod', [RoomController::class, 'showAvailableRoomsInPeriod'])->name('rooms.available.period');
-    Route::get('/current/reserved/rooms', [RoomController::class, 'showCurrnetReservedRooms'])->name('rooms.reserved.current');
-    Route::get('/reserved/rooms/specificTime', [RoomController::class, 'showReservedRoomsInSpecificTime'])->name('rooms.reserved.specificTime');
-    Route::get('/reserved/rooms/specificPeriod', [RoomController::class, 'showReservedRoomsInPeriod'])->name('rooms.reserved.period');
-
-    Route::get('/ending-in-24-hours', [RoomController::class, 'roomsEndingIn24Hours'])->name('rooms.ending-in-24-hours');
+Route::get('/current/available/rooms',[RoomController::class,'showCurrnetAvailableRooms'])->name('rooms.available.current');
+Route::get('/available/rooms/specificTime',[RoomController::class,'showAvailableRoomsInSpecificTime'])->name('rooms.available.specificTime');
+Route::get('/available/rooms/specificPeriod',[RoomController::class,'showAvailableRoomsInPeriod'])->name('rooms.available.period');
+Route::get('/current/reserved/rooms',[RoomController::class,'showCurrnetReservedRooms'])->name('rooms.reserved.current');
+Route::get('/reserved/rooms/specificTime',[RoomController::class,'showReservedRoomsInSpecificTime'])->name('rooms.reserved.specificTime');
+Route::get('/reserved/rooms/specificPeriod',[RoomController::class,'showReservedRoomsInPeriod'])->name('rooms.reserved.period');
+Route::get('/ending-in-24-hours', [RoomController::class, 'roomsEndingIn24Hours'])->name('rooms.ending-in-24-hours');
 });

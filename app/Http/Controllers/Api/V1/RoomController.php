@@ -17,14 +17,14 @@ class RoomController extends Controller
     public function showCurrnetAvailableRooms()
     {
         try {
-            $rooms = Room::where('status', 'available')->get();
+            $bookedRooms = Reservation::pluck('room_id')->toArray();
+            $rooms=Room::whereNotIn('id',$bookedRooms)->get();
             return $this->successResponse([$rooms], 'Availabe Rooms Returned Successfully');
         } catch (\Throwable $th) {
             return $this->errorResponse('Server error probably.', [$th->getMessage()], 500);
         }
 
     }
-
     public function showAvailableRoomsInSpecificTime(Request $request)
     {
         try {
@@ -50,9 +50,7 @@ class RoomController extends Controller
         } catch (\Throwable $th) {
             return $this->errorResponse('Server error probably.', [$th->getMessage()], 500);
         }
-
     }
-
     public function showAvailableRoomsInPeriod(DateRangeRequest $request)
     {
         #Noura could use this time zone ( Asia/Dubai )
@@ -62,6 +60,7 @@ class RoomController extends Controller
             $reservations_endDates = Reservation::pluck('end_date')->toArray();
             $latestEndDate = max($reservations_endDates);
             $latestEndDate = Carbon::parse($latestEndDate);
+            
             $startRange = Carbon::parse($request->input('start_range'), 'UTC')
                                                 ->setTimezone('Asia/Baghdad');
             $endRange = $request->has('end_range') ?
@@ -86,7 +85,7 @@ class RoomController extends Controller
 
                         $available = False;
                         break;
-                    }
+                      }
 
                 }
                 if ($available) {
@@ -101,17 +100,16 @@ class RoomController extends Controller
 
 
     }
-
     public function showCurrnetReservedRooms()
     {
         try {
-            $rooms = Room::where('status', 'booked')->get();
+            $bookedRooms = Reservation::pluck('room_id')->toArray();
+            $rooms=Room::whereIn('id',$bookedRooms)->get();
             return $this->successResponse([$rooms], 'Booked Rooms Returned Successfully');
         } catch (\Throwable $th) {
             return $this->errorResponse('Server error probably.', [$th->getMessage()], 500);
         }
     }
-
     public function showReservedRoomsInSpecificTime(Request $request)
     {
         try {
@@ -138,7 +136,6 @@ class RoomController extends Controller
             return $this->errorResponse('Server error probably.', [$th->getMessage()], 500);
         }
     }
-
     public function showReservedRoomsInPeriod(DateRangeRequest $request)
     {
         try {

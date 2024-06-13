@@ -12,7 +12,6 @@ use App\Http\Requests\StoreReservationRequest;
 
 
 
-
 class ReservationController extends Controller
 {
     use ApiResponserTrait, ApiReservationTrait;

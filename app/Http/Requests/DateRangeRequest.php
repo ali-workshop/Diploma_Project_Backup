@@ -23,7 +23,7 @@ class DateRangeRequest extends FormRequest
     {
         return [
             'start_range' => 'required|date',
-            'end_range' => 'required|date|after:start_date',
+            'end_range' => 'date|after:start_range',
         ];
     }
 }

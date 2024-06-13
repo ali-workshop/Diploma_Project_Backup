@@ -35,11 +35,11 @@ Route::group(['prefix'=>'v1'],function(){
 
     Route::post('/auth/register', [AuthController::class, 'register']);
     Route::post('/auth/login', [AuthController::class, 'login']);
-    
+   
     Route::group(['middleware' => ['auth:sanctum']], function () {
     
     Route::post('/auth/logout', [AuthController::class, 'logout']);
-    
+     
     Route::get('/reservation/events/{reservation}', [ReservationEventController::class, 'reservationEvents']);
     
     Route::get('/current/available/rooms',[RoomController::class,'showCurrnetAvailableRooms']);
@@ -59,3 +59,6 @@ Route::get('/services/{service}', [ServicesController::class, 'show']);
 
 
 Route::get('/roomType',[RoomTypeContoller::class,'index']);
+
+
+    

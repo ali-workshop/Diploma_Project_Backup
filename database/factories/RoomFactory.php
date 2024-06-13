@@ -69,7 +69,7 @@ class RoomFactory extends Factory
             'floorNumber'=>$this->faker->numberBetween(1,10), 
             'description'=>$this->generateRoomDescription($roomTypeName),
             'img'=> $this->faker->imageUrl(),
-            'status'=>$this->faker->randomElement(['booked','available']), 
+            'status'=>$this->faker->randomElement(['unavailable','available']), 
             'price'=>$roomPrice, 
         ];
     }

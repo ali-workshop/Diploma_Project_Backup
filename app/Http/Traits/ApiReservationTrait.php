@@ -11,12 +11,18 @@ trait ApiReservationTrait
     use ApiResponserTrait;
 
     protected function ReservationHandle($user, $room, $request)
-    {
+    { 
+        // checking the date format of the request and if it is (2024-1-1) not (2024-01-01) for example then fix it // 
+        $request->merge([
+            'start_date' => $this->checkFormatDate($request->start_date),
+            'end_date' => $this->checkFormatDate($request->end_date),
+        ]);
+
         $validationResponse = $this->validateReservationRequest($request, $room);
         if ($validationResponse !== true) {
             return $validationResponse;
         }
-        
+
         // API Response for Unavailable Room and Showing list of Reservations for this room During the time of the request //  
         $roomAvailabilityData = $this->isRoomUnavailable($room->id, $request->start_date, $request->end_date);
 
@@ -27,24 +33,24 @@ trait ApiReservationTrait
                 'reservations' => $roomAvailabilityData['reservations']
             ], 400);
         }
-        
+
         /////////// information needed for making new reservation /////////////// 
         $typeOThisRoom = $room->roomType;
-        $days = $this->CalculateDateTime($request->start_date , $request->end_date);
-        $total_price= $room->price * $days;
+        $days = $this->CalculateDateTime($request->start_date, $request->end_date);
+        $total_price = $room->price * $days;
 
         ////////// making new Reservation after the request been validated ///////////
         $reservation = new Reservation();
         $reservation->user_id = $user->id;
         $reservation->room()->associate($room);
-        $reservation->code = $request->code;
+        $reservation->code = $this->generateUniqueReservationCode();
         $reservation->guestNumber = $request->guestNumber;
         $reservation->start_date = $request->start_date;
         $reservation->end_date = $request->end_date;
         $reservation->totalPrice = $total_price;
         $reservation->save();
 
-        
+
 
         //////// Prepare successful reservation response ////////////
 
@@ -57,9 +63,10 @@ trait ApiReservationTrait
             'room_type' => $typeOThisRoom->name,
             'room_services' => $typeOThisRoom->services->pluck('name'),
             'bill_details' => [
-                'RoomServices'=>$typeOThisRoom->services->pluck('price') , 
-                'Room type Price'=> $room->price ,
-                'Nights of staying'=> $days 
+                'RoomServices' => $typeOThisRoom->services->pluck('price'),
+                'RoomTypePrice' => $typeOThisRoom->price,
+                'Room Price = (Room services price + Room Type price )' => $room->price,
+                'Nights of staying' => $days
             ],
             'total_price = (Room services + Room Type price)*(Nights of staying)' => $reservation->totalPrice,
         ];
@@ -68,6 +75,11 @@ trait ApiReservationTrait
     }
 
 
+
+    protected function checkFormatDate($date)
+    {
+        return Carbon::parse($date)->format('Y-m-d');
+    }
 
 
     protected function validateReservationRequest($request, $room)
@@ -125,12 +137,38 @@ trait ApiReservationTrait
     }
 
 
-    protected function CalculateDateTime($start_date , $end_date )
+    protected function CalculateDateTime($start_date, $end_date)
     {
         $start = Carbon::parse($start_date);
         $end = Carbon::parse($end_date);
         $daysDifference = $start->diffInDays($end);
-        return $daysDifference ;
+        return $daysDifference;
+    }
+
+    protected function generateUniqueReservationCode()
+    {
+        $letters = range('A', 'Z');
+        $letterIndex = 0;
+        $number = 1;
+
+        while (true) {
+            $code = $letters[$letterIndex] . str_pad($number, 4, '0', STR_PAD_LEFT);
+
+            if (!Reservation::where('code', $code)->exists()) {
+                return $code;
+            }
+
+            $number++;
+
+            if ($number > 9999) {
+                $letterIndex++;
+                $number = 1;
+
+                if ($letterIndex >= count($letters)) {
+                    throw new \Exception('Maximum number of reservation codes reached');
+                }
+            }
+        }
     }
 
     

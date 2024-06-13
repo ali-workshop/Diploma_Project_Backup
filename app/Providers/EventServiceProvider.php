@@ -20,6 +20,9 @@ class EventServiceProvider extends ServiceProvider
         EndingSoonEvent::class => [
             SendEmail::class,
         ],
+        'App\Events\ReservationAttempting' => [
+            'App\Listeners\CheckRoomAvailability',
+        ],
     ];
     
 
