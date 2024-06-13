@@ -1,6 +1,12 @@
 @extends('Admin.layouts.master')
 @section('index.rooms')
-
+<style>
+    .table-image {
+        td, th {
+            vertical-align: middle;
+        }
+    }
+</style>
 <!-- Page Heading -->
 <h1 class="h3 mb-2 text-gray-800">Hotel Rooms</h1>
 
@@ -20,23 +26,23 @@
                 </div>
             </div>
         </form> 
-        <div class="table-responsive">
-            <table class="table table-bordered table-striped"  id="dataTable">
+        <div class="container">
+            <table class="table-bordered table-hover table-image">
                 <thead>
                     <tr>
-                        <th>#</th>
-                        <th>Room type</th>
-                        <th>Room code</th>
-                        <th>Floor Number</th>
-                        <th>Description</th>
-                        <th>status</th>
-                        <th>Image</th>
-                        <th>price</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
+                        <th class="col-md-1">#</th>
+                        <th class="col-md-1">Room type</th>
+                        <th class="col-md-1">Room code</th>
+                        <th class="col-md-1">Floor Number</th>
+                        <th class="col-md-1">Description</th>
+                        <th class="col-md-1">status</th>
+                        <th class="col-md-1">Price</th>
+                        <th class="col-md-3">Image</th>
+                        <th class="col-md-1">Edit</th>
+                        <th class="col-md-1">Delete</th>
                     </tr>
                 </thead>
-                <tbody >
+                <tbody>
                     @foreach($rooms as $room)
                     <tr>
                         <td>{{ $loop->iteration}}</td>
@@ -45,8 +51,12 @@
                         <td>{{ $room->floorNumber}}</td>
                         <td>{{ $room->description}}</td>
                         <td>{{ $room->status}}</td>
-                        <td><img src="{{ asset('images/' . $room->img) }}" alt="{{ $room->code }}" style="max-width: 100px;"></td>
                         <td>{{ $room->price}}</td>
+                        <td>
+                            @foreach (json_decode($room->images,true) as $image)
+                                <img src="{{asset('images/'.$image )}}" alt="{{ $room->code }}" style="max-width:50%;  padding:5px; display:inline; float:left;" class="img-responsive">
+                            @endforeach
+                        </td>
                         <td><a href='{{route("rooms.edit", $room->id)}}' class="btn btn-outline-success">EDIT</a></td>
                         <td>
                             <form action="{{ route('rooms.destroy', $room->id) }}" method="POST">

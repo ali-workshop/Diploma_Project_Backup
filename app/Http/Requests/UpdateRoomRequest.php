@@ -23,11 +23,12 @@ class UpdateRoomRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'code' =>['string','max:100',Rule::unique('rooms')->ignore($this->room)],
-            'floorNumber' => 'numeric|integer|max:15',
-            'description' => 'string|max:800',
-            'img' => 'image',
-            'status' => 'string|in:available,booked',
+            'code' =>['nullable' ,'string','max:100',Rule::unique('rooms')->ignore($this->room)],
+            'floorNumber' => 'nullable|numeric|integer|max:15',
+            'description' => 'nullable|string|max:800',
+            'images' => 'nullable|image',
+            'images.*' => 'nullable|image|max:2048',
+            'status' => 'nullable|string|in:available,booked',
         ];
     }
 }

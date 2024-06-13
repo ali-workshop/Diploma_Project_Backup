@@ -50,16 +50,27 @@ class RoomController extends Controller
     public function store(StoreRoomRequest $request)
     {   
         $validatedData=$request->validated();
+        //compute room cost per night
         $typeOThisRoom=RoomType::find($request->room_type);
-        $sumOfAllAvailableServices=$typeOThisRoom->services->sum('price');
+        $sumPricesOfAllAvailableServices=$typeOThisRoom->services->sum('price');
+        //
+        if($request->has('images')){
+            $roomImages=array();
+            foreach($request->file('images') as $key=>$img){
+                $path=$this->UploadMultipleImages($img,'rooms',$validatedData['code'].$key);
+                if($path){
+                    array_push($roomImages,$path);
+                }
+            }
+        }
         $room=Room::create([
             "room_type_id" => $request->room_type,
             "code" => $validatedData['code'],
             "floorNumber" => $validatedData['floorNumber'],
             "description" => $validatedData['description'],
-            "img" => $this->verifyAndUpload($validatedData['img'],'rooms'),
+            "images" =>  json_encode($roomImages),
             "status" => $validatedData['status'],
-            "price" => $typeOThisRoom->price +$sumOfAllAvailableServices,
+            "price" => $typeOThisRoom->price +$sumPricesOfAllAvailableServices,
         ]);
 
         return redirect()->route('rooms.index');
@@ -82,30 +93,80 @@ class RoomController extends Controller
         return view('Admin.pages.dashboard.rooms.edit', compact('room','roomTypes'));
 
     }
+//     public function update(Request $request, $id)
+// {
+//     $room = Room::findOrFail($id);
 
+//     // Decode the existing images JSON column
+//     $existingImages = json_decode($room->images, true) ?? [];
+
+//     // Handle deletion of selected images
+//     if ($request->filled('delete_images')) {
+//         $deleteImages = json_decode($request->delete_images, true);
+//         foreach ($deleteImages as $image) {
+//             // Remove the image file from the server
+//             $filePath = public_path('images/'.$image);
+//             if (file_exists($filePath)) {
+//                 unlink($filePath);
+//             }
+//             // Remove the image from the existing images array
+//             $existingImages = array_filter($existingImages, function ($img) use ($image) {
+//                 return $img !== $image;
+//             });
+//         }
+//     }
+
+//     // Handle addition of new images
+//     if ($request->hasfile('new_images')) {
+//         foreach ($request->file('new_images') as $image) {
+//             $name = time() . '-' . $image->getClientOriginalName();
+//             $image->move(public_path('images'), $name);
+//             $existingImages[] = $name;
+//         }
+//     }
+
+//     // Encode the updated images array to JSON and save to the database
+//     $room->images = json_encode(array_values($existingImages));
+//     $room->save();
+
+//     return back()->with('success', 'Images updated successfully');
+// }
     /**
      * Update the specified resource in storage.
      */
     public function update(UpdateRoomRequest $request, Room $room)
     {   
         try {
-            $request->validated();
+            $existingImages =json_decode($room->images,true);
+            $validatedData=$request->validated();
+            if ($request->filled('delete_images')) {
+                $deleteImages = json_decode($request->delete_images, true);
+                foreach ($deleteImages as $image) {
+                    // Remove the image file from the server
+                    $filePath = public_path('images/'.$image);
+                    if (file_exists($filePath)) {
+                        $this->deleteImage($image);
+                    }
+                    // Remove the image from the existing images array
+                    $existingImages = array_filter($existingImages, function ($img) use ($image) {
+                        return $img !== $image;
+                    });
+                }
+            }
+            // Handle addition of new images
+            if ($request->hasfile('new_images')) {
+                foreach ($request->file('new_images') as $key=>$image) {
+                    $path=$this->UploadMultipleImages($image,'rooms',$validatedData['code'].$key);
+                    $existingImages[] = $path;
+                }
+            }
             $room->code =$request->code ?? $room->code;
             $room->room_type_id =$request->room_type_id ?? $room->room_type_id;
             $room->floorNumber = $request->floorNumber ?? $room->floorNumber;
             $room->price = $request->price ?? $room->price;
             $room->status = $request->status ?? $room->status;
             $room->description = $request->description ?? $room->description;
-
-            if ($request->hasFile('img')) {
-                $path =$this->verifyAndUpload($request->file('img'),'rooms');
-                if ($path) {
-                    $this->deleteImage($room->img);
-                    $room->img = $path;
-                } else {
-                    return redirect()->back()->with('error', 'Failed to upload image.');
-                }
-            }
+            $room->images = json_encode($existingImages);// Encode the updated images array to JSON and save to the database
             $room->save();
             return redirect()->route('rooms.index')->with('success', 'Room updated successfully!');
 

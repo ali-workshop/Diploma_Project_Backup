@@ -13,11 +13,18 @@ class Room extends Model
         'code',
         'floorNumber',
         'description',
-        'img',
+        'images',
         'status',
         'price',
         
     ];
+    protected $casts = [
+        'images' => 'array',
+    ];
+    public function getImagesAttribute($value){
+        return json_decode($value, true);
+    }
+
     public function roomType()
     {
         return $this->belongsTo(RoomType::class);

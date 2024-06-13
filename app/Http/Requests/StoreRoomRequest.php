@@ -25,7 +25,8 @@ class StoreRoomRequest extends FormRequest
             'code' => 'required|string|max:100',
             'floorNumber' => 'required|numeric|integer|max:15',
             'description' => 'required|string|max:800',
-            'img' => 'required|image',
+            'images' => 'required', // fot the field
+            'images.*' => 'image|max:2048', // for the files themselves
             'status' => 'required|string|in:available,booked',
         ];
     }

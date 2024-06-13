@@ -22,7 +22,7 @@
     <link href="{{ asset('assets/css/sb-admin-2.css') }}" rel="stylesheet">
     <!-- Custom styles for this page -->
     <link href="{{ asset('assets/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 </head>
 
