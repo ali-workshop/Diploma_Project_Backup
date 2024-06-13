@@ -52,6 +52,15 @@ class ReservationEventController extends Controller
                     'currentEventDate' => $reservationCurrentEventDate,
                 ];
             } 
+            // Tuka: start
+            // another way to get the same result by using map() instead of foreach
+            // $reservationStatusOverTime = $reservationEvents->map(function ($reservationEvent) {
+            //     return [
+            //         'currentStatus' => $reservationEvent->reservationStatusCatalogs->name,
+            //         'currentEventDate' => $reservationEvent->created_at->format('d-m-Y H:i:s'),
+            //     ];
+            // })->toArray(); 
+            // end
             return $this->successResponse($reservationStatusOverTime, 'Reservation Events Returned Successfully');
         } catch (Throwable $th) {
             return $this->errorResponse('Server error probably.', [$th->getMessage()], 500);
