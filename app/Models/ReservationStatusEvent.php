@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class ReservationStatusEvent extends Model
 {
@@ -13,8 +15,8 @@ class ReservationStatusEvent extends Model
         return $this->belongsTo(Reservation::class);
     }
 
-    public function reservationStatusCatalogs()
+    public function reservationStatusCatalogs():BelongsTo
     {
-        return $this->belongsToMany(ReservationStatusCatlog::class);
+        return $this->belongsTo(ReservationStatusCatlog::class,'reservation_status_catlog_id');
     }
 }

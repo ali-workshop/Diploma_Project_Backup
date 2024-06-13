@@ -15,6 +15,7 @@
                     <button class="btn btn-outline-info" onclick="printBill()">Print</button>
                 </div>
             </div>
+            {{-- {{$reservation}} --}}
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-6">
@@ -123,8 +124,35 @@
             </div>
         </div>
     </div>
+    <br>
+    <!-- button to show reservation events better than show it  directly -->
+    <!-- Reservation events section, it is initially hidden :) -->
+<button onclick="document.getElementById('reservation-events').style.display='block'" class="btn btn-primary">
+    Show Events
+</button>
 
-    <script>
+<div id="reservation-events" style="display:none;">
+    <br>
+    <h2>Reservation Events</h2>
+    <br>
+    <table style="border: 1px solid black;" class="table table-bordered" >
+        <thead>
+            <tr>
+                <th>Status</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($reservationStatusOverTime as $event)
+            <tr>
+                <td>{{ $event['currentStatus'] }}</td>
+                <td>{{ $event['currentEventDate'] }}</td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
+ <script>
         function printBill() {
             var printContents = document.getElementById('print-content').innerHTML;
             var originalContents = document.body.innerHTML;

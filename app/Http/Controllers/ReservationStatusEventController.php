@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Reservation;
+use Illuminate\Support\Facades\Log;
 use App\Models\ReservationStatusEvent;
 use App\Http\Requests\StoreReservationStatusEventRequest;
 use App\Http\Requests\UpdateReservationStatusEventRequest;
@@ -21,7 +23,7 @@ class ReservationStatusEventController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -63,4 +65,6 @@ class ReservationStatusEventController extends Controller
     {
         //
     }
+
+    
 }
