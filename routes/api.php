@@ -29,12 +29,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-
-
 Route::group(['prefix'=>'v1'],function(){
 
     Route::post('/auth/register', [AuthController::class, 'register']);
     Route::post('/auth/login', [AuthController::class, 'login']);
+    
+    Route::get('/rooms',[RoomController::class,'index'])->name('rooms.index');
+    Route::get('/rooms/{room}',[RoomController::class,'show'])->name('rooms.show');
    
     Route::group(['middleware' => ['auth:sanctum']], function () {
     

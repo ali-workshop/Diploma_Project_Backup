@@ -10,10 +10,35 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Traits\ApiResponserTrait;
 use App\Http\Requests\DateRangeRequest;
+use App\Http\Resources\RoomResource;
 
 class RoomController extends Controller
 {
     use ApiResponserTrait;
+
+    /**
+     * Display a listing of the room resource.
+     */
+    public function index()
+    {
+        $rooms = Room::with('roomType')->paginate(5);
+        return $this->successResponseTest('success',RoomResource::collection($rooms));
+    }
+    
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {   
+            $room=Room::findOrFail($id);
+            if($room){
+                return $this->successResponseTest("Room Found",new RoomResource($room));
+                
+            }else{
+                return $this->notFoundResponse("Room Not Found");
+            }
+    }
+
     public function showCurrnetAvailableRooms()
     {
         try {

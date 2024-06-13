@@ -28,6 +28,7 @@ class UpdateRoomRequest extends FormRequest
             'description' => 'nullable|string|max:800',
             'images' => 'nullable|image',
             'images.*' => 'nullable|image|max:2048',
+            'new_images.*' => 'nullable|image|max:2048',
             'status' => 'nullable|string|in:available,booked',
         ];
     }

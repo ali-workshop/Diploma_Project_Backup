@@ -129,8 +129,8 @@
         </script>
         </body>
         <br>
-        <div class="table-responsive">
-            <table class="table table-bordered table-striped"  id="dataTable">
+        <div class="container">
+            <table class="table-bordered table-hover table-image"  id="dataTable">
                 <thead>
                     <tr>
                         <th class="col-md-1">#</th>
@@ -140,7 +140,7 @@
                         <th class="col-md-1">Description</th>
                         <th class="col-md-1">status</th>
                         <th class="col-md-1">Price</th>
-                        <th class="col-md-3">Image</th>
+                        <th class="col-md-3">Images</th>
                         <th class="col-md-1">Edit</th>
                         <th class="col-md-1">Delete</th>
                     </tr>
@@ -157,7 +157,7 @@
                         <td>{{ $room->price}}</td>
                         <td>
                             @foreach (json_decode($room->images,true) as $image)
-                                <img src="{{asset('images/'.$image )}}" alt="{{ $room->code }}" style="max-width:50%;  padding:5px; display:inline; float:left;" class="img-responsive">
+                                <img src="{{asset('images/'.$image )}}" alt="{{ $room->code }}" style="max-width:50%; height: auto; padding:5px; display:inline; float:left;" class="img-responsive">
                             @endforeach
                         </td>
                         <td><a href='{{route("rooms.edit", $room->id)}}' class="btn btn-outline-success">EDIT</a></td>
