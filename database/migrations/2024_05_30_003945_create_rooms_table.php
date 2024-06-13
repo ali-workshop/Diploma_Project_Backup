@@ -18,12 +18,11 @@ return new class extends Migration
             $table->integer('floorNumber');
             $table->text('description');
             $table->json('images');
-            $table->enum('status', ['available', 'booked'])->default('available');
+            $table->enum('status', ['available', 'unavailable'])->default('available');
             $table->decimal('price', 8, 2);
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */

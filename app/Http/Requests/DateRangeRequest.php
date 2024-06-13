@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreReservationRequest extends FormRequest
+class DateRangeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +22,8 @@ class StoreReservationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'room_id' => ['required', 'numeric'],
-            // 'code' => ['required', 'numeric', 'max:999'], 
-            'guestNumber' => ['required', 'numeric'], 
-            'start_date' => ['required', 'date'],
-            'end_date' => ['required', 'date'],
+            'start_range' => 'required|date',
+            'end_range' => 'date|after:start_range',
         ];
     }
 }

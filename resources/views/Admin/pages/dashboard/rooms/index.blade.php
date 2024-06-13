@@ -14,8 +14,9 @@
 <div class="card shadow mb-1" >
     <div class="card-header py-2">
     <a href="{{ route('rooms.create') }}" class="btn btn-primary">New Room</a>
+    <a href="{{ route('rooms.ending-in-24-hours') }}" class="btn btn-primary">Rooms that expire after 24 hours</a>
     </div>
-    <div class="card-body">
+        <div class="card-body">
         <form action="{{ route('rooms.index') }}" method="GET">
             <div class="row mb-3 my-1">
                 <div class="col-md-3">
@@ -26,8 +27,110 @@
                 </div>
             </div>
         </form> 
-        <div class="container">
-            <table class="table-bordered table-hover table-image">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Room Filters</title>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+        <body>
+        <div class="container mt-3">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Filter Rooms BY Date <span id="collapseIndicator" style="cursor: pointer;">^</span></h4>
+                </div>
+                <div class="card-body" id="filterCard">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="filterOptions">Select Filtering Option:</label>
+                                <select id="filterOptions" class="form-control">
+                                    <option value="availableSpecificDate">Available Rooms on Specific Date</option>
+                                    <option value="reservedSpecificDate">Booked Rooms on Specific Date</option>
+                                    <option value="availablePeriod">Available Rooms for Period</option>
+                                    <option value="reservedPeriod">Reserved Rooms for Period</option>
+                                </select>
+                            </div>
+                            <div id="filterForms">
+                                <!-- Filtering forms will be added here dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                
+                $('#filterOptions').change(function() {
+                    var selectedOption = $(this).val();
+                    var formContent = '';
+        
+                    if (selectedOption === 'availableSpecificDate') {
+                        formContent = `
+                            <form action="{{ route('rooms.available.specificTime') }}" method="GET">
+                                <div class="form-group">
+                                    <label for="specificDate">Select Date:</label>
+                                    <input type="date" name="specificDate" id="specificDate" class="form-control">
+                                </div>
+                                <button type="submit" class="btn btn-outline-secondary">Filter</button>
+                            </form>
+                        `;
+                    } else if (selectedOption === 'reservedSpecificDate') {
+                        formContent = `
+                            <form action="{{ route('rooms.reserved.specificTime') }}" method="GET">
+                                <div class="form-group">
+                                    <label for="specificDate">Select Date:</label>
+                                    <input type="date" name="specificDate" id="specificDate" class="form-control">
+                                </div>
+                                <button type="submit" class="btn btn-outline-secondary">Filter</button>
+                            </form>
+                        `;
+                    } else if (selectedOption === 'availablePeriod') {
+                        formContent = `
+                            <form action="{{ route('rooms.available.period') }}" method="GET">
+                                <div class="form-group">
+                                    <label for="start_range">Start Date:</label>
+                                    <input type="date" name="start_range" id="start_range" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="end_range">End Date:</label>
+                                    <input type="date" name="end_range" id="end_range" class="form-control">
+                                </div>
+                                <button type="submit" class="btn btn-outline-secondary">Filter</button>
+                            </form>
+                        `;
+                    } else if (selectedOption === 'reservedPeriod') {
+                        formContent = `
+                            <form action="{{ route('rooms.reserved.period') }}" method="GET">
+                                <div class="form-group">
+                                    <label for="start_range">Start Date:</label>
+                                    <input type="date" name="start_range" id="start_range" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="end_range">End Date:</label>
+                                    <input type="date" name="end_range" id="end_range" class="form-control">
+                                </div>
+                                <button type="submit" class="btn btn-outline-secondary">Filter</button>
+                            </form>
+                        `;
+                    }
+        
+                   
+                    $('#filterForms').html(formContent);
+                });
+        
+               
+                $('#collapseIndicator').click(function() {
+                    $('#filterCard').toggle();
+                    $(this).text($(this).text() === '^' ? 'v' : '^'); 
+                });
+            });
+        </script>
+        </body>
+        <br>
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped"  id="dataTable">
                 <thead>
                     <tr>
                         <th class="col-md-1">#</th>

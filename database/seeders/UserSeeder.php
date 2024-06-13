@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-class AdminSeeder extends Seeder
+class UserSeeder extends Seeder
 {
 
     /**
@@ -23,5 +23,10 @@ class AdminSeeder extends Seeder
             'password' => Hash::make('12345678'), 
         ]);
         $user->assignRole('admin');
+
+        User::factory(4)->create()->each(function ($user) {
+            $randomRole = rand(0, 1) ? 'admin' : 'client'; 
+            $user->assignRole($randomRole);
+        });
     }
 }

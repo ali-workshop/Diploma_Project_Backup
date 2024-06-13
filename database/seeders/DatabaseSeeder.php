@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Reservation;
 use App\Models\User;
 use App\Models\Service;
 use Illuminate\Database\Seeder;
@@ -15,6 +16,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // Reservation::factory(10)->create();
         //  User::factory()->create([
         //     'name' => 'admin',
         //     'email' => 'admin@example.com',
@@ -30,12 +32,17 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             RoleSeeder::class,
-            AdminSeeder::class,
+            UserSeeder::class,
             ContactSeeder::class,
             MessageSeeder::class,
             ServicesSeeder::class,
             RoomTypeSeeder::class,
+            RoomSeeder::class,
             RoomTypeServiceSeeder::class,
+            ReservationStatusCatlogSeeder::class,
+            ReservationSeeder::class,
+            ReservationStatusEventSeeder::class,
+
         ]);
     }
 }
