@@ -25,7 +25,6 @@ class RoomController extends Controller
         }
 
     }
-
     public function showAvailableRoomsInSpecificTime(Request $request)
     {
         try {
@@ -51,9 +50,7 @@ class RoomController extends Controller
         } catch (\Throwable $th) {
             return $this->errorResponse('Server error probably.', [$th->getMessage()], 500);
         }
-
     }
-
     public function showAvailableRoomsInPeriod(DateRangeRequest $request)
     {
         #Noura could use this time zone ( Asia/Dubai )
@@ -63,6 +60,7 @@ class RoomController extends Controller
             $reservations_endDates = Reservation::pluck('end_date')->toArray();
             $latestEndDate = max($reservations_endDates);
             $latestEndDate = Carbon::parse($latestEndDate);
+            
             $startRange = Carbon::parse($request->input('start_range'), 'UTC')
                                                 ->setTimezone('Asia/Baghdad');
             $endRange = $request->has('end_range') ?
@@ -87,7 +85,7 @@ class RoomController extends Controller
 
                         $available = False;
                         break;
-                    }
+                      }
 
                 }
                 if ($available) {
@@ -102,7 +100,6 @@ class RoomController extends Controller
 
 
     }
-
     public function showCurrnetReservedRooms()
     {
         try {
@@ -113,7 +110,6 @@ class RoomController extends Controller
             return $this->errorResponse('Server error probably.', [$th->getMessage()], 500);
         }
     }
-
     public function showReservedRoomsInSpecificTime(Request $request)
     {
         try {
@@ -140,7 +136,6 @@ class RoomController extends Controller
             return $this->errorResponse('Server error probably.', [$th->getMessage()], 500);
         }
     }
-
     public function showReservedRoomsInPeriod(DateRangeRequest $request)
     {
         try {

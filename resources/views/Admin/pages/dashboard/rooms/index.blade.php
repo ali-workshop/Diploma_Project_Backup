@@ -54,12 +54,11 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script>
             $(document).ready(function() {
-                // Function to dynamically load selected filter form
+                
                 $('#filterOptions').change(function() {
                     var selectedOption = $(this).val();
                     var formContent = '';
         
-                    // Generate the form content based on the selected option
                     if (selectedOption === 'availableSpecificDate') {
                         formContent = `
                             <form action="{{ route('rooms.available.specificTime') }}" method="GET">
@@ -110,14 +109,14 @@
                         `;
                     }
         
-                    // Set the generated form content to the #filterForms div
+                   
                     $('#filterForms').html(formContent);
                 });
         
-                // Function to toggle visibility of filter options
+               
                 $('#collapseIndicator').click(function() {
                     $('#filterCard').toggle();
-                    $(this).text($(this).text() === '^' ? 'v' : '^'); // Change symbol from ^ to v or vice versa
+                    $(this).text($(this).text() === '^' ? 'v' : '^'); 
                 });
             });
         </script>

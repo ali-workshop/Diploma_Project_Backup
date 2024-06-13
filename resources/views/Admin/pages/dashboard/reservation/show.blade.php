@@ -132,8 +132,9 @@
 </button>
 
 <div id="reservation-events" style="display:none;">
+    <br>
     <h2>Reservation Events</h2>
- 
+    <br>
     <table style="border: 1px solid black;" class="table table-bordered" >
         <thead>
             <tr>

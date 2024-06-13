@@ -171,7 +171,7 @@ class RoomController extends Controller
                     $avaliableRooms[]=$room;
                 }
             }
-            $rooms=collect($avaliableRooms); # ali comment : i am just ensure convert it to collection before send it to view
+            $rooms=collect($avaliableRooms); # ali comment : i am just ensure convert it to collection before send it to view (best practise)
             return view('Admin.pages.dashboard.rooms.index',['rooms'=>$rooms]);
         }catch(\Exception $e){
             Log::error('Error in RoomController@showAvailableRoomsInSpecificTime: ' . $e->getMessage());
@@ -184,10 +184,12 @@ class RoomController extends Controller
            #Noura could use this time zone ( Asia/Dubai )
            # other members 'Asia/Damascus'
            # Mr.Hashim Europe/Berlin
+        //    dd($request);
            try{
            $reservations_endDates = Reservation::pluck('end_date')->toArray();
             $latestEndDate = max($reservations_endDates);
             $latestEndDate =Carbon::parse($latestEndDate);
+            dd($latestEndDate);
             $startRange = Carbon::parse($request->input('start_range'), 'UTC')
                                                 ->setTimezone('Asia/Baghdad');
             $endRange=$request->has('end_range') ? 
