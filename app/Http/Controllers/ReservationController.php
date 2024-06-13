@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\Room;
 use App\Models\Reservation;
 use Illuminate\Support\Facades\Log;
+use App\Events\ReservationAttempting;
 use App\Models\ReservationStatusEvent;
+use App\Http\Traits\ApiReservationTrait;
 use App\Http\Requests\StoreReservationRequest;
 use App\Http\Requests\UpdateReservationRequest;
-use App\Http\Traits\ApiReservationTrait;
 
 class ReservationController extends Controller
 {
@@ -33,7 +35,8 @@ class ReservationController extends Controller
      */
     public function create()
     {
-        //
+        
+
     }
 
     /**
@@ -41,12 +44,21 @@ class ReservationController extends Controller
      */
     public function store(StoreReservationRequest $request)
     {
-        //
+        $roomId = $request->input('room_id');
+        $reservationStartDate = Carbon::parse($request->input('start_date'));
+
+        $room = Room::findOrFail($roomId);
+
+        // trigger  the event to check room availability
+        event(new ReservationAttempting($room, $reservationStartDate));
     }
 
     /**
      * Display the specified resource.
      */
+
+
+
     public function show(Reservation $reservation)
     {
         try
@@ -58,11 +70,35 @@ class ReservationController extends Controller
                     'price' => $service->price,
                 ];
             });
-            return view('Admin.pages.dashboard.reservation.show', compact('reservation' ,'stayingNights','services'));
+
+            /// edit this fucntion by ali for add features which is the events for this reservation
+            $reservationEvents = ReservationStatusEvent::with('reservationStatusCatalogs')
+            ->where('reservation_id', $reservation->id)
+            ->get();
+            // dd($reservationEvents);
+       
+       $reservationStatusOverTime = [];
+       
+       foreach ($reservationEvents as $reservationEvent) {
+                $reservationCurrentStatus = optional($reservationEvent->reservationStatusCatalogs)->name;
+                $reservationCurrentEventDate = $reservationEvent->created_at->format('d-m-Y H:i:s');
+                
+                $reservationStatusOverTime[] = [
+                'currentStatus' => $reservationCurrentStatus ?? 'UnKnown',
+                'currentEventDate' => $reservationCurrentEventDate,
+                ];
+                 }          
+                if(empty($reservationStatusOverTime)){
+                    $reservationStatusOverTime[] = [
+                        'currentStatus' => 'inprogress',
+                        'currentEventDate' => now()->format('d-m-Y H:i:s')
+                    ];
+                 } 
+            return view('Admin.pages.dashboard.reservation.show', compact('reservation' ,'stayingNights','services','reservationStatusOverTime'));
         }catch (\Exception $e) {
 
-            Log::error('Error in RoomsController@index: ' . $e->getMessage());
-            return redirect()->route('Admin.pages.dashboard.reservation.index')->with('error', 'An error occurred: ' . $e->getMessage());
+            Log::error('Error in RoomsController@show: ' . $e->getMessage());
+            return redirect()->route('reservation.index')->with('error', 'An error occurred: ' . $e->getMessage());
         }
     }
 

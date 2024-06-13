@@ -37,14 +37,14 @@ class ReservationEventController extends Controller
         //     }
         try {
             // another way to apply the same logic is to Load reservation events with the Relation 
-            $reservationEvents = ReservationStatusEvent::with('statusCatalog')
+            $reservationEvents = ReservationStatusEvent::with('reservationStatusCatalogs')
                                 ->where('reservation_id', $reservation->id)
                                 ->get();
-    
+            // return $reservationEvents;
             $reservationStatusOverTime = [];
     
             foreach ($reservationEvents as $reservationEvent) {
-                $reservationCurrentStatus = $reservationEvent->statusCatalog->name;
+                $reservationCurrentStatus = $reservationEvent->reservationStatusCatalogs->name;
                 $reservationCurrentEventDate = $reservationEvent->created_at->format('d-m-Y H:i:s');
     
                 $reservationStatusOverTime[] = [

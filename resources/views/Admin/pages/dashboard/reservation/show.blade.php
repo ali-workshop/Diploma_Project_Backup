@@ -12,7 +12,6 @@
                 <div>
                     <label class="m-3 font-weight-bold text-primary"> Date : {{now()}} </label>
                     <a class="btn btn-outline-primary" href="{{ route('reservation.index') }}">Back</a>
-                    <a class="btn btn-outline-primary" href="{{ route('reservation.events',$reservation->id)}}">events</a>
                     <button class="btn btn-outline-info" onclick="printBill()">Print</button>
                 </div>
             </div>
@@ -126,8 +125,16 @@
         </div>
     </div>
     <br>
-    {{-- <h1>Show Reservation Events</h1> 
-    <table>
+    <!-- button to show reservation events better than show it  directly -->
+    <!-- Reservation events section, it is initially hidden :) -->
+<button onclick="document.getElementById('reservation-events').style.display='block'" class="btn btn-primary">
+    Show Events
+</button>
+
+<div id="reservation-events" style="display:none;">
+    <h2>Reservation Events</h2>
+ 
+    <table style="border: 1px solid black;" class="table table-bordered" >
         <thead>
             <tr>
                 <th>Status</th>
@@ -135,16 +142,16 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($events as $event)
+            @foreach ($reservationStatusOverTime as $event)
             <tr>
                 <td>{{ $event['currentStatus'] }}</td>
                 <td>{{ $event['currentEventDate'] }}</td>
             </tr>
             @endforeach
         </tbody>
-    </table> --}}
-    {{-- {{$events}} --}}
-    <script>
+    </table>
+</div>
+ <script>
         function printBill() {
             var printContents = document.getElementById('print-content').innerHTML;
             var originalContents = document.body.innerHTML;
