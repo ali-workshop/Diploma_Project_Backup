@@ -2,10 +2,12 @@
 
 namespace App\Providers;
 
+use App\Listeners\SendEmail;
+use App\Events\EndingSoonEvent;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -15,10 +17,11 @@ class EventServiceProvider extends ServiceProvider
      * @var array<class-string, array<int, class-string>>
      */
     protected $listen = [
-        Registered::class => [
-            SendEmailVerificationNotification::class,
+        EndingSoonEvent::class => [
+            SendEmail::class,
         ],
     ];
+    
 
     /**
      * Register any events for your application.

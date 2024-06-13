@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use App\Models\Reservation;
 use App\Http\Traits\ApiResponserTrait;
 
-trait ApiReservationTrait
+trait ApiReservationTrait 
 {
     use ApiResponserTrait;
 
@@ -131,5 +131,15 @@ trait ApiReservationTrait
         $end = Carbon::parse($end_date);
         $daysDifference = $start->diffInDays($end);
         return $daysDifference ;
+    }
+
+    
+    public function roomsEndingIn24Hours($query)
+    {
+        $now = Carbon::now();
+        $endIn24Hours = $now->copy()->addDay();
+
+        return $query->where('end_date', '>=', $now)
+                     ->where('end_date', '<=', $endIn24Hours);
     }
 }
