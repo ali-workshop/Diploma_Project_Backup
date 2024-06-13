@@ -50,7 +50,7 @@ class SendEmail
                 <p>We hope you will be satisfied with our services.</p>";
 
             $mail->send();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             Log::error("Email could not be sent. Mailer Error: {$mail->ErrorInfo}");
         }
     }
