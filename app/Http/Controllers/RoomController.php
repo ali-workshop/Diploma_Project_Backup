@@ -108,8 +108,7 @@ class RoomController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRoomRequest $request, Room $room)
-    {
+    public function update(UpdateRoomRequest $request, Room $room){
         try {
             $existingImages =json_decode($room->images,true);
             $validatedData=$request->validated();
@@ -148,21 +147,12 @@ class RoomController extends Controller
             Log::error('Error in RoomController@update: ' . $e->getMessage());
             return redirect()->route('rooms.index')->with('error', $e->getMessage());
         }
-
-            
-            $room->save();
-            return redirect()->route('rooms.index')->with('success', 'Room updated successfully!');
-        } catch (\Exception $e) {
-            Log::error('Error in RoomController@update: ' . $e->getMessage());
-            return redirect()->route('rooms.index')->with('error', $e->getMessage());
-        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Room $room)
-    {
+    public function destroy(Room $room){
         try {
             $this->deleteImage($room->img);
             $room->delete();
@@ -172,8 +162,8 @@ class RoomController extends Controller
             return redirect()->route('Admin.pages.dashboard.rooms.index')->with('error', $e->getMessage());
         }
     }
-    public function showCurrnetAvailableRooms()
-        {
+
+    public function showCurrnetAvailableRooms(){
             try{
                 $bookedRooms = Reservation::pluck('room_id')->toArray();
                 $rooms=Room::whereNotIn('id',$bookedRooms)->get();
@@ -184,10 +174,9 @@ class RoomController extends Controller
                 return redirect()->route('rooms.index')->with('error', $e->getMessage());
             }
 
-        }
+    }
 
-    public function showAvailableRoomsInSpecificTime(Request $request)
-    {
+    public function showAvailableRoomsInSpecificTime(Request $request){
         try{
             $availableRooms=[];
             $rooms=Room::all();
@@ -214,7 +203,8 @@ class RoomController extends Controller
         }catch(\Exception $e){
             Log::error('Error in RoomController@showAvailableRoomsInSpecificTime: ' . $e->getMessage());
             return redirect()->route('rooms.index')->with('error', $e->getMessage());
-        }}
+        }
+    }
         
         public function showAvailableRoomsInPeriod(DateRangeRequest $request)
         {  
@@ -260,8 +250,6 @@ class RoomController extends Controller
             Log::error('Error in RoomController@showAvailableRoomsInPeriod: ' . $e->getMessage());
             return redirect()->route('rooms.index')->with('error', $e->getMessage());
         }
-
-
         }
         
         public function showCurrnetReservedRooms()
