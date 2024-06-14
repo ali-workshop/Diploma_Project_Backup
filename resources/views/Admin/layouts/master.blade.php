@@ -127,7 +127,7 @@
                     <i class="fa-solid fa-utensils"></i>
                     <span>Room Services</span>
                 </a>
-                <div id="collapsePages" class="collapse show" aria-labelledby="headingPages"
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{ route('services.index') }}">All Services</a>
@@ -136,17 +136,19 @@
                 </div>
             </li>
 
-            <!-- Nav Item - Room Services  Collapse Menu -->
+            <!-- Nav Item - User management  Collapse Menu -->
             <li class="nav-item ">
-                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fa-solid fa-utensils"></i>
+                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseUser"
+                    aria-expanded="true" aria-controls="collapseUser">
+                    <i class="fa-solid fa-user-plus"></i>
                     <span>Users Management</span>
                 </a>
-                <div id="collapsePages" class="collapse show" aria-labelledby="headingPages"
+                <div id="collapseUser" class="collapse" aria-labelledby="headingPages"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('users.index') }}">All Users</a>
+                        <a class="collapse-item" href="{{ route('users.index') }}">Users</a>
+                        <a class="collapse-item" href="{{ route('users.create') }}">Add User</a>
+
                     </div>
                 </div>
             </li>
@@ -158,7 +160,7 @@
                     <i class="fa-solid fa-envelope"></i>
                     <span>Messages</span>
                 </a>
-                <div id="collapseMessages" class="collapse show" aria-labelledby="headingMessages"
+                <div id="collapseMessages" class="collapse" aria-labelledby="headingMessages"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{ route('messages.index') }}">All Messages</a>

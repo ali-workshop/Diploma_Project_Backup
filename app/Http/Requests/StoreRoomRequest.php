@@ -27,7 +27,7 @@ class StoreRoomRequest extends FormRequest
             'description' => 'required|string|max:800',
             'images' => 'required', // fot the field
             'images.*' => 'image|max:2048', // for the files themselves
-            'status' => 'required|string|in:available,booked',
+            'status' => 'required|string|in:available,unavailable',
         ];
     }
 }
