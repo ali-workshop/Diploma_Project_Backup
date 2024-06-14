@@ -30,6 +30,7 @@ class RoomController extends Controller
     public function index(Request $request)
     {
         try {
+            // Filter rooms based on room type name
             $rooms = Room::with('roomType')
                 ->whereHas('roomType', function ($query) use ($request) {
                     if ($request->has('name')) {

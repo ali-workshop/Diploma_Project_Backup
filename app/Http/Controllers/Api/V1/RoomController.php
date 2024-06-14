@@ -19,11 +19,32 @@ class RoomController extends Controller
     /**
      * Display a listing of the room resource.
      */
-    public function index()
+    // public function index()
+    // {
+    //     $rooms = Room::with('roomType')->paginate(5);
+    //     return $this->successResponseTest('success',RoomResource::collection($rooms));
+    // }
+        public function index(Request $request)
     {
-        $rooms = Room::with('roomType')->paginate(5);
-        return $this->successResponseTest('success',RoomResource::collection($rooms));
+        try {
+            // Filter rooms based on room type name
+            $rooms = Room::with('roomType')
+                ->whereHas('roomType', function ($query) use ($request) {
+                    if ($request->has('name')) {
+                        $query->where('name', 'like', '%' . $request->name . '%');
+                    }
+                })
+                ->orderBy('floorNumber', 'asc')
+                ->paginate(5);
+
+            return $this->successResponseTest('success', RoomResource::collection($rooms));
+        } catch (\Throwable $th) {
+            Log::error('Error in RoomController@index: ' . $th->getMessage());
+            return $this->errorResponse('Server error probably.', [$th->getMessage()], 500);
+        }
     }
+
+
     
     /**
      * Display the specified resource.
