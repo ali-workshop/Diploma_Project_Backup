@@ -60,6 +60,7 @@ Route::get('/services/{service}', [ServicesController::class, 'show']);
 
 
 Route::get('/roomType',[RoomTypeContoller::class,'index']);
+Route::get('/rooms', [RoomController::class, 'index']); // for filter
 
 
     
