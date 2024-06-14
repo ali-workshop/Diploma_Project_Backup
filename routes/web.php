@@ -45,4 +45,5 @@ Route::get('/available/rooms/specificPeriod',[RoomController::class,'showAvailab
 Route::get('/current/reserved/rooms',[RoomController::class,'showCurrnetReservedRooms'])->name('rooms.reserved.current');
 Route::get('/reserved/rooms/specificTime',[RoomController::class,'showReservedRoomsInSpecificTime'])->name('rooms.reserved.specificTime');
 Route::get('/reserved/rooms/specificPeriod',[RoomController::class,'showReservedRoomsInPeriod'])->name('rooms.reserved.period');
+Route::get('/ending-in-24-hours', [RoomController::class, 'roomsEndingIn24Hours'])->name('rooms.ending-in-24-hours');
 });
