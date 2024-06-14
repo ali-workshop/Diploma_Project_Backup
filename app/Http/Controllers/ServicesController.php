@@ -18,11 +18,7 @@ class ServicesController extends Controller
     public function index(Request $request)
     {
         try {
-            if ($request->has('name') && $request->name != '') {
-                $services = Service::where('name', 'like', '%' . $request->name . '%')->get();
-            } else {
-                $services = Service::all();
-            }
+            $services = Service::all();
             return view('Admin.pages.dashboard.services.index', compact('services'));
         } catch (\Exception $e) {
             Log::error('Error in ServicesController@index: ' . $e->getMessage());
@@ -54,7 +50,7 @@ class ServicesController extends Controller
                     'description' => $request->description,
                     'img' => $path,
                 ]);
-                return redirect()->route('services.index')->with('success', 'Service created successfully!'); 
+                return redirect()->route('services.index')->with('success', 'Service created successfully!');
             }
             return redirect()->back()->with('error', 'Failed!. Image was not stored');
         } catch (\Exception $e) {
