@@ -135,6 +135,7 @@ class RoomController extends Controller
             return $this->errorResponse('Server error probably.', [$th->getMessage()], 500);
         }
     }
+    
     public function showReservedRoomsInSpecificTime(Request $request)
     {
         try {

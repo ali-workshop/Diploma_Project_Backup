@@ -75,7 +75,6 @@ trait ApiReservationTrait
     }
 
 
-
     protected function checkFormatDate($date)
     {
         return Carbon::parse($date)->format('Y-m-d');

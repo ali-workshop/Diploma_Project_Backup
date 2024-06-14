@@ -11,7 +11,7 @@ class UpdateGuestRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class UpdateGuestRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'nullable|string|max:100',
+            'birthDate' => 'nullable|date',
+            'identificationNumber' => 'nullable|string|max:50',
         ];
     }
 }

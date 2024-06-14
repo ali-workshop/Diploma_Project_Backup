@@ -15,6 +15,7 @@ use App\Http\Traits\UploadImageTrait;
 use App\Http\Requests\DateRangeRequest;
 use App\Http\Requests\StoreRoomRequest;
 use App\Http\Requests\UpdateRoomRequest;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
 class RoomController extends Controller
@@ -158,7 +159,7 @@ class RoomController extends Controller
             $room->delete();
             return redirect()->route('rooms.index')->with('success', 'Room deleted successfully.');
         } catch (\Exception $e) {
-            Log::error('Error in RoomController@destroy: ' . $e->getMessage());
+            Log::error('Error in RoomController@destroy:' . $e->getMessage());
             return redirect()->route('Admin.pages.dashboard.rooms.index')->with('error', $e->getMessage());
         }
     }
@@ -173,9 +174,24 @@ class RoomController extends Controller
                 Log::error('Error in RoomController@showCurrnetAvailableRooms: ' . $e->getMessage());
                 return redirect()->route('rooms.index')->with('error', $e->getMessage());
             }
-
     }
 
+    public function showCurrnetOccupiedRoomsWithguests(){
+        try{
+            $allReservations = Reservation::all();
+            $todayExistingReservations = $allReservations->filter(function ($reservation,$key) {
+                $todayDate = date("Y-m-d");
+                return ($todayDate >= $reservation->start_date && $todayDate <= $reservation->end_date );
+            });
+            $todayBookingsWithRoomsAndGuestsInfo=$todayExistingReservations->load('room','guests');
+            //return view('Admin.pages.dashboard.rooms.index', ['rooms'=>$rooms]);
+        }catch(\Exception $e){
+            Log::error('Error in RoomController@showCurrnetAvailableRooms: ' . $e->getMessage());
+            return redirect()->route('rooms.index')->with('error', $e->getMessage());
+        }
+
+    }
+    
     public function showAvailableRoomsInSpecificTime(Request $request){
         try{
             $availableRooms=[];

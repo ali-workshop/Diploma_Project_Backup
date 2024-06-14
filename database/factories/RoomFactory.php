@@ -20,7 +20,7 @@ class RoomFactory extends Factory
      function generateRoomDescription(string $roomTypeName): string {
         $roomTypeInstanses=RoomType::all();
         $roomType = $roomTypeInstanses->firstWhere('name', $roomTypeName);
-        // $roomType=roomType::where('name',"LIKE",$roomTypeName)->first();
+        //$roomType=roomType::where('name',"LIKE",$roomTypeName)->first();
         $descriptions = [
             'Standard Single Room' => [
                 'This room is a standard single room, perfect for solo travelers.',
