@@ -23,3 +23,4 @@ class EndingSoonEvent
         $this->reservation = $reservation;
     }
 }
+//test
