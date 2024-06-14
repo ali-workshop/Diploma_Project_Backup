@@ -14,7 +14,7 @@
                 <thead>
                     <tr>
                         <th>user name</th>
-                        <th>Code</th>
+                        <th>ٌRoom Code</th>
                         <th>floorNumber</th>
                         <th>status  </th>
                         <th>description</th>
