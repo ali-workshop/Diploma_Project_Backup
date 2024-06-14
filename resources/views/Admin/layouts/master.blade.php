@@ -136,6 +136,21 @@
                 </div>
             </li>
 
+            <!-- Nav Item - Room Services  Collapse Menu -->
+            <li class="nav-item ">
+                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fa-solid fa-utensils"></i>
+                    <span>Users Management</span>
+                </a>
+                <div id="collapsePages" class="collapse show" aria-labelledby="headingPages"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{ route('users.index') }}">All Users</a>
+                    </div>
+                </div>
+            </li>
+
             <!-- Nav Item - Messages Collapse Menu -->
             <li class="nav-item ">
                 <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseMessages"
@@ -385,6 +400,9 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
+                    @yield('index.users')
+                    @yield('create.users')
+                    @yield('edit.users')
                     @yield('index.services')
                     @yield('create.services')
                     @yield('edit.services')
@@ -412,7 +430,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
+                        <span>Copyright &copy; Hotel Syria 2024</span>
                     </div>
                 </div>
             </footer>
