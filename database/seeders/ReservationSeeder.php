@@ -15,4 +15,4 @@ class ReservationSeeder extends Seeder
     {
        Reservation::factory(5)->create();
     }
-}
+} 
