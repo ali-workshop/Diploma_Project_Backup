@@ -66,7 +66,7 @@ class RoomFactory extends Factory
 
         $floor=$this->faker->numberBetween(0,15);
         // Regular expression for a room code format
-        $roomCodePattern = '/[1-9]{1,2}[A-D]?$/';
+        $roomCodePattern = '/([0-9]|[1-9][0-9])[A-D]?$/';
         $floor=$this->faker->numberBetween(1,15);
 
         return [
