@@ -48,29 +48,35 @@ class RoomFactory extends Factory
             ? implode(' ', $descriptions[$roomTypeName])
             : $roomType->description;
     }
+
     public function definition(): array
-    {      
-        
-        $roomType_ids=RoomType::pluck('id')->toArray();
-        $roomType_id=$this->faker->randomElement($roomType_ids);
-        $roomTypePrice=RoomType::firstWhere('id',$roomType_id)->price;
+    {   
+        // select type of room     
+        $roomTypeId=RoomType::get('id')->random();
+        $roomType=RoomType::find($roomTypeId)->first();
+        $sumPricesOfAllAvailableServices=$roomType->services->sum('price');
 
-        $service_ids=Service::pluck('id')->toArray();
-        $service_id=$this->faker->randomElement($service_ids);
-        $servicePrice=Service::firstWhere('id',$service_id)->price;
+        // Define the ratio
+        $availableRatio = 0.85;
+        // Generate a random float between 0 and 1
+        $randomFloat = $this->faker->randomFloat(2,0,1);
 
-        $roomPrice= $roomTypePrice+$servicePrice;
-        $randomRoomTypeId = $this->faker->randomElement($roomType_ids);
-        $roomTypeName=RoomType::firstWhere('id',$randomRoomTypeId)->name;
+        // Select the element based on the ratio
+        $selectedStatus = $randomFloat < $availableRatio ? 'available' : 'unavailable';
+
+        $floor=$this->faker->numberBetween(0,15);
+        // Regular expression for a room code format
+        $roomCodePattern = '/[1-9]{1,2}[A-D]?$/';
+        $floor=$this->faker->numberBetween(1,15);
+
         return [
-            
-            'room_type_id' => $randomRoomTypeId,
-            'code'=>$this->faker->numberBetween(1,10), 
-            'floorNumber'=>$this->faker->numberBetween(1,10), 
-            'description'=>$this->generateRoomDescription($roomTypeName),
-            'img'=> $this->faker->imageUrl(),
-            'status'=>$this->faker->randomElement(['unavailable','available']), 
-            'price'=>$roomPrice, 
+            'room_type_id' => $roomTypeId,
+            'code'=>$this->faker->regexify($roomCodePattern).$floor,
+            'floorNumber'=> $floor, 
+            'description'=> $this->generateRoomDescription($roomType->name),
+            //'images'=> $this->faker->imageUrl(),
+            'status'=>$selectedStatus, 
+            'price'=> $roomType->price + $sumPricesOfAllAvailableServices, 
         ];
     }
 }

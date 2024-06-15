@@ -156,9 +156,11 @@
                         <td>{{ $room->status}}</td>
                         <td>{{ $room->price}}</td>
                         <td>
+                            @if ($room->images)
                             @foreach (json_decode($room->images,true) as $image)
                                 <img src="{{asset('images/'.$image )}}" alt="{{ $room->code }}" style="max-width:50%; height: auto; padding:5px; display:inline; float:left;" class="img-responsive">
                             @endforeach
+                            @endif
                         </td>
                         <td><a href='{{route("rooms.edit", $room->id)}}' class="btn btn-outline-success">EDIT</a></td>
                         <td>
