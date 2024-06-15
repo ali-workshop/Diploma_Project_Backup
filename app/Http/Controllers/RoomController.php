@@ -8,6 +8,7 @@ use App\Models\Room;
 use App\Models\RoomType;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
+use App\Events\EndingSoonEvent;
 use Illuminate\Support\Facades\Log;
 use App\Http\Traits\UploadImageTrait;
 use App\Http\Requests\DateRangeRequest;
@@ -320,7 +321,31 @@ class RoomController extends Controller
             Log::error('Error in RoomController@showReservedRoomsInPeriod: ' . $e->getMessage());
             return redirect()->route('rooms.index')->with('error', $e->getMessage());
         }
-        }       
+        } 
+
+        public function roomsEndingIn24Hours()
+         {
+        $now = Carbon::now();
+        $endIn24Hours = $now->copy()->addDay();
+
+        $reservationsEndingIn24Hours = Reservation::where('end_date', '>=', $now)
+            ->where('end_date', '<=', $endIn24Hours)
+            ->with('room', 'user')
+            ->get();
+
+        foreach ($reservationsEndingIn24Hours as $reservation) {
+            event(new EndingSoonEvent($reservation));
+        }
+
+        $rooms = $reservationsEndingIn24Hours->map(function ($reservation) {
+            $room = $reservation->room;
+         $room->user_name = $reservation->user->name;
+        return $room;
+        });
+
+        return view('Admin.pages.dashboard.rooms.ending_soon', compact('rooms'));
+    } 
+        
 }
 
 

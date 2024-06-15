@@ -16,29 +16,26 @@ class ReservationEventController extends Controller
     use ApiResponserTrait;
 
     public function reservationEvents(Reservation $reservation)
-    {
-        try {
-            $reservationStatusOverTime = [];
-            $reservationEvents = ReservationStatusEvent::where('reservation_id', $reservation->id)->get();
+    {   
+        # ALI and TUKA achieve this logic within best practice ways (Relation Eager + map functionality)
 
-            foreach ($reservationEvents as $reservationEvent) {
-                $reservationCurrentStatus=ReservationStatusCatlog::where(
-                    'id',$reservationEvent->reservation_status_catlog_id)
-                    ->pluck('name')
-                    ->first();
-                $reservationCurrentEventDate = $reservationEvent
-                ->created_at
-                ->format('d-m-Y H:i:s');
-                $reservationStatusOverTime[] = [
-                    'currentStatus' => $reservationCurrentStatus,
-                    'currentEventDate' => $reservationCurrentEventDate,
-                ];
-            }
+        try {
             
-            return $this->successResponse($reservationStatusOverTime, 'Reservation Events Returned Successfully');
-        } catch (Throwable $th) {
-            return $this->errorResponse('Server error probably.', [$th->getMessage()], 500);
-        }
+            $reservationEvents = ReservationStatusEvent::with('reservationStatusCatalogs')
+                                ->where('reservation_id', $reservation->id)
+                                ->get();
+            $reservationStatusOverTime = [];
+
+            $reservationStatusOverTime = $reservationEvents->map(function ($reservationEvent) {
+                    return [
+                        'currentStatus' => $reservationEvent->reservationStatusCatalogs->name,
+                        'currentEventDate' => $reservationEvent->created_at->format('d-m-Y H:i:s'),
+                    ];
+                })->toArray(); 
+                return $this->successResponse($reservationStatusOverTime, 'Reservation Events Returned Successfully');
+              } catch (Throwable $th) {
+                return $this->errorResponse('Server error probably.', [$th->getMessage()], 500);
+                                    }
     }
 
 }

@@ -399,6 +399,7 @@
                     @yield('create.roomType')
                     @yield('edit.roomType')
                     @yield('show.roomType')
+                    @yield('ending_soon.rooms')
                 </div>
                 <!-- /.container-fluid -->
 
