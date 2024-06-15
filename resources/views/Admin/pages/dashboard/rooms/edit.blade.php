@@ -92,12 +92,14 @@
                 <!-- Display existing images with delete option -->
                 <div class="row mb-3">
                     <div class="col-md-6">
-                        @foreach (json_decode($room->images,true) as $image)
-                            <div id="Existing-images">
-                                <img src={{asset('images/'.$image)}} alt="room {{$room->code}}">
-                                <span class="remove-image" onclick="removeImage(this,'{{$image}}')">X</span>
-                            </div> 
-                        @endforeach
+                        @if ($room->images)
+                            @foreach (json_decode($room->images,true) as $image)
+                                <div id="Existing-images">
+                                    <img src={{asset('images/'.$image)}} alt="room {{$room->code}}">
+                                    <span class="remove-image" onclick="removeImage(this,'{{$image}}')">X</span>
+                                </div> 
+                            @endforeach
+                        @endif
                     </div>
                 </div>
 
