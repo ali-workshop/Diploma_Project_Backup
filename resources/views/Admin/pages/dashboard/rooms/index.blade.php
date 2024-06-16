@@ -196,7 +196,7 @@
     </script>
 @endsection
 
-        </script>
+        {{-- </script>
         </body>
         <br>
         <div class="container">
@@ -248,4 +248,4 @@
     </div>
 </div>
 @endsection
-
+ --}}
