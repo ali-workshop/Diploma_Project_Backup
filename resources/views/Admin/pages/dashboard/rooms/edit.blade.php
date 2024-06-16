@@ -92,12 +92,14 @@
                 <!-- Display existing images with delete option -->
                 <div class="row mb-3">
                     <div class="col-md-6">
-                        @foreach (json_decode($room->images,true) as $image)
-                            <div id="Existing-images">
-                                <img src={{asset('images/'.$image)}} alt="room {{$room->code}}">
-                                <span class="remove-image" onclick="removeImage(this,'{{$image}}')">X</span>
-                            </div> 
-                        @endforeach
+                        @if ($room->images)
+                            @foreach (json_decode($room->images,true) as $image)
+                                <div id="Existing-images">
+                                    <img src={{asset('images/'.$image)}} alt="room {{$room->code}}">
+                                    <span class="remove-image" onclick="removeImage(this,'{{$image}}')">X</span>
+                                </div> 
+                            @endforeach
+                        @endif
                     </div>
                 </div>
 
@@ -132,7 +134,11 @@
                     <div class="col-md-6">
                         <select name="status" id="status" class="form-control @error('status') is-invalid @enderror">
                             <option value="available" {{ $room->status == 'available' ? 'selected' : '' }}>Available</option>
+
                             <option value="unavailable" {{ $room->status == 'booked' ? 'selected' : '' }}>unavailable</option>
+
+                            <option value="unavailable" {{ $room->status == 'unavailable' ? 'selected' : '' }}>UnaVailable</option>
+
                         </select>
                         @error('status')
                         <span class="invalid-feedback" role="alert">

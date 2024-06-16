@@ -64,8 +64,8 @@ class RoomController extends Controller
     {   
         $validatedData=$request->validated();
         //compute room cost per night
-        $typeOThisRoom=RoomType::find($request->room_type);
-        $sumPricesOfAllAvailableServices=$typeOThisRoom->services->sum('price');
+        $typeOfThisRoom=RoomType::find($request->room_type);
+        $sumPricesOfAllAvailableServices=$typeOfThisRoom->services->sum('price');
         //
         if($request->has('images')){
             $roomImages=array();
@@ -83,7 +83,7 @@ class RoomController extends Controller
             "description" => $validatedData['description'],
             "images" =>  json_encode($roomImages),
             "status" => $validatedData['status'],
-            "price" => $typeOThisRoom->price +$sumPricesOfAllAvailableServices,
+            "price" => $typeOfThisRoom->price +$sumPricesOfAllAvailableServices,
         ]);
 
         return redirect()->route('rooms.index');

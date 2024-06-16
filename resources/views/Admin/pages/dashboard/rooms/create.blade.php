@@ -86,7 +86,11 @@
                         <div class="col-md-6">
                             <select name="status" id="status" class="form-control @error('status') is-invalid @enderror">
                                 <option value="available" {{ old('status') === 'available' ? 'selected' : '' }}>Available</option>
+
                                 <option value="unavailable" {{ old('status') === 'booked' ? 'selected' : '' }}>unavailable</option>
+
+                                <option value="booked" {{ old('status') === 'unavailable' ? 'selected' : '' }}>UnAvailable</option>
+
                             </select>
                             @error('status')
                             <span class="invalid-feedback" role="alert">

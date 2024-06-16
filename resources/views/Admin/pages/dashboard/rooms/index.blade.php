@@ -187,6 +187,7 @@
                 $('#filterForms').html(formContent);
             });
 
+
             $('#collapseIndicator').click(function() {
                 $('#filterCard').toggle();
                 $(this).text($(this).text() === '^' ? 'v' : '^');
@@ -194,3 +195,57 @@
         });
     </script>
 @endsection
+
+        </script>
+        </body>
+        <br>
+        <div class="container">
+            <table class="table-bordered table-hover table-image"  id="dataTable">
+                <thead>
+                    <tr>
+                        <th class="col-md-1">#</th>
+                        <th class="col-md-1">Room type</th>
+                        <th class="col-md-1">Room code</th>
+                        <th class="col-md-1">Floor Number</th>
+                        <th class="col-md-1">Description</th>
+                        <th class="col-md-1">status</th>
+                        <th class="col-md-1">Price</th>
+                        <th class="col-md-3">Images</th>
+                        <th class="col-md-1">Edit</th>
+                        <th class="col-md-1">Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($rooms as $room)
+                    <tr>
+                        <td>{{ $loop->iteration}}</td>
+                        <td>{{ $room->roomType->name}}</td>
+                        <td><a href='{{route("rooms.show", $room->id)}}'>{{ $room->code}}</a></td>
+                        <td>{{ $room->floorNumber}}</td>
+                        <td>{{ $room->description}}</td>
+                        <td>{{ $room->status}}</td>
+                        <td>{{ $room->price}}</td>
+                        <td>
+                            @if ($room->images)
+                                @foreach (json_decode($room->images,true) as $image)
+                                    <img src="{{asset('images/'.$image )}}" alt="{{ $room->code }}" style="max-width:50%; height: auto; padding:5px; display:inline; float:left;" class="img-responsive">
+                                @endforeach
+                            @endif
+                        </td>
+                        <td><a href='{{route("rooms.edit", $room->id)}}' class="btn btn-outline-success">EDIT</a></td>
+                        <td>
+                            <form action="{{ route('rooms.destroy', $room->id) }}" method="POST">
+                                @csrf
+                                @method ('DELETE')
+                                <button type="submit" class="btn btn-outline-danger">DELETE</button>
+                            </form>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+@endsection
+

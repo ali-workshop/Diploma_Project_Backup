@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('code');
             $table->integer('floorNumber');
             $table->text('description');
-            $table->json('images');
+            $table->json('images')->nullable();
             $table->enum('status', ['available', 'unavailable'])->default('available');
             $table->decimal('price', 8, 2);
             $table->timestamps();

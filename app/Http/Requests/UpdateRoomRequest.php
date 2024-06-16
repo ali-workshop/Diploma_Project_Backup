@@ -23,7 +23,8 @@ class UpdateRoomRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'code' =>['nullable' ,'string','max:100',Rule::unique('rooms')->ignore($this->room)],
+            'code' =>['nullable' ,'string','regex:/^([0-9]|[1-9][0-9])[A-D]?([0-9]|1[0-5])\b$/','max:100',
+                        Rule::unique('rooms')->ignore($this->room)],
             'floorNumber' => 'nullable|numeric|integer|max:15',
             'description' => 'nullable|string|max:800',
             'images' => 'nullable|image',
