@@ -22,9 +22,9 @@ class UpdateServicesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:100',
+            'name' => 'required|string|max:100|regex:/^(?=.*[a-zA-Z])[a-zA-Z0-9\s\-]+$/',
             'price' => 'required|numeric|between:0,9999.99',
-            'description' => 'required|string|max:800',
+            'description' => 'required|string|max:800|regex:/^(?=.*[a-zA-Z])[a-zA-Z0-9\s\-]+$/',
             'img' => 'required|image|mimes:jpg,png,jpeg,gif',
         ];
     }
