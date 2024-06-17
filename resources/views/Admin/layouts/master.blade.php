@@ -59,29 +59,28 @@
             <div class="sidebar-heading">
                 Hotel Reservation Panel
             </div>
-
             <!-- Nav Item - Rooms Section Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fa-solid fa-door-open"></i>
+                <a class="nav-link " href="#" data-toggle="collapse" data-target="#collapseRooms"
+                    aria-expanded="true" aria-controls="collapseRooms">
+                    <i class="fas fa-house"></i>
                     <span>Manage Rooms</span>
                 </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div id="collapseRooms" class="collapse" aria-labelledby="headingRooms"
+                    data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Rooms:</h6>
                         <a class="collapse-item" href="{{ route('rooms.create') }}">Create New Room</a>
                         <a class="collapse-item" href="{{ route('rooms.index') }}">all rooms</a>
                         <a class="collapse-item" href="{{ route('rooms.available.current') }}">Current Available Rooms</a>
                         <a class="collapse-item" href="{{ route('rooms.reserved.current') }}">Current Reserved Rooms</a>
-                       
                     </div>
                 </div>
             </li>
             
             <!-- Nav Item - Booking section Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBooking"
+                <a class="nav-link " href="#" data-toggle="collapse" data-target="#collapseBooking"
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fa-solid fa-file-invoice-dollar"></i>                    
                     <span>Booking Section</span>
@@ -95,11 +94,12 @@
                     </div>
                 </div>
             </li>
+
             <!-- Nav Item - Room Types Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fa-solid fa-key"></i>
+                    <i class="fas fa-bed"></i>
                     <span>Room Types</span>
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
@@ -112,6 +112,24 @@
                     </div>
                 </div>
             </li>
+
+            <!-- Nav Item - Guests Section Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGuests"
+                    aria-expanded="true" aria-controls="collapseGuests">
+                    <i class="fas fa-user-group"></i>
+                    <span>Guest Management</span>
+                </a>
+                <div id="collapseGuests" class="collapse " aria-labelledby="headingTwo" 
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Guests:</h6>
+                        <a class="collapse-item" href="{{ route('guests.index') }}">Guest List</a>
+                        <a class="collapse-item" href="{{ route('guests.create') }}">add new guest Info</a>
+                    </div>
+                </div>
+            </li>
+
             <!-- Divider -->
             {{-- <hr class="sidebar-divider"> --}}
 
@@ -127,7 +145,7 @@
                     <i class="fa-solid fa-utensils"></i>
                     <span>Room Services</span>
                 </a>
-                <div id="collapsePages" class="collapse show" aria-labelledby="headingPages"
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{ route('services.index') }}">All Services</a>
@@ -143,7 +161,7 @@
                     <i class="fa-solid fa-utensils"></i>
                     <span>Users Management</span>
                 </a>
-                <div id="collapsePages" class="collapse show" aria-labelledby="headingPages"
+                <div id="collapsePages" class="collapse " aria-labelledby="headingPages"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{ route('users.index') }}">All Users</a>
@@ -158,7 +176,7 @@
                     <i class="fa-solid fa-envelope"></i>
                     <span>Messages</span>
                 </a>
-                <div id="collapseMessages" class="collapse show" aria-labelledby="headingMessages"
+                <div id="collapseMessages" class="collapse " aria-labelledby="headingMessages"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{ route('messages.index') }}">All Messages</a>
@@ -420,6 +438,10 @@
                     @yield('create.roomType')
                     @yield('edit.roomType')
                     @yield('show.roomType')
+                    @yield('index.guests')
+                    @yield('create.guests')
+                    @yield('edit.guests')
+                    @yield('show.guests')
                 </div>
                 <!-- /.container-fluid -->
 

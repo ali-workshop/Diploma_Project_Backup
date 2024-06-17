@@ -24,7 +24,8 @@ class StoreGuestRequest extends FormRequest
         return [
             'name' => 'required|string|max:100',
             'birthDate' => 'required|date',
-            'identificationNumber' => 'required|string|max:50|unique',
+            'phone_number' => 'nullable|string|regex:/^[0-9]{10}$/',
+            'identificationNumber' => 'required|string|max:50|unique:guests',
         ];
     }
 }

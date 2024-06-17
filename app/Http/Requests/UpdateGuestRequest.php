@@ -24,7 +24,8 @@ class UpdateGuestRequest extends FormRequest
         return [
             'name' => 'nullable|string|max:100',
             'birthDate' => 'nullable|date',
-            'identificationNumber' => 'nullable|string|max:50',
+            'phone_number' => 'nullable|string|regex:/^[0-9]{10}$/',
+            'identificationNumber' => 'nullable|string|max:50|unique:guests',
         ];
     }
 }

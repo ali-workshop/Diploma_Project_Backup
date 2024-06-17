@@ -12,6 +12,9 @@
 
 <!-- DataTales -->
 <div class="card shadow mb-1" >
+    @if(session('status'))
+        <div class="alert alert-success">{{ session('status') }}</div>
+    @endif
     <div class="card-header py-2">
     <a href="{{ route('rooms.create') }}" class="btn btn-primary">New Room</a>
     <a href="{{ route('rooms.ending-in-24-hours') }}" class="btn btn-primary">Rooms that expire after 24 hours</a>

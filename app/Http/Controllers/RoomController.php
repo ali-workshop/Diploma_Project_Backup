@@ -85,8 +85,7 @@ class RoomController extends Controller
             "status" => $validatedData['status'],
             "price" => $typeOfThisRoom->price +$sumPricesOfAllAvailableServices,
         ]);
-
-        return redirect()->route('rooms.index');
+        return redirect()->route('rooms.index')->with('status','Guest Created Successfully');
     }
 
     /**
@@ -143,7 +142,7 @@ class RoomController extends Controller
             $room->description = $request->description ?? $room->description;
             $room->images = json_encode($existingImages);// Encode the updated images array to JSON and save to the database
             $room->save();
-            return redirect()->route('rooms.index')->with('success', 'Room updated successfully!');
+            return redirect()->route('rooms.index')->with('status', 'Room updated successfully!');
 
         } catch (\Exception $e) {
             Log::error('Error in RoomController@update: ' . $e->getMessage());

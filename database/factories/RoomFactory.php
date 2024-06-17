@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Models\Service;
 use App\Models\RoomType;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\File;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Room>
@@ -17,7 +17,7 @@ class RoomFactory extends Factory
      * @return array<string, mixed>
      */
     
-     function generateRoomDescription(string $roomTypeName): string {
+    function generateRoomDescription(string $roomTypeName): string {
         $roomTypeInstanses=RoomType::all();
         $roomType = $roomTypeInstanses->firstWhere('name', $roomTypeName);
         //$roomType=roomType::where('name',"LIKE",$roomTypeName)->first();
@@ -48,6 +48,18 @@ class RoomFactory extends Factory
             ? implode(' ', $descriptions[$roomTypeName])
             : $roomType->description;
     }
+    // select random images with count between 1 and 6 images per room from specific directory
+    function selectRandomImages($directory){
+        $imageFiles = File::files($directory);
+        $imageFilesArray = array_values($imageFiles);
+        $numberOfImagesToSelect = rand(1,6);
+        $selectedImages = array_rand($imageFilesArray,$numberOfImagesToSelect);
+        $selectedPaths = [];
+        foreach ((array) $selectedImages as $index) {
+            $selectedFilenames[] = 'rooms/'.$imageFilesArray[$index]->getFilename();
+        }
+        return $selectedFilenames;
+    }
 
     public function definition(): array
     {   
@@ -67,14 +79,15 @@ class RoomFactory extends Factory
         $floor=$this->faker->numberBetween(0,15);
         // Regular expression for a room code format
         $roomCodePattern = '/([0-9]|[1-9][0-9])[A-D]?$/';
-        $floor=$this->faker->numberBetween(1,15);
+
+        $roomImages=$this->selectRandomImages(public_path('images/rooms'));
 
         return [
             'room_type_id' => $roomTypeId,
             'code'=>$this->faker->regexify($roomCodePattern).$floor,
             'floorNumber'=> $floor, 
             'description'=> $this->generateRoomDescription($roomType->name),
-            //'images'=> $this->faker->imageUrl(),
+            'images'=> json_encode($roomImages),
             'status'=>$selectedStatus, 
             'price'=> $roomType->price + $sumPricesOfAllAvailableServices, 
         ];

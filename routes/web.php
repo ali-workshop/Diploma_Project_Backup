@@ -12,6 +12,7 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\RoomTypeController;
 use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\Admin\adminController;
+use App\Http\Controllers\GuestController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ReservationStatusEventController;
 
@@ -46,6 +47,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::resource('/roomType', RoomTypeController::class);
     Route::resource('/reservation', ReservationController::class);
     Route::resource('/users', UserController::class);
+    Route::resource('guests', GuestController::class);
 
 Route::get('/current/bookings/room/Guests',[RoomController::class,'showCurrnetOccupiedRoomsWithguests'])->name('today.Bookings.Rooms.guests');
 Route::get('/current/available/rooms',[RoomController::class,'showCurrnetAvailableRooms'])->name('rooms.available.current');

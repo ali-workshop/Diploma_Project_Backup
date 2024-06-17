@@ -9,10 +9,13 @@ class Guest extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'identificationNumber',  
         'name',
         'birthDate',
-        'identificationNumber',  
+        'phone_number',
     ];
+
+    protected $dates = ['birthDate'];
 
     public function reservations()
     {
