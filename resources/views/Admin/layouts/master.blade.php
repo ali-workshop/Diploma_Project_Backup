@@ -11,19 +11,23 @@
     <title>Hotel Reservation Control Panel</title>
 
     <!-- Custom fonts for this template-->
-    {{-- <link href="{{asset('assets/vendor/fontawsome/css/all.min.css')}}" rel="stylesheet" type="text/css"> --}}
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet"
         type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-
     <!-- Custom styles for this template-->
     <link href="{{ asset('assets/css/sb-admin-2.css') }}" rel="stylesheet">
     <!-- Custom styles for this page -->
     <link href="{{ asset('assets/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+    <!-- clock style -->
+    <style>
+         #live-clock,#live-clock1 {
+            font-size: 1.2rem;
+            font-weight: bold;
+        } 
+    </style>
 </head>
 
 <body id="page-top">
@@ -72,25 +76,26 @@
                         <h6 class="collapse-header">Rooms:</h6>
                         <a class="collapse-item" href="{{ route('rooms.create') }}">Create New Room</a>
                         <a class="collapse-item" href="{{ route('rooms.index') }}">all rooms</a>
-                        <a class="collapse-item" href="{{ route('rooms.available.current') }}">Current Available Rooms</a>
+                        <a class="collapse-item" href="{{ route('rooms.available.current') }}">Current Available
+                            Rooms</a>
                         <a class="collapse-item" href="{{ route('rooms.reserved.current') }}">Current Reserved Rooms</a>
-                       
+
                     </div>
                 </div>
             </li>
-            
+
             <!-- Nav Item - Booking section Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBooking"
                     aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fa-solid fa-file-invoice-dollar"></i>                    
+                    <i class="fa-solid fa-file-invoice-dollar"></i>
                     <span>Booking Section</span>
                 </a>
                 <div id="collapseBooking" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Booking:</h6>
-                        <a class="collapse-item" href="{{route('reservation.index')}}">Reservations List</a>
+                        <a class="collapse-item" href="{{ route('reservation.index') }}">Reservations List</a>
                         <a class="collapse-item" href="#"></a>
                     </div>
                 </div>
@@ -193,21 +198,15 @@
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
                     </button>
-
-                    <!-- Topbar Search -->
-                    {{-- <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                     --}}
-
-
+                    <!-- Clock on the left side -->
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link">
+                                <i id="live-clock1" class="fas fa-clock text-info"></i>
+                                <span id="live-clock" class="ml-2 text-dark"></span>
+                            </a>
+                        </li>
+                    </ul>
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
@@ -400,7 +399,6 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
                     <!-- Page Heading -->
                     @yield('index.users')
                     @yield('create.users')
@@ -487,6 +485,24 @@
 
     <!-- Page level custom scripts -->
     <script src="{{ asset('assets/js/demo/datatables-demo.js') }}"></script>
+    <!-- Script for live time -->
+    <script>
+        function updateClock() {
+            var now = new Date();
+            var hours = now.getHours();
+            var minutes = now.getMinutes();
+            var seconds = now.getSeconds();
+            var ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12; // the hour '0' should be '12'
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            var strTime = hours + ':' + minutes + ':' + seconds + ' ' + ampm;
+            document.getElementById('live-clock').textContent = strTime;
+        }
+        setInterval(updateClock, 1000);
+        updateClock(); // initial call to set the clock immediately
+    </script>
 
 </body>
 

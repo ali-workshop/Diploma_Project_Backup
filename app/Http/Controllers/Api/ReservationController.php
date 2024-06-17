@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use Carbon\Carbon;
 use App\Models\Room;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
@@ -11,63 +12,48 @@ use App\Http\Traits\ApiResponserTrait;
 use App\Http\Traits\ApiReservationTrait;
 use App\Http\Resources\ReservationResource;
 use App\Http\Requests\StoreReservationRequest;
-
-
+use App\Http\Requests\UpdateReservationRequest;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ReservationController extends Controller
 {
     use ApiResponserTrait, ApiReservationTrait;
 
-    /**
-     * Display a listing of the resource.
-     */
-
     public function index()
     {
+        // return all reservations of the auth user he/she has ever made 
         try {
             $userId = auth('sanctum')->user()->id;
             $reservations = Reservation::where('user_id', $userId)->get();
             $reservationData = ReservationResource::collection($reservations)->toArray(request());
             return $this->successResponse($reservationData, 'All Your reservations', 200);
         } catch (\Exception $e) {
-            $errorMessage = "Error in ReservationController@index: " . $e->getMessage();
-            Log::error($errorMessage);
-            $errorData = [
-                'exception_class' => get_class($e),
-                'exception_message' => $e->getMessage(),
-                'exception_trace' => $e->getTraceAsString(),
-            ];
-            return $this->errorResponse('An error occurred while bringing user reservations.', $errorData, 500);
+            return $this->handleException($e, 'An error occurred while bringing user reservations.');
         }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreReservationRequest $request)
     {
         try {
             $request->validated();
             $user = auth('sanctum')->user();
-            $room = Room::find($request->room_id);
-            return $this->ReservationHandle($user, $room,  $request);
+            $room = Room::findOrFail($request->room_id);
+            return $this->ReservationHandle($user, $room, $request);   // all the logic of handling all senatrios of the request will be handled there and if no issues then it would make new reservation
+        } catch (ModelNotFoundException $e) {
+            return $this->errorResponse('Room not found.', [], 404);
         } catch (\Exception $e) {
-            Log::error('Error in ReservationController@store: ' . $e->getMessage());
-            return $this->errorResponse('An error occurred while creating the reservation.', [], 500);
+            return $this->handleException($e, 'An error occurred while creating the reservation.');
         }
     }
 
-
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        
+       
     }
-    
+
     public function MyLatestReservation()
-    {
+    { 
+        //returns the lastest reservation the auth user has made 
         try {
             $userId = auth('sanctum')->user()->id;
             $latestReservation = Reservation::where('user_id', $userId)->orderByDesc('created_at')->first();
@@ -78,30 +64,61 @@ class ReservationController extends Controller
                 return $this->errorResponse('No reservation found for the user.', [], 404);
             }
         } catch (\Exception $e) {
-            $errorMessage = "Error in ReservationController@showMyLatestReservation: " . $e->getMessage();
-            Log::error($errorMessage);
-            $errorData = [
-                'exception_class' => get_class($e),
-                'exception_message' => $e->getMessage(),
-                'exception_trace' => $e->getTraceAsString(),
-            ];
-            return $this->errorResponse('An error occurred while fetching the latest reservation.', $errorData, 500);
+            return $this->handleException($e, 'An error occurred while fetching the latest reservation.');
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
-        //
+        // allowing the user to update the reservation if the reservation hasn't passed 24h since it was made 
+        try {
+            $user = auth('sanctum')->user();
+            $reservation = Reservation::where('id', $id)->first();
+            $this->validateReservationUpdate($reservation);
+            $room = Room::findOrFail($request->room_id);
+            return $this->ReservationHandle($user, $room, $request, $reservation);
+        } catch (ModelNotFoundException $e) {
+            return $this->errorResponse('Reservation or room not found.', [], 404);
+        } catch (\Exception $e) {
+            return $this->handleException($e, 'An error occurred while updating the reservation.');
+        }
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
+    
     public function destroy(string $id)
     {
-        //
+        // allowing the user to delete the reservation if the reservation hasn't passed 24h since it was made 
+        try {
+            $user = auth('sanctum')->user();
+            $reservation = Reservation::where('user_id', $user->id)->where('id', $id)->firstOrFail();
+            $this->validateReservationUpdate($reservation);
+            $reservation->delete();
+            return $this->successResponse([], 'Reservation deleted successfully.', 200);
+        } catch (ModelNotFoundException $e) {
+            return $this->errorResponse('Reservation not found.', [], 404);
+        } catch (\Exception $e) {
+            return $this->handleException($e, 'An error occurred while deleting the reservation.');
+        }
+    }
+
+    private function handleException(\Exception $e, string $message)
+    {
+        $errorMessage = "Error in " . __METHOD__ . ": " . $e->getMessage();
+        Log::error($errorMessage);
+        $errorData = [
+            'exception_class' => get_class($e),
+            'exception_message' => $e->getMessage(),
+        ];
+        return $this->errorResponse($message, $errorData, 500);
+    }
+
+    private function validateReservationUpdate($reservation)
+    {
+        $createdAt = Carbon::parse($reservation->created_at);
+        $now = Carbon::now();
+        $timeDifference = $now->diffInHours($createdAt);
+
+        if ($timeDifference >= 24) {
+            throw new \Exception('Sorry, you cannot update or delete your reservation after 24 hours.');
+        }
     }
 }

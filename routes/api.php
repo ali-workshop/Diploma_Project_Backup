@@ -49,6 +49,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/reservation/MyLastestReservation', [ReservationController::class, 'MyLatestReservation']);
     Route::get('/reservation', [ReservationController::class, 'index']);
     Route::post('/reservation', [ReservationController::class, 'store']);
+    Route::put('/reservation/{id}', [ReservationController::class, 'update']);
+    Route::delete('/reservation/{id}', [ReservationController::class, 'destroy']);
 });
 Route::post('/contacts', [ContactController::class, 'store']);
 Route::post('/messages', [MessageController::class, 'store']);

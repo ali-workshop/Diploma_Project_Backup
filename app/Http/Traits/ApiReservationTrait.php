@@ -6,55 +6,87 @@ use Carbon\Carbon;
 use App\Models\Reservation;
 use App\Http\Traits\ApiResponserTrait;
 
-trait ApiReservationTrait 
+trait ApiReservationTrait
 {
     use ApiResponserTrait;
 
-    protected function ReservationHandle($user, $room, $request)
-    { 
-        // checking the date format of the request and if it is (2024-1-1) not (2024-01-01) for example then fix it // 
-        $request->merge([
-            'start_date' => $this->checkFormatDate($request->start_date),
-            'end_date' => $this->checkFormatDate($request->end_date),
-        ]);
 
+    protected function ReservationHandle($user, $room, $request, $reservation = null)
+    {
+        // check all datas issues senarios or if the room id doesn't exist then return the proper response
         $validationResponse = $this->validateReservationRequest($request, $room);
         if ($validationResponse !== true) {
             return $validationResponse;
         }
-
-        // API Response for Unavailable Room and Showing list of Reservations for this room During the time of the request //  
-        $roomAvailabilityData = $this->isRoomUnavailable($room->id, $request->start_date, $request->end_date);
-
+    
+        // if no issues with date then check if room is unavailable and if it is not available then return the proper response
+        // notice that in case of update the reservation then I pass the reservation in calling to except it and doesn't tell the user that the room he  trying to update is unavailable 
+        $roomAvailabilityData = $this->isRoomUnavailable($room->id, $request->start_date, $request->end_date, $reservation?->id);
+    
         if ($roomAvailabilityData['roomUnavailable']) {
-            return $this->errorResponse('Room is not available for the selected dates', [
-                'start_date' => $request->start_date,
-                'end_date' => $request->end_date,
-                'reservations' => $roomAvailabilityData['reservations']
-            ], 400);
+            return $this->errorResponse(
+                'Room is not available for the selected dates',
+                [
+                    'start_date' => $request->start_date,
+                    'end_date' => $request->end_date,
+                    'reservations that comes in your selected date ' => $roomAvailabilityData['reservations'],
+                    'all reservation dates of the selected room' => $roomAvailabilityData['all resevations for Room']
+                ],
+                400
+            );
         }
+        // if all is fine then either update the reservation if in Reservation handle the reservation is passed or then make new reservation 
+        $reservationResponse = $reservation
+            ? $this->updateReservation($user, $room, $request, $reservation)
+            : $this->makeNewReservation($user, $room, $request);
+        // return proper response depends if it is new reservation or updating existing reservation
+        return $this->successResponse(
+            $reservationResponse,
+            $reservation ? 'Reservation updated successfully.' : 'Reservation created successfully.',
+            $reservation ? 200 : 201
+        );
+    }
+    
+    protected function updateReservation($user, $room, $request, $reservation)
+    {
+        // before updating calculate the total price of the reservation
+        $days = $this->calculateDateTime($request->start_date, $request->end_date);
+        $total_price = $room->price * $days;
+        // call the method passing all informations needed to update the reservation
+        $this->fillReservationData($reservation, $user, $room, $request, $total_price);
+        $reservation->update();
 
-        /////////// information needed for making new reservation /////////////// 
-        $typeOThisRoom = $room->roomType;
-        $days = $this->CalculateDateTime($request->start_date, $request->end_date);
+        return $this->prepareReservationResponse($user, $reservation, $room, $days);
+    }
+
+    protected function makeNewReservation($user, $room, $request)
+    {
+        $days = $this->calculateDateTime($request->start_date, $request->end_date);
         $total_price = $room->price * $days;
 
-        ////////// making new Reservation after the request been validated ///////////
         $reservation = new Reservation();
+        $this->fillReservationData($reservation, $user, $room, $request, $total_price);
+        $reservation->code = $this->generateUniqueReservationCode();
+        $reservation->save();
+
+        return $this->prepareReservationResponse($user, $reservation, $room, $days);
+    }
+
+    private function fillReservationData($reservation, $user, $room, $request, $total_price)
+    {
         $reservation->user_id = $user->id;
         $reservation->room()->associate($room);
-        $reservation->code = $this->generateUniqueReservationCode();
         $reservation->guestNumber = $request->guestNumber;
         $reservation->start_date = $request->start_date;
         $reservation->end_date = $request->end_date;
         $reservation->totalPrice = $total_price;
-        $reservation->save();
+    }
 
-
-
-        //////// Prepare successful reservation response ////////////
-
-        $successfulReservationResponse = [
+    private function prepareReservationResponse($user, $reservation, $room, $days)
+    {
+        // the shape of response I want it to look like in Api response 
+        $typeOThisRoom = $room->roomType;
+        return [
             'user_name' => $user->name,
             'reservation_code' => $reservation->code,
             'guest_number' => $reservation->guestNumber,
@@ -68,21 +100,23 @@ trait ApiReservationTrait
                 'Room Price = (Room services price + Room Type price )' => $room->price,
                 'Nights of staying' => $days
             ],
-            'total_price = (Room services + Room Type price)*(Nights of staying)' => $reservation->totalPrice,
+            'total_price = (Room services + Room Type price) * (Nights of staying)' => $reservation->totalPrice,
         ];
-
-        return $this->successResponse($successfulReservationResponse, 'Reservation created successfully.', 201);
     }
-
 
     protected function checkFormatDate($date)
     {
+        // it would fix any form user input doesn't match with yyyy-mm-dd or oppisite order like dd-mm-yyyy
         return Carbon::parse($date)->format('Y-m-d');
     }
 
-
     protected function validateReservationRequest($request, $room)
     {
+        $request->merge([
+            'start_date' => $this->checkFormatDate($request->start_date),
+            'end_date' => $this->checkFormatDate($request->end_date),
+        ]);
+
         if (!$room) {
             return $this->errorResponse('Room not found', ['room_id' => null], 404);
         }
@@ -90,62 +124,71 @@ trait ApiReservationTrait
         $roomType = $room->roomType;
 
         if ($request->guestNumber > $roomType->capacity) {
-            return $this->errorResponse('The number of guests is greater than the capacity of the room', ['guestNumber' => $request->guestNumber, 'Room_Capacity' => $roomType->capacity], 400);
+            return $this->errorResponse('The number of guests exceeds the room capacity', ['guestNumber' => $request->guestNumber, 'Room_Capacity' => $roomType->capacity], 400);
         }
 
         if ($request->start_date > $request->end_date) {
-            return $this->errorResponse('The start date is after the the end date in time !!!', ['start_date' => $request->start_date], 400);
+            return $this->errorResponse('The start date is after the end date.', ['start_date' => $request->start_date], 400);
         }
 
         $currentDate = date('Y-m-d');
 
         if ($request->start_date < $currentDate) {
-            return $this->errorResponse('You have entered a start date in the past !!!!', ['start_date' => $request->start_date], 400);
+            return $this->errorResponse('The start date is in the past.', ['start_date' => $request->start_date], 400);
         }
 
         if ($request->end_date < $currentDate) {
-            return $this->errorResponse('The end date is the past !!!!', ['end_date' => $request->end_date], 400);
+            return $this->errorResponse('The end date is in the past.', ['end_date' => $request->end_date], 400);
         }
 
         if ($request->start_date == $request->end_date) {
-            return $this->errorResponse('The start date is equal to the end date, it must be at least one night', ['start_date' => $request->start_date], 400);
+            return $this->errorResponse('The start date is equal to the end date. The stay must be at least one night.', ['start_date' => $request->start_date], 400);
         }
 
         return true;
     }
 
-
-
-    protected function isRoomUnavailable($room_id, $start_date, $end_date)
+    
+    protected function isRoomUnavailable($room_id, $start_date, $end_date, $reservation_id = null)
     {
-        $reservations = Reservation::where('room_id', $room_id)
+        $query = Reservation::where('room_id', $room_id)
             ->where(function ($query) use ($start_date, $end_date) {
                 $query->whereBetween('start_date', [$start_date, $end_date])
                     ->orWhereBetween('end_date', [$start_date, $end_date])
                     ->orWhereRaw('? BETWEEN start_date AND end_date', [$start_date])
                     ->orWhereRaw('? BETWEEN start_date AND end_date', [$end_date]);
-            })
-            ->get();
-
+            });
+    
+        if ($reservation_id) {
+            $query->where('id', '!=', $reservation_id);
+        }
+    
+        $reservations = $query->select('start_date', 'end_date')->get();
+    
         $roomUnavailable = $reservations->isNotEmpty();
-
+        $allReservationForRoom = Reservation::where('room_id', $room_id)->select('start_date', 'end_date')->get();
+    
         return [
             'roomUnavailable' => $roomUnavailable,
             'reservations' => $reservations,
+            'all resevations for Room' => $allReservationForRoom,
         ];
     }
-
-
-    protected function CalculateDateTime($start_date, $end_date)
+    
+    protected function calculateDateTime($start_date, $end_date)
     {
+        // calcaulating days of staying so we can calculate the total price of reservation 
         $start = Carbon::parse($start_date);
         $end = Carbon::parse($end_date);
-        $daysDifference = $start->diffInDays($end);
-        return $daysDifference;
+        return $start->diffInDays($end);
     }
 
     protected function generateUniqueReservationCode()
     {
+        // make code in form starting like this A0001 and add 1 for new reservation 
+        // A0002 till it becomes A9999 then becomes B0001 and so on till Z9999
+        // in this case it would make a unique reservation code for every new reservation 
+
         $letters = range('A', 'Z');
         $letterIndex = 0;
         $number = 1;
@@ -170,13 +213,12 @@ trait ApiReservationTrait
         }
     }
 
-    
     public function roomsEndingIn24Hours($query)
     {
         $now = Carbon::now();
         $endIn24Hours = $now->copy()->addDay();
 
         return $query->where('end_date', '>=', $now)
-                     ->where('end_date', '<=', $endIn24Hours);
+            ->where('end_date', '<=', $endIn24Hours);
     }
 }

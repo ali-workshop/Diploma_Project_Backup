@@ -15,12 +15,13 @@ class ReservationResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'userName'     => $this->user->name,
-            'roomCode'     => $this->code,
-            'guestNumber'  => $this->guestNumber,
-            'totalPrice'   => $this->totalPrice,
-            'startDate'    => $this->start_date,
-            'endDate'      => $this->end_date,
+            'userName'             => $this->user->name,
+            'reservation Code'     => $this->code,
+            'room ID'              =>$this->room_id,
+            'guestNumber'          => $this->guestNumber,
+            'totalPrice'           => $this->totalPrice,
+            'startDate'            => $this->start_date,
+            'endDate'              => $this->end_date,
         ];
     }
 }
