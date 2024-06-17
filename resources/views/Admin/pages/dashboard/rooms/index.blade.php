@@ -1,14 +1,31 @@
 @extends('Admin.layouts.master')
 @section('index.rooms')
-<style>
+{{-- <style>
     .table-image {
-        td, th {
+
+        td,
+        th {
             vertical-align: middle;
         }
     }
-</style>
-<!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Hotel Rooms</h1>
+</style> --}}
+    <div class="container-fluid">
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Hotel Rooms</h1>
+            <div>
+                <a href="{{ route('rooms.create') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                    <i class="fas fa-plus fa-sm text-white-50"></i> New Room
+                </a>
+                <a href="{{ route('rooms.ending-in-24-hours') }}"
+                    class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                    <i class="fas fa-clock fa-sm text-white-50"></i> Rooms Expiring in 24 Hours
+                </a>
+            </div>
+        </div>
+        <!-- DataTales -->
+        {{-- <div class="card shadow mb-1">
+            <div class="card-body"> --}}
 
 <!-- DataTales -->
 <div class="card shadow mb-1" >
@@ -79,8 +96,8 @@
                                 <button type="submit" class="btn btn-outline-secondary">Filter</button>
                             </form>
                         `;
-                    } else if (selectedOption === 'reservedSpecificDate') {
-                        formContent = `
+                } else if (selectedOption === 'reservedSpecificDate') {
+                    formContent = `
                             <form action="{{ route('rooms.reserved.specificTime') }}" method="GET">
                                 <div class="form-group">
                                     <label for="specificDate">Select Date:</label>
@@ -89,8 +106,8 @@
                                 <button type="submit" class="btn btn-outline-secondary">Filter</button>
                             </form>
                         `;
-                    } else if (selectedOption === 'availablePeriod') {
-                        formContent = `
+                } else if (selectedOption === 'availablePeriod') {
+                    formContent = `
                             <form action="{{ route('rooms.available.period') }}" method="GET">
                                 <div class="form-group">
                                     <label for="start_range">Start Date:</label>
@@ -103,8 +120,8 @@
                                 <button type="submit" class="btn btn-outline-secondary">Filter</button>
                             </form>
                         `;
-                    } else if (selectedOption === 'reservedPeriod') {
-                        formContent = `
+                } else if (selectedOption === 'reservedPeriod') {
+                    formContent = `
                             <form action="{{ route('rooms.reserved.period') }}" method="GET">
                                 <div class="form-group">
                                     <label for="start_range">Start Date:</label>
@@ -117,19 +134,20 @@
                                 <button type="submit" class="btn btn-outline-secondary">Filter</button>
                             </form>
                         `;
-                    }
-        
-                   
-                    $('#filterForms').html(formContent);
-                });
-        
-               
-                $('#collapseIndicator').click(function() {
-                    $('#filterCard').toggle();
-                    $(this).text($(this).text() === '^' ? 'v' : '^'); 
-                });
+                }
+                $('#filterForms').html(formContent);
             });
-        </script>
+
+
+            $('#collapseIndicator').click(function() {
+                $('#filterCard').toggle();
+                $(this).text($(this).text() === '^' ? 'v' : '^');
+            });
+        });
+    </script>
+@endsection
+
+        {{-- </script>
         </body>
         <br>
         <div class="container">
@@ -181,3 +199,4 @@
     </div>
 </div>
 @endsection
+ --}}

@@ -40,6 +40,11 @@ class ServicesController extends Controller
     public function store(StoreServicesRequest $request)
     {
         try {
+            // Store image in session before validation to avoid re-upload it if there is any validation error
+            if ($request->hasFile('img')) {
+                $request->session()->put('img', $request->file('img'));
+            }
+
             $request->validated();
             $path = $this->storeImage($request->file('img'), 'services');
 
@@ -50,6 +55,9 @@ class ServicesController extends Controller
                     'description' => $request->description,
                     'img' => $path,
                 ]);
+                // Clear the image from the session after save the new service
+                $request->session()->forget('img');
+                
                 return redirect()->route('services.index')->with('success', 'Service created successfully!');
             }
             return redirect()->back()->with('error', 'Failed!. Image was not stored');

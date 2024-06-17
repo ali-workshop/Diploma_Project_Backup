@@ -154,17 +154,19 @@
                 </div>
             </li>
 
-            <!-- Nav Item - Room Services  Collapse Menu -->
+            <!-- Nav Item - User management  Collapse Menu -->
             <li class="nav-item ">
-                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fa-solid fa-utensils"></i>
+                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseUser"
+                    aria-expanded="true" aria-controls="collapseUser">
+                    <i class="fa-solid fa-user-plus"></i>
                     <span>Users Management</span>
                 </a>
                 <div id="collapsePages" class="collapse " aria-labelledby="headingPages"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('users.index') }}">All Users</a>
+                        <a class="collapse-item" href="{{ route('users.index') }}">Users</a>
+                        <a class="collapse-item" href="{{ route('users.create') }}">Add User</a>
+
                     </div>
                 </div>
             </li>
@@ -434,6 +436,8 @@
                     @yield('show.rooms')
                     @yield('ending_soon.rooms')
                     @yield('index.reservations')
+                    @yield('create.reservations')
+                    @yield('show.reservations')
                     @yield('index.roomType')
                     @yield('create.roomType')
                     @yield('edit.roomType')

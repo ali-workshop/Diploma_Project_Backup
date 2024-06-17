@@ -1,6 +1,6 @@
 @extends('Admin.layouts.master')
 
-@section('show.rooms')
+@section('show.reservations')
     <!-- Page Heading -->
     <h1 class="h3 mb-2 text-gray-800">Reservation Details</h1>
 
