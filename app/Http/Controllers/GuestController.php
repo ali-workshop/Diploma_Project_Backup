@@ -15,10 +15,10 @@ class GuestController extends Controller
     public function index()
     {   
         try{
-        $guests = Guest::with('reservations')
-            ->withCount('reservations')
-            ->latest()
-            ->paginate(20);
+            $guests = Guest::with('reservations')
+                ->withCount('reservations')
+                ->latest()
+                ->paginate(20);
             return view('Admin.pages.dashboard.guests.index', compact('guests'));
         }catch (\Exception $e) {
             Log::error('Error in GuestsController@index: ' . $e->getMessage());
@@ -40,13 +40,14 @@ class GuestController extends Controller
     public function store(StoreGuestRequest $request)
     {   
         try{
-        $validatedData=$request->validated();
-        $guest=Guest::create([
-            'name'=>$validatedData['name'],
-            'birthDate'=>$validatedData['birthDate'],
-            'identificationNumber'=> $validatedData['identificationNumber'],
-        ]);
-        return redirect()->route('guests.index')->with('status','Book Created Successfully');
+            $validatedData=$request->validated();
+            $guest=Guest::create([
+                'name'=>$validatedData['name'],
+                'birthDate'=>$validatedData['birthDate'],
+                'phone_number'=>$validatedData['phone_number'],
+                'identificationNumber'=> $validatedData['identificationNumber'],
+            ]);
+            return redirect()->route('guests.index')->with('status','Guest Created Successfully');
         }catch (\Exception $e) {
             Log::error('Error in GuestsController@store: ' . $e->getMessage());
             return redirect()->route('guests.index')->with('error', 'An error occurred: ' . $e->getMessage());
@@ -75,12 +76,14 @@ class GuestController extends Controller
     public function update(UpdateGuestRequest $request, Guest $guest)
     {   
         try{
-        $validated=$request->safe();
-        $guest->update([
-            "name"=>$validated->name ?? $guest->name,
-            "birthDate"=>$validated->birthDate ?? $guest->birthDate,
-            "identificationNumber"=> $validated->identificationNumber ?? $guest->identificationNumber,
-        ]);
+            $validated=$request->safe();
+            $guest->update([
+                "name"=>$validated->name ?? $guest->name,
+                "birthDate"=>$validated->birthDate ?? $guest->birthDate,
+                "phone_number"=>$validated->phone_number ?? $guest->phone_number,
+                "identificationNumber"=> $validated->identificationNumber ?? $guest->identificationNumber,
+            ]);
+            return redirect()->route('guests.index')->with('status','Guest Updateded Successfully');
         }catch (\Exception $e) {
             Log::error('Error in GuestsController@update: ' . $e->getMessage());
             return redirect()->route('guests.index')->with('error', 'An error occurred: ' . $e->getMessage());
