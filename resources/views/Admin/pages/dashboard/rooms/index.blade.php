@@ -1,6 +1,6 @@
 @extends('Admin.layouts.master')
 @section('index.rooms')
-{{-- <style>
+<style>
     .table-image {
 
         td,
@@ -8,7 +8,7 @@
             vertical-align: middle;
         }
     }
-</style> --}}
+</style>
     <div class="container-fluid">
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -145,9 +145,8 @@
             });
         });
     </script>
-@endsection
 
-        {{-- </script>
+        </script>
         </body>
         <br>
         <div class="container">
@@ -199,4 +198,4 @@
     </div>
 </div>
 @endsection
- --}}
+
