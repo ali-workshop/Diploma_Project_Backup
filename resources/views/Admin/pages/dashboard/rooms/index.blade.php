@@ -1,6 +1,17 @@
 @extends('Admin.layouts.master')
 @section('index.rooms')
 <style>
+    .read-more, .read-less {
+        display: inline-block;
+        margin-left: 5px;
+        font-size: 0.9em;
+        color: #007bff;
+        cursor: pointer;
+    }
+
+    .read-more:hover, .read-less:hover {
+        text-decoration: underline;
+    }
     .table-image {
 
         td,
@@ -169,7 +180,18 @@
                         <td>{{ $room->roomType->name}}</td>
                         <td><a href='{{route("rooms.show", $room->id)}}'>{{ $room->code}}</a></td>
                         <td>{{ $room->floorNumber}}</td>
-                        <td>{{ $room->description}}</td>
+                        <td>
+                            <div class="description-cell" id="description-{{ $room->id }}">
+                            {{ Str::limit($room->description, 50) }}
+                            @if (strlen($room->description) > 50)
+                                <span class="read-more" onclick="toggleDescription({{ $room->id }})">Read more</span>
+                            @endif
+                            </div>
+                            <div class="full-description-cell d-none" id="full-description-{{ $room->id }}">
+                                {{ $room->description }}
+                                <span class="read-less" onclick="toggleDescription({{ $room->id }})">Read less</span>
+                            </div>
+                        </td>
                         <td>{{ $room->status}}</td>
                         <td>{{ $room->price}}</td>
                         <td>
@@ -194,5 +216,18 @@
         </div>
     </div>
 </div>
+<script>
+    function toggleDescription(id) {
+        var shortDesc = document.getElementById('description-' + id);
+        var fullDesc = document.getElementById('full-description-' + id);
+        if (shortDesc.classList.contains('d-none')) {
+            shortDesc.classList.remove('d-none');
+            fullDesc.classList.add('d-none');
+        } else {
+            shortDesc.classList.add('d-none');
+            fullDesc.classList.remove('d-none');
+        }
+    }
+    </script>
 @endsection
 

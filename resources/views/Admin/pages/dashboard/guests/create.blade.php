@@ -4,7 +4,9 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Add Guest</div>
+                <div class="card-header">Add Guest
+                    <a href="{{route('guests.index')}}" class="btn btn-outline-danger" style="float:right;">X</a>
+                </div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('guests.store') }}">
@@ -45,7 +47,7 @@
                                 </span>
                             @enderror
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
                     </form>
                 </div>
             </div>

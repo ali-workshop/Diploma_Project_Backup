@@ -39,6 +39,7 @@
                 <h4 class="mb-3">Details</h4>
                 <p><strong>Room Number:</strong> {{ $room->code }}</p>
                 <p><strong>Room Type:</strong> {{ $room->roomType->name }}</p>
+                <p><strong>Services:</strong>  @foreach ($room->roomType->services as $service){{$service->name.' '.','}} @endforeach </p>
                 <p><strong>Floor:</strong> {{ $room->floorNumber }}</p>
                 <p><strong>Capacity:</strong> {{ $room->roomType->capacity }}</p>
                 <p><strong>Availability Status:</strong> {{ $room->status }}</p>
