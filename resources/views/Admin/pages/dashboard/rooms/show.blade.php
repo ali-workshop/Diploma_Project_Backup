@@ -45,6 +45,7 @@
                 <p><strong>Availability Status:</strong> {{ $room->status }}</p>
                 <p><strong>Description:</strong> {{ $room->description }}</p>
                 <p><strong>Price:</strong> {{ $room->price }}</p>
+                <a class="btn btn-outline-primary" href="{{ route('rooms.index') }}">Back</a>
             </div>
         </div>
     </div>   
