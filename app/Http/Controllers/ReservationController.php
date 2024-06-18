@@ -71,8 +71,9 @@ class ReservationController extends Controller
         event(new ReservationAttempting($room, $reservationStartDate));
         return view('reservation.index');
     }
-
-    /**
+    
+    
+     /**
      * Display the specified resource.
      */
 
