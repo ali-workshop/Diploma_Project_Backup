@@ -29,38 +29,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-<<<<<<< HEAD
-
-
-Route::group(['prefix'=>'v1'],function(){
-
-    Route::post('/auth/register', [AuthController::class, 'register']);
-    Route::post('/auth/login', [AuthController::class, 'login']);
-    
-    Route::group(['middleware' => ['auth:sanctum']], function () {
-    
-    Route::post('/auth/logout', [AuthController::class, 'logout']);
-    
-    Route::get('/reservation/events/{reservation}', [ReservationEventController::class, 'reservationEvents']);
-    
-    Route::get('/current/available/rooms',[RoomController::class,'showCurrnetAvailableRooms']);
-    Route::get('/available/rooms/specificTime',[RoomController::class,'showAvailableRoomsInSpecificTime']);
-    Route::get('/available/rooms/specificPeriod',[RoomController::class,'showAvailableRoomsInPeriod']);
-    Route::get('/current/reserved/rooms',[RoomController::class,'showCurrnetReservedRooms']);
-    Route::get('/reserved/rooms/specificTime',[RoomController::class,'showReservedRoomsInSpecificTime']);
-    Route::get('/reserved/rooms/specificPeriod',[RoomController::class,'showReservedRoomsInPeriod']);
-
-    });
-    });
-Route::post('/contacts',[ContactController::class,'store']);
-Route::post('/messages',[MessageController::class,'store']);
-Route::post('/reservation',[ReservationController::class,'store'])->middleware('auth:sanctum');
-Route::get('/services', [ServicesController::class, 'index']);
-Route::get('/services/{service}', [ServicesController::class, 'show']);
-
-
-Route::get('/roomType',[RoomTypeContoller::class,'index']);
-=======
 Route::group(['prefix' => 'v1'], function () {
     Route::post('/auth/register', [AuthController::class, 'register']);
     Route::post('/auth/login', [AuthController::class, 'login']);
@@ -91,4 +59,3 @@ Route::get('/services/{service}', [ServicesController::class, 'show']);
 Route::get('/roomType', [RoomTypeContoller::class, 'index']);
 Route::get('/rooms', [RoomController::class, 'index']); // for filter
 
->>>>>>> repoB/main

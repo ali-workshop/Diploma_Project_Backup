@@ -1,11 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Auth;
-<<<<<<< HEAD
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\RoomController;
-=======
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -13,20 +8,14 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RoomController;
 
 use App\Http\Controllers\UserController;
->>>>>>> repoB/main
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\RoomTypeController;
 use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\Admin\adminController;
-<<<<<<< HEAD
-use App\Http\Controllers\ReservationController;
-use Illuminate\Support\Facades\Mail;
-=======
 use App\Http\Controllers\GuestController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ReservationStatusEventController;
 
->>>>>>> repoB/main
 
 
 /*
@@ -44,25 +33,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-<<<<<<< HEAD
-=======
 
 
->>>>>>> repoB/main
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::group(['middleware' => ['auth', 'role:admin']], function () {
-<<<<<<< HEAD
-Route::get('/dashboard', [adminController::class, 'index'])->name('dashboard');
-Route::resource('/services', ServicesController::class);
-Route::resource('/messages', MessageController::class);
-Route::resource('/rooms', RoomController::class);
-Route::resource('/roomType', RoomTypeController::class);
-Route::resource('/reservation', ReservationController::class);
-
-=======
     Route::get('/dashboard', [adminController::class, 'index'])->name('dashboard');
     Route::resource('/services', ServicesController::class);
     Route::resource('/messages', MessageController::class);
@@ -73,7 +50,6 @@ Route::resource('/reservation', ReservationController::class);
     Route::resource('guests', GuestController::class);
 
 Route::get('/current/bookings/room/Guests',[RoomController::class,'showCurrnetOccupiedRoomsWithguests'])->name('today.Bookings.Rooms.guests');
->>>>>>> repoB/main
 Route::get('/current/available/rooms',[RoomController::class,'showCurrnetAvailableRooms'])->name('rooms.available.current');
 Route::get('/available/rooms/specificTime',[RoomController::class,'showAvailableRoomsInSpecificTime'])->name('rooms.available.specificTime');
 Route::get('/available/rooms/specificPeriod',[RoomController::class,'showAvailableRoomsInPeriod'])->name('rooms.available.period');
@@ -81,8 +57,4 @@ Route::get('/current/reserved/rooms',[RoomController::class,'showCurrnetReserved
 Route::get('/reserved/rooms/specificTime',[RoomController::class,'showReservedRoomsInSpecificTime'])->name('rooms.reserved.specificTime');
 Route::get('/reserved/rooms/specificPeriod',[RoomController::class,'showReservedRoomsInPeriod'])->name('rooms.reserved.period');
 Route::get('/ending-in-24-hours', [RoomController::class, 'roomsEndingIn24Hours'])->name('rooms.ending-in-24-hours');
-<<<<<<< HEAD
 });
-=======
-});
->>>>>>> repoB/main
