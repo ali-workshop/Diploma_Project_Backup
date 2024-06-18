@@ -18,11 +18,11 @@ trait ApiReservationTrait
         if ($validationResponse !== true) {
             return $validationResponse;
         }
-    
+
         // if no issues with date then check if room is unavailable and if it is not available then return the proper response
         // notice that in case of update the reservation then I pass the reservation in calling to except it and doesn't tell the user that the room he  trying to update is unavailable 
         $roomAvailabilityData = $this->isRoomUnavailable($room->id, $request->start_date, $request->end_date, $reservation?->id);
-    
+
         if ($roomAvailabilityData['roomUnavailable']) {
             return $this->errorResponse(
                 'Room is not available for the selected dates',
@@ -46,7 +46,7 @@ trait ApiReservationTrait
             $reservation ? 200 : 201
         );
     }
-    
+
     protected function updateReservation($user, $room, $request, $reservation)
     {
         // before updating calculate the total price of the reservation
@@ -148,33 +148,31 @@ trait ApiReservationTrait
         return true;
     }
 
-    
+
     protected function isRoomUnavailable($room_id, $start_date, $end_date, $reservation_id = null)
     {
         $query = Reservation::where('room_id', $room_id)
             ->where(function ($query) use ($start_date, $end_date) {
                 $query->whereBetween('start_date', [$start_date, $end_date])
-                    ->orWhereBetween('end_date', [$start_date, $end_date])
-                    ->orWhereRaw('? BETWEEN start_date AND end_date', [$start_date])
-                    ->orWhereRaw('? BETWEEN start_date AND end_date', [$end_date]);
+                    ->orWhereBetween('end_date', [$start_date, $end_date]);
             });
-    
+
         if ($reservation_id) {
             $query->where('id', '!=', $reservation_id);
         }
-    
+
         $reservations = $query->select('start_date', 'end_date')->get();
-    
+
         $roomUnavailable = $reservations->isNotEmpty();
         $allReservationForRoom = Reservation::where('room_id', $room_id)->select('start_date', 'end_date')->get();
-    
+
         return [
             'roomUnavailable' => $roomUnavailable,
             'reservations' => $reservations,
             'all resevations for Room' => $allReservationForRoom,
         ];
     }
-    
+
     protected function calculateDateTime($start_date, $end_date)
     {
         // calcaulating days of staying so we can calculate the total price of reservation 
