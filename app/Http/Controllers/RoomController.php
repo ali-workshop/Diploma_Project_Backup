@@ -38,8 +38,7 @@ class RoomController extends Controller
                         $query->where('name', 'like', '%' . $request->name . '%');
                     }
                 })
-                ->orderBy('floorNumber', 'asc')
-                ->paginate(20);
+                ->orderBy('floorNumber', 'asc')->get();
 
             return view('Admin.pages.dashboard.rooms.index', compact('rooms'));
         } catch (\Exception $e) {

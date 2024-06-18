@@ -19,7 +19,7 @@ class RoomTypeResource extends JsonResource
         'price'       => $this->price,
         'capacity'    => $this->capacity,
         'description' => $this->description,
-        'service'     => $this->services->pluck('name')
+        'services'     => $this->services->pluck('name')
         ];
     }
 }

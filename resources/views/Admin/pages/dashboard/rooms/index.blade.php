@@ -13,7 +13,6 @@
         text-decoration: underline;
     }
     .table-image {
-
         td,
         th {
             vertical-align: middle;
