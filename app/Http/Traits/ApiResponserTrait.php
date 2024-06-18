@@ -34,5 +34,25 @@ trait ApiResponserTrait{
             'code'     =>404
         ]);
     }
+<<<<<<< HEAD
+=======
+
+    protected function apiResponse($success,$message,$data=[],$statusCode=200){
+        return response()->json([
+            'success' => $success,
+            'message' => $message,
+            'data'=> $data,
+        ],$statusCode);
+    }
+    
+    protected function successResponseTest($message='success',$data=[],$statusCode=200){
+        return $this->apiResponse(true,$message,$data,$statusCode);
+    }
+
+    protected function errorResponseTest($message='Invalid',$statusCode=500){
+        return $this->apiResponse(false,$message,null,$statusCode);
+    }
+
+>>>>>>> repoB/main
 }
 

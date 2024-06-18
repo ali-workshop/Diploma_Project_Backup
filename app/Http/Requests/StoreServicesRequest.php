@@ -22,9 +22,15 @@ class StoreServicesRequest extends FormRequest
     public function rules(): array
     {
         return [
+<<<<<<< HEAD
             'name' => 'required|string|max:100',
             'price' => 'required|numeric|between:0,9999.99',
             'description' => 'required|string|max:800',
+=======
+            'name' => 'required|string|max:100|regex:/^(?=.*[a-zA-Z])[a-zA-Z0-9\s\-]+$/',
+            'price' => 'required|numeric|between:0,9999.99',
+            'description' => 'required|string|max:800|regex:/^(?=.*[a-zA-Z])[a-zA-Z0-9\s\-]+$/',
+>>>>>>> repoB/main
             'img' => 'required|image|mimes:jpg,png,jpeg,gif',
         ];
     }

@@ -2,9 +2,15 @@
 
 namespace Database\Factories;
 
+<<<<<<< HEAD
 use App\Models\Service;
 use App\Models\RoomType;
 use Illuminate\Database\Eloquent\Factories\Factory;
+=======
+use App\Models\RoomType;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\File;
+>>>>>>> repoB/main
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Room>
@@ -17,10 +23,17 @@ class RoomFactory extends Factory
      * @return array<string, mixed>
      */
     
+<<<<<<< HEAD
      function generateRoomDescription(string $roomTypeName): string {
         $roomTypeInstanses=RoomType::all();
         $roomType = $roomTypeInstanses->firstWhere('name', $roomTypeName);
         // $roomType=roomType::where('name',"LIKE",$roomTypeName)->first();
+=======
+    function generateRoomDescription(string $roomTypeName): string {
+        $roomTypeInstanses=RoomType::all();
+        $roomType = $roomTypeInstanses->firstWhere('name', $roomTypeName);
+        //$roomType=roomType::where('name',"LIKE",$roomTypeName)->first();
+>>>>>>> repoB/main
         $descriptions = [
             'Standard Single Room' => [
                 'This room is a standard single room, perfect for solo travelers.',
@@ -48,6 +61,7 @@ class RoomFactory extends Factory
             ? implode(' ', $descriptions[$roomTypeName])
             : $roomType->description;
     }
+<<<<<<< HEAD
     public function definition(): array
     {      
         
@@ -71,6 +85,50 @@ class RoomFactory extends Factory
             'img'=> $this->faker->imageUrl(),
             'status'=>$this->faker->randomElement(['booked','available']), 
             'price'=>$roomPrice, 
+=======
+    // select random images with count between 1 and 6 images per room from specific directory
+    function selectRandomImages($directory){
+        $imageFiles = File::files($directory);
+        $imageFilesArray = array_values($imageFiles);
+        $numberOfImagesToSelect = rand(1,6);
+        $selectedImages = array_rand($imageFilesArray,$numberOfImagesToSelect);
+        $selectedPaths = [];
+        foreach ((array) $selectedImages as $index) {
+            $selectedFilenames[] = 'rooms/'.$imageFilesArray[$index]->getFilename();
+        }
+        return $selectedFilenames;
+    }
+
+    public function definition(): array
+    {   
+        // select type of room     
+        $roomTypeId=RoomType::get('id')->random();
+        $roomType=RoomType::find($roomTypeId)->first();
+        $sumPricesOfAllAvailableServices=$roomType->services->sum('price');
+
+        // Define the ratio
+        $availableRatio = 0.85;
+        // Generate a random float between 0 and 1
+        $randomFloat = $this->faker->randomFloat(2,0,1);
+
+        // Select the element based on the ratio
+        $selectedStatus = $randomFloat < $availableRatio ? 'available' : 'unavailable';
+
+        $floor=$this->faker->numberBetween(0,15);
+        // Regular expression for a room code format
+        $roomCodePattern = '/([0-9]|[1-9][0-9])[A-D]?$/';
+
+        $roomImages=$this->selectRandomImages(public_path('images/rooms'));
+
+        return [
+            'room_type_id' => $roomTypeId,
+            'code'=>$this->faker->regexify($roomCodePattern).$floor,
+            'floorNumber'=> $floor, 
+            'description'=> $this->generateRoomDescription($roomType->name),
+            'images'=> json_encode($roomImages),
+            'status'=>$selectedStatus, 
+            'price'=> $roomType->price + $sumPricesOfAllAvailableServices, 
+>>>>>>> repoB/main
         ];
     }
 }

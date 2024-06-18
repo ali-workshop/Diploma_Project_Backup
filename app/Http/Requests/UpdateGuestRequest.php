@@ -11,7 +11,11 @@ class UpdateGuestRequest extends FormRequest
      */
     public function authorize(): bool
     {
+<<<<<<< HEAD
         return false;
+=======
+        return true;
+>>>>>>> repoB/main
     }
 
     /**
@@ -22,7 +26,14 @@ class UpdateGuestRequest extends FormRequest
     public function rules(): array
     {
         return [
+<<<<<<< HEAD
             //
+=======
+            'name' => 'nullable|string|max:100',
+            'birthDate' => 'nullable|date',
+            'phone_number' => 'nullable|string|regex:/^[0-9]{10}$/',
+            'identificationNumber' => 'nullable|string|max:50|unique:guests',
+>>>>>>> repoB/main
         ];
     }
 }

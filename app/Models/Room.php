@@ -13,11 +13,25 @@ class Room extends Model
         'code',
         'floorNumber',
         'description',
+<<<<<<< HEAD
         'img',
+=======
+        'images',
+>>>>>>> repoB/main
         'status',
         'price',
         
     ];
+<<<<<<< HEAD
+=======
+    protected $casts = [
+        'images' => 'array',
+    ];
+    public function getImagesAttribute($value){
+        return json_decode($value, true);
+    }
+
+>>>>>>> repoB/main
     public function roomType()
     {
         return $this->belongsTo(RoomType::class);

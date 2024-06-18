@@ -23,4 +23,7 @@ class EndingSoonEvent
         $this->reservation = $reservation;
     }
 }
+<<<<<<< HEAD
 //test
+=======
+>>>>>>> repoB/main

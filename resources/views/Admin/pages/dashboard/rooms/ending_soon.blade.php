@@ -13,8 +13,13 @@
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
+<<<<<<< HEAD
                         <th>user name</th>
                         <th>ٌRoom Code</th>
+=======
+                        <th>id</th>
+                        <th>Code</th>
+>>>>>>> repoB/main
                         <th>floorNumber</th>
                         <th>status  </th>
                         <th>description</th>
@@ -26,7 +31,11 @@
                 <tbody>
                     @foreach($rooms as $room)
                     <tr>
+<<<<<<< HEAD
                         <td>{{ $room->user_name}}</td>
+=======
+                        <td>{{ $room->id}}</td>
+>>>>>>> repoB/main
                         <td>{{ $room->code}}</td>
                         <td>{{ $room->floorNumber}}</td>
                         <td>{{ $room->status}}</td>

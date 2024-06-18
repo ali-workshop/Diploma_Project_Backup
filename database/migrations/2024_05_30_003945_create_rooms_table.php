@@ -17,8 +17,13 @@ return new class extends Migration
             $table->string('code');
             $table->integer('floorNumber');
             $table->text('description');
+<<<<<<< HEAD
             $table->string('img');
             $table->enum('status', ['available', 'booked'])->default('available');
+=======
+            $table->json('images')->nullable();
+            $table->enum('status', ['available', 'unavailable'])->default('available');
+>>>>>>> repoB/main
             $table->decimal('price', 8, 2);
             $table->timestamps();
         });
