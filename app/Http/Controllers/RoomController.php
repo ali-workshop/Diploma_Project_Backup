@@ -39,7 +39,7 @@ class RoomController extends Controller
                     }
                 })
                 ->orderBy('floorNumber', 'asc')
-                ->paginate(10);
+                ->paginate(20);
 
             return view('Admin.pages.dashboard.rooms.index', compact('rooms'));
         } catch (\Exception $e) {
@@ -85,7 +85,7 @@ class RoomController extends Controller
             "status" => $validatedData['status'],
             "price" => $typeOfThisRoom->price +$sumPricesOfAllAvailableServices,
         ]);
-        return redirect()->route('rooms.index')->with('status','Guest Created Successfully');
+        return redirect()->route('rooms.index')->with('status','Room Created Successfully');
     }
 
     /**
@@ -155,12 +155,19 @@ class RoomController extends Controller
      */
     public function destroy(Room $room){
         try {
-            $this->deleteImage($room->img);
+            $images=json_decode($room->images,true);
+            foreach ($images as $image) {
+                // Remove the image file from the server
+                $filePath = public_path('images/'.$image);
+                if (file_exists($filePath)) {
+                    $this->deleteImage($image);
+                }
+            }
             $room->delete();
-            return redirect()->route('rooms.index')->with('success', 'Room deleted successfully.');
+            return redirect()->route('rooms.index')->with('status', 'Room deleted successfully.');
         } catch (\Exception $e) {
             Log::error('Error in RoomController@destroy:' . $e->getMessage());
-            return redirect()->route('Admin.pages.dashboard.rooms.index')->with('error', $e->getMessage());
+            return redirect()->route('rooms.index')->with('error', $e->getMessage());
         }
     }
 

@@ -17,7 +17,7 @@
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
-                            @enderror
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label for="birthDate">Birth Date</label>
@@ -26,7 +26,7 @@
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
-                            @enderror
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label for="phone_number">Phone Number</label>
@@ -35,7 +35,7 @@
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
-                            @enderror
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label for="identificationNumber">Identification Number</label>
@@ -44,7 +44,7 @@
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
-                            @enderror
+                                @enderror
                             </div>
                             <button type="submit" class="btn btn-primary">Update</button>
                         </form>

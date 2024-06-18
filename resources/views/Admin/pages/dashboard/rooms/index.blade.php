@@ -145,9 +145,7 @@
             });
         });
     </script>
-
-        </script>
-        </body>
+    </body>
         <br>
         <div class="container">
             <table class="table-bordered table-hover table-image"  id="dataTable">
@@ -160,9 +158,8 @@
                         <th class="col-md-1">Description</th>
                         <th class="col-md-1">status</th>
                         <th class="col-md-1">Price</th>
-                        <th class="col-md-3">Images</th>
-                        <th class="col-md-1">Edit</th>
-                        <th class="col-md-1">Delete</th>
+                        <th class="col-md-4">Images</th>
+                        <th class="col-md-1">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -182,12 +179,12 @@
                                 @endforeach
                             @endif
                         </td>
-                        <td><a href='{{route("rooms.edit", $room->id)}}' class="btn btn-outline-success">EDIT</a></td>
                         <td>
-                            <form action="{{ route('rooms.destroy', $room->id) }}" method="POST">
+                            <a href="{{ route('rooms.edit', $room->id) }}" class="btn btn-primary btn-action mr-1" data-toggle="tooltip"  ><i class="fas fa-pencil-alt"></i></a>
+                            <form action="{{ route('rooms.destroy', $room->id) }}" method="POST" style="display: inline-block;">
                                 @csrf
-                                @method ('DELETE')
-                                <button type="submit" class="btn btn-outline-danger">DELETE</button>
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-action" ><i class="fas fa-trash"></i></button>
                             </form>
                         </td>
                     </tr>

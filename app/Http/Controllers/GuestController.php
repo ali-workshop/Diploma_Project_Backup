@@ -97,10 +97,10 @@ class GuestController extends Controller
     {
         try {
             $guest->delete();
-            return redirect()->route('rooms.index')->with('success', 'Guest deleted successfully.');
+            return redirect()->route('guests.index')->with('status', 'Guest deleted successfully.');
         } catch (\Exception $e) {
-            Log::error('Error in RoomController@destroy: ' . $e->getMessage());
-            return redirect()->route('Admin.pages.dashboard.guests.index')->with('error', $e->getMessage());
+            Log::error('Error in GuestController@destroy: ' . $e->getMessage());
+            return redirect()->route('.guests.index')->with('error', $e->getMessage());
         }
     }
 }
