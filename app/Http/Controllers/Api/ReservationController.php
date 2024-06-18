@@ -1,11 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\Api;
-<<<<<<< HEAD
-=======
 
 use Carbon\Carbon;
->>>>>>> repoB/main
 use App\Models\Room;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
@@ -13,34 +10,15 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Traits\ApiResponserTrait;
 use App\Http\Traits\ApiReservationTrait;
-<<<<<<< HEAD
-use App\Http\Requests\StoreReservationRequest;
-
-
-=======
 use App\Http\Resources\ReservationResource;
 use App\Http\Requests\StoreReservationRequest;
 use App\Http\Requests\UpdateReservationRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
->>>>>>> repoB/main
 
 class ReservationController extends Controller
 {
     use ApiResponserTrait, ApiReservationTrait;
 
-<<<<<<< HEAD
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-=======
     public function index()
     {
         // return all reservations of the auth user he/she has ever made 
@@ -54,45 +32,11 @@ class ReservationController extends Controller
         }
     }
 
->>>>>>> repoB/main
     public function store(StoreReservationRequest $request)
     {
         try {
             $request->validated();
             $user = auth('sanctum')->user();
-<<<<<<< HEAD
-            $room = Room::find($request->room_id);
-            return $this->ReservationHandle($user, $room,  $request);
-        } catch (\Exception $e) {
-            Log::error('Error in ReservationController@store: ' . $e->getMessage());
-            return $this->errorResponse('An error occurred while creating the reservation.', [], 500);
-        }
-    }
-
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-=======
             $room = Room::findOrFail($request->room_id);
             return $this->ReservationHandle($user, $room, $request);   // all the logic of handling all senatrios of the request will be handled there and if no issues then it would make new reservation
         } catch (ModelNotFoundException $e) {
@@ -176,6 +120,5 @@ class ReservationController extends Controller
         if ($timeDifference >= 24) {
             throw new \Exception('Sorry, you cannot update or delete your reservation after 24 hours.');
         }
->>>>>>> repoB/main
     }
 }

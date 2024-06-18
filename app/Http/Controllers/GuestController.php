@@ -5,10 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Guest;
 use App\Http\Requests\StoreGuestRequest;
 use App\Http\Requests\UpdateGuestRequest;
-<<<<<<< HEAD
-=======
 use Illuminate\Support\Facades\Log;
->>>>>>> repoB/main
 
 class GuestController extends Controller
 {
@@ -16,10 +13,6 @@ class GuestController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-<<<<<<< HEAD
-    {
-        //
-=======
     {   
         try{
             $guests = Guest::with('reservations')
@@ -31,7 +24,6 @@ class GuestController extends Controller
             Log::error('Error in GuestsController@index: ' . $e->getMessage());
             return redirect()->route('guests.index')->with('error', 'An error occurred: ' . $e->getMessage());
         }
->>>>>>> repoB/main
     }
 
     /**
@@ -39,21 +31,13 @@ class GuestController extends Controller
      */
     public function create()
     {
-<<<<<<< HEAD
-        //
-=======
         return view('Admin.pages.dashboard.guests.create');
->>>>>>> repoB/main
     }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(StoreGuestRequest $request)
-<<<<<<< HEAD
-    {
-        //
-=======
     {   
         try{
             $validatedData=$request->validated();
@@ -68,7 +52,6 @@ class GuestController extends Controller
             Log::error('Error in GuestsController@store: ' . $e->getMessage());
             return redirect()->route('guests.index')->with('error', 'An error occurred: ' . $e->getMessage());
         }
->>>>>>> repoB/main
     }
 
     /**
@@ -76,11 +59,7 @@ class GuestController extends Controller
      */
     public function show(Guest $guest)
     {
-<<<<<<< HEAD
-        //
-=======
         return view('Admin.pages.dashboard.guests.show', compact('guest'));
->>>>>>> repoB/main
     }
 
     /**
@@ -88,21 +67,13 @@ class GuestController extends Controller
      */
     public function edit(Guest $guest)
     {
-<<<<<<< HEAD
-        //
-=======
         return view('Admin.pages.dashboard.guests.edit', compact('guest'));
->>>>>>> repoB/main
     }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(UpdateGuestRequest $request, Guest $guest)
-<<<<<<< HEAD
-    {
-        //
-=======
     {   
         try{
             $validated=$request->safe();
@@ -117,7 +88,6 @@ class GuestController extends Controller
             Log::error('Error in GuestsController@update: ' . $e->getMessage());
             return redirect()->route('guests.index')->with('error', 'An error occurred: ' . $e->getMessage());
         }
->>>>>>> repoB/main
     }
 
     /**
@@ -125,9 +95,6 @@ class GuestController extends Controller
      */
     public function destroy(Guest $guest)
     {
-<<<<<<< HEAD
-        //
-=======
         try {
             $guest->delete();
             return redirect()->route('rooms.index')->with('success', 'Guest deleted successfully.');
@@ -135,6 +102,5 @@ class GuestController extends Controller
             Log::error('Error in RoomController@destroy: ' . $e->getMessage());
             return redirect()->route('Admin.pages.dashboard.guests.index')->with('error', $e->getMessage());
         }
->>>>>>> repoB/main
     }
 }

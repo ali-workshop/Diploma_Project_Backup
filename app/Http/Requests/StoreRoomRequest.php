@@ -22,13 +22,6 @@ class StoreRoomRequest extends FormRequest
     public function rules(): array
     {
         return [
-<<<<<<< HEAD
-            'code' => 'required|string|max:100',
-            'floorNumber' => 'required|numeric|integer|max:15',
-            'description' => 'required|string|max:800',
-            'img' => 'required|image',
-            'status' => 'required|string|in:available,booked',
-=======
             // 0-99: The room code starts with 1 or 2 digits representing the room number.
             // [A-D]?: An optional single uppercase letter, which might be used to designate a specific wing or section (e.g., A, B).
             // 0-15$: Ends with digits representing  the floor number.
@@ -38,7 +31,6 @@ class StoreRoomRequest extends FormRequest
             'images' => 'required', // fot the field
             'images.*' => 'image|max:2048', // for the files themselves
             'status' => 'required|string|in:available,unavailable',
->>>>>>> repoB/main
         ];
     }
 }

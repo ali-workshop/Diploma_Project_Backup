@@ -11,11 +11,7 @@ class StoreGuestRequest extends FormRequest
      */
     public function authorize(): bool
     {
-<<<<<<< HEAD
-        return false;
-=======
         return true;
->>>>>>> repoB/main
     }
 
     /**
@@ -26,14 +22,10 @@ class StoreGuestRequest extends FormRequest
     public function rules(): array
     {
         return [
-<<<<<<< HEAD
-            //
-=======
             'name' => 'required|string|max:100',
             'birthDate' => 'required|date',
             'phone_number' => 'nullable|string|regex:/^[0-9]{10}$/',
             'identificationNumber' => 'required|string|max:50|unique:guests',
->>>>>>> repoB/main
         ];
     }
 }

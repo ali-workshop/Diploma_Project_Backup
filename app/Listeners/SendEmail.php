@@ -9,11 +9,8 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-<<<<<<< HEAD
-=======
 
 
->>>>>>> repoB/main
 class SendEmail
 {
     /**
@@ -55,11 +52,7 @@ class SendEmail
                 <p>We hope you will be satisfied with our services.</p>";
 
             $mail->send();
-<<<<<<< HEAD
-        } catch (Exception $e) {
-=======
         } catch (\Exception $e) {
->>>>>>> repoB/main
             Log::error("Email could not be sent. Mailer Error: {$mail->ErrorInfo}");
         }
     }

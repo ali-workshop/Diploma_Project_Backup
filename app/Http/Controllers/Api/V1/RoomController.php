@@ -10,29 +10,21 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Traits\ApiResponserTrait;
 use App\Http\Requests\DateRangeRequest;
-<<<<<<< HEAD
-=======
+
 use App\Http\Resources\RoomResource;
->>>>>>> repoB/main
+
 
 class RoomController extends Controller
 {
     use ApiResponserTrait;
-<<<<<<< HEAD
-    public function showCurrnetAvailableRooms()
-    {
-        try {
-            $rooms = Room::where('status', 'available')->get();
-=======
 
-    /**
-     * Display a listing of the room resource.
-     */
+
     // public function index()
     // {
     //     $rooms = Room::with('roomType')->paginate(5);
     //     return $this->successResponseTest('success',RoomResource::collection($rooms));
     // }
+
         public function index(Request $request)
     {
         try {
@@ -74,17 +66,12 @@ class RoomController extends Controller
         try {
             $bookedRooms = Reservation::pluck('room_id')->toArray();
             $rooms=Room::whereNotIn('id',$bookedRooms)->get();
->>>>>>> repoB/main
             return $this->successResponse([$rooms], 'Availabe Rooms Returned Successfully');
         } catch (\Throwable $th) {
             return $this->errorResponse('Server error probably.', [$th->getMessage()], 500);
         }
 
     }
-<<<<<<< HEAD
-
-=======
->>>>>>> repoB/main
     public function showAvailableRoomsInSpecificTime(Request $request)
     {
         try {
@@ -110,13 +97,9 @@ class RoomController extends Controller
         } catch (\Throwable $th) {
             return $this->errorResponse('Server error probably.', [$th->getMessage()], 500);
         }
-<<<<<<< HEAD
 
     }
-
-=======
-    }
->>>>>>> repoB/main
+    
     public function showAvailableRoomsInPeriod(DateRangeRequest $request)
     {
         #Noura could use this time zone ( Asia/Dubai )
@@ -126,10 +109,6 @@ class RoomController extends Controller
             $reservations_endDates = Reservation::pluck('end_date')->toArray();
             $latestEndDate = max($reservations_endDates);
             $latestEndDate = Carbon::parse($latestEndDate);
-<<<<<<< HEAD
-=======
-            
->>>>>>> repoB/main
             $startRange = Carbon::parse($request->input('start_range'), 'UTC')
                                                 ->setTimezone('Asia/Baghdad');
             $endRange = $request->has('end_range') ?
@@ -154,11 +133,8 @@ class RoomController extends Controller
 
                         $available = False;
                         break;
-<<<<<<< HEAD
-                    }
-=======
+
                       }
->>>>>>> repoB/main
 
                 }
                 if ($available) {
@@ -173,29 +149,17 @@ class RoomController extends Controller
 
 
     }
-<<<<<<< HEAD
 
-    public function showCurrnetReservedRooms()
-    {
-        try {
-            $rooms = Room::where('status', 'booked')->get();
-=======
     public function showCurrnetReservedRooms()
     {
         try {
             $bookedRooms = Reservation::pluck('room_id')->toArray();
             $rooms=Room::whereIn('id',$bookedRooms)->get();
->>>>>>> repoB/main
             return $this->successResponse([$rooms], 'Booked Rooms Returned Successfully');
         } catch (\Throwable $th) {
             return $this->errorResponse('Server error probably.', [$th->getMessage()], 500);
         }
     }
-<<<<<<< HEAD
-
-=======
-    
->>>>>>> repoB/main
     public function showReservedRoomsInSpecificTime(Request $request)
     {
         try {
@@ -222,10 +186,6 @@ class RoomController extends Controller
             return $this->errorResponse('Server error probably.', [$th->getMessage()], 500);
         }
     }
-<<<<<<< HEAD
-
-=======
->>>>>>> repoB/main
     public function showReservedRoomsInPeriod(DateRangeRequest $request)
     {
         try {

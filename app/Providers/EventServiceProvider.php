@@ -20,15 +20,11 @@ class EventServiceProvider extends ServiceProvider
         EndingSoonEvent::class => [
             SendEmail::class,
         ],
-<<<<<<< HEAD
-    ];
-=======
         'App\Events\ReservationAttempting' => [
             'App\Listeners\CheckRoomAvailability',
         ],
     ];
     
->>>>>>> repoB/main
 
     /**
      * Register any events for your application.

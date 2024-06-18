@@ -16,10 +16,6 @@ class RoomSeeder extends Seeder
 
     public function run(): void
     {
-<<<<<<< HEAD
-       Room::factory(5)->create();
-=======
        Room::factory(20)->create();
->>>>>>> repoB/main
     }
 }

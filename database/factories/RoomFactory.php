@@ -2,15 +2,9 @@
 
 namespace Database\Factories;
 
-<<<<<<< HEAD
-use App\Models\Service;
-use App\Models\RoomType;
-use Illuminate\Database\Eloquent\Factories\Factory;
-=======
 use App\Models\RoomType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\File;
->>>>>>> repoB/main
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Room>
@@ -23,17 +17,10 @@ class RoomFactory extends Factory
      * @return array<string, mixed>
      */
     
-<<<<<<< HEAD
-     function generateRoomDescription(string $roomTypeName): string {
-        $roomTypeInstanses=RoomType::all();
-        $roomType = $roomTypeInstanses->firstWhere('name', $roomTypeName);
-        // $roomType=roomType::where('name',"LIKE",$roomTypeName)->first();
-=======
     function generateRoomDescription(string $roomTypeName): string {
         $roomTypeInstanses=RoomType::all();
         $roomType = $roomTypeInstanses->firstWhere('name', $roomTypeName);
         //$roomType=roomType::where('name',"LIKE",$roomTypeName)->first();
->>>>>>> repoB/main
         $descriptions = [
             'Standard Single Room' => [
                 'This room is a standard single room, perfect for solo travelers.',
@@ -61,31 +48,6 @@ class RoomFactory extends Factory
             ? implode(' ', $descriptions[$roomTypeName])
             : $roomType->description;
     }
-<<<<<<< HEAD
-    public function definition(): array
-    {      
-        
-        $roomType_ids=RoomType::pluck('id')->toArray();
-        $roomType_id=$this->faker->randomElement($roomType_ids);
-        $roomTypePrice=RoomType::firstWhere('id',$roomType_id)->price;
-
-        $service_ids=Service::pluck('id')->toArray();
-        $service_id=$this->faker->randomElement($service_ids);
-        $servicePrice=Service::firstWhere('id',$service_id)->price;
-
-        $roomPrice= $roomTypePrice+$servicePrice;
-        $randomRoomTypeId = $this->faker->randomElement($roomType_ids);
-        $roomTypeName=RoomType::firstWhere('id',$randomRoomTypeId)->name;
-        return [
-            
-            'room_type_id' => $randomRoomTypeId,
-            'code'=>$this->faker->numberBetween(1,10), 
-            'floorNumber'=>$this->faker->numberBetween(1,10), 
-            'description'=>$this->generateRoomDescription($roomTypeName),
-            'img'=> $this->faker->imageUrl(),
-            'status'=>$this->faker->randomElement(['booked','available']), 
-            'price'=>$roomPrice, 
-=======
     // select random images with count between 1 and 6 images per room from specific directory
     function selectRandomImages($directory){
         $imageFiles = File::files($directory);
@@ -128,7 +90,6 @@ class RoomFactory extends Factory
             'images'=> json_encode($roomImages),
             'status'=>$selectedStatus, 
             'price'=> $roomType->price + $sumPricesOfAllAvailableServices, 
->>>>>>> repoB/main
         ];
     }
 }

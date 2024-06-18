@@ -34,8 +34,6 @@ trait ApiResponserTrait{
             'code'     =>404
         ]);
     }
-<<<<<<< HEAD
-=======
 
     protected function apiResponse($success,$message,$data=[],$statusCode=200){
         return response()->json([
@@ -53,6 +51,5 @@ trait ApiResponserTrait{
         return $this->apiResponse(false,$message,null,$statusCode);
     }
 
->>>>>>> repoB/main
 }
 

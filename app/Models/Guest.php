@@ -8,8 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Guest extends Model
 {
     use HasFactory;
-<<<<<<< HEAD
-=======
     protected $fillable = [
         'identificationNumber',  
         'name',
@@ -18,14 +16,9 @@ class Guest extends Model
     ];
 
     protected $dates = ['birthDate'];
->>>>>>> repoB/main
 
     public function reservations()
     {
         return $this->belongsToMany(Reservation::class);
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> repoB/main

@@ -16,28 +16,6 @@ class ReservationEventController extends Controller
     use ApiResponserTrait;
 
     public function reservationEvents(Reservation $reservation)
-<<<<<<< HEAD
-    {   
-        # ALI and TUKA achieve this logic within best practice ways (Relation Eager + map functionality)
-
-        try {
-            
-            $reservationEvents = ReservationStatusEvent::with('reservationStatusCatalogs')
-                                ->where('reservation_id', $reservation->id)
-                                ->get();
-            $reservationStatusOverTime = [];
-
-            $reservationStatusOverTime = $reservationEvents->map(function ($reservationEvent) {
-                    return [
-                        'currentStatus' => $reservationEvent->reservationStatusCatalogs->name,
-                        'currentEventDate' => $reservationEvent->created_at->format('d-m-Y H:i:s'),
-                    ];
-                })->toArray(); 
-                return $this->successResponse($reservationStatusOverTime, 'Reservation Events Returned Successfully');
-              } catch (Throwable $th) {
-                return $this->errorResponse('Server error probably.', [$th->getMessage()], 500);
-                                    }
-=======
     {
         #first way to solve this 
         // try {
@@ -87,7 +65,6 @@ class ReservationEventController extends Controller
         } catch (Throwable $th) {
             return $this->errorResponse('Server error probably.', [$th->getMessage()], 500);
         }
->>>>>>> repoB/main
     }
 
 }

@@ -11,11 +11,7 @@ class UpdateReservationRequest extends FormRequest
      */
     public function authorize(): bool
     {
-<<<<<<< HEAD
-        return false;
-=======
         return true;
->>>>>>> repoB/main
     }
 
     /**
@@ -26,14 +22,10 @@ class UpdateReservationRequest extends FormRequest
     public function rules(): array
     {
         return [
-<<<<<<< HEAD
-            //
-=======
                 'room_id' => ['sometimes', 'required', 'numeric'],
                 'guestNumber' => ['sometimes', 'required', 'numeric'],
                 'start_date' => ['sometimes', 'required', 'date'],
                 'end_date' => ['sometimes', 'required', 'date'],
->>>>>>> repoB/main
         ];
     }
 }

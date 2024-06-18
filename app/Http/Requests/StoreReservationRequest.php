@@ -23,16 +23,9 @@ class StoreReservationRequest extends FormRequest
     {
         return [
             'room_id' => ['required', 'numeric'],
-<<<<<<< HEAD
-            'code' => ['required', 'numeric', 'max:999'], 
-            'guestNumber' => ['required', 'numeric'], 
-            'start_date' => ['required', 'date_format:Y-m-d'],
-            'end_date' => ['required', 'date_format:Y-m-d'],
-=======
             'guestNumber' => ['required', 'numeric'], 
             'start_date' => ['required', 'date'],
             'end_date' => ['required', 'date'],
->>>>>>> repoB/main
         ];
     }
 }

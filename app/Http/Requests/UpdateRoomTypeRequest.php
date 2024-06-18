@@ -24,11 +24,7 @@ class UpdateRoomTypeRequest extends FormRequest
         return [
             'name'         => ['string', 'required'],
             'price'        => ['numeric', 'required','between:1,99999999.99'],
-<<<<<<< HEAD
-            'capacity'     => ['integer', 'required', 'between:2,6'],
-=======
             'capacity'     => ['integer', 'required', 'between:1,6'],    // rooms starts with 1 person for single room 
->>>>>>> repoB/main
             'description'  => ['string', 'required', 'max:200'],
             'service_id'   =>[ 'required','array'],
             'service_id.*' => ['exists:services,id'],

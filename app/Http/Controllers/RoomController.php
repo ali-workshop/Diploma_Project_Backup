@@ -11,22 +11,6 @@ use Illuminate\Http\Request;
 use App\Events\EndingSoonEvent;
 use Illuminate\Support\Facades\Log;
 use App\Http\Traits\UploadImageTrait;
-<<<<<<< HEAD
-use App\Http\Requests\DateRangeRequest;
-use App\Http\Requests\StoreRoomRequest;
-use App\Http\Requests\UpdateRoomRequest;
-use Illuminate\Database\Eloquent\Collection;
-
-class RoomController extends Controller
-{   
-    use UploadImageTrait;
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(Request $request)
-    {
-        try {
-=======
 
 use App\Http\Requests\DateRangeRequest;
 use App\Http\Requests\StoreRoomRequest;
@@ -48,7 +32,6 @@ class RoomController extends Controller
     {
         try {
             // Filter rooms based on room type name
->>>>>>> repoB/main
             $rooms = Room::with('roomType')
                 ->whereHas('roomType', function ($query) use ($request) {
                     if ($request->has('name')) {
@@ -57,11 +40,7 @@ class RoomController extends Controller
                 })
                 ->orderBy('floorNumber', 'asc')
                 ->paginate(10);
-<<<<<<< HEAD
-                
-=======
 
->>>>>>> repoB/main
             return view('Admin.pages.dashboard.rooms.index', compact('rooms'));
         } catch (\Exception $e) {
             Log::error('Error in RoomController@index: ' . $e->getMessage());
@@ -75,11 +54,7 @@ class RoomController extends Controller
     public function create()
     {
         $roomTypes = RoomType::all();
-<<<<<<< HEAD
-        return view('Admin.pages.dashboard.rooms.create' , compact('roomTypes'));
-=======
         return view('Admin.pages.dashboard.rooms.create', compact('roomTypes'));
->>>>>>> repoB/main
     }
 
     /**
@@ -88,10 +63,6 @@ class RoomController extends Controller
     public function store(StoreRoomRequest $request)
     {   
         $validatedData=$request->validated();
-<<<<<<< HEAD
-        $typeOThisRoom=RoomType::find($request->room_type);
-        $sumOfAllAvailableServices=$typeOThisRoom->services->sum('price');
-=======
         //compute room cost per night
         $typeOfThisRoom=RoomType::find($request->room_type);
         $sumPricesOfAllAvailableServices=$typeOfThisRoom->services->sum('price');
@@ -105,26 +76,16 @@ class RoomController extends Controller
                 }
             }
         }
->>>>>>> repoB/main
         $room=Room::create([
             "room_type_id" => $request->room_type,
             "code" => $validatedData['code'],
             "floorNumber" => $validatedData['floorNumber'],
             "description" => $validatedData['description'],
-<<<<<<< HEAD
-            "img" => $this->verifyAndUpload($validatedData['img'],'rooms'),
-            "status" => $validatedData['status'],
-            "price" => $typeOThisRoom->price +$sumOfAllAvailableServices,
-        ]);
-
-        return redirect()->route('rooms.index');
-=======
             "images" =>  json_encode($roomImages),
             "status" => $validatedData['status'],
             "price" => $typeOfThisRoom->price +$sumPricesOfAllAvailableServices,
         ]);
         return redirect()->route('rooms.index')->with('status','Guest Created Successfully');
->>>>>>> repoB/main
     }
 
     /**
@@ -139,11 +100,7 @@ class RoomController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(Room $room)
-<<<<<<< HEAD
-    {   
-=======
     {
->>>>>>> repoB/main
         $roomTypes = RoomType::all();
         return view('Admin.pages.dashboard.rooms.edit', compact('room','roomTypes'));
 
@@ -152,12 +109,6 @@ class RoomController extends Controller
     /**
      * Update the specified resource in storage.
      */
-<<<<<<< HEAD
-    public function update(UpdateRoomRequest $request, Room $room)
-    {   
-        try {
-            $request->validated();
-=======
     public function update(UpdateRoomRequest $request, Room $room){
         try {
             $existingImages =json_decode($room->images,true);
@@ -183,31 +134,15 @@ class RoomController extends Controller
                     $existingImages[] = $path;
                 }
             }
->>>>>>> repoB/main
             $room->code =$request->code ?? $room->code;
             $room->room_type_id =$request->room_type_id ?? $room->room_type_id;
             $room->floorNumber = $request->floorNumber ?? $room->floorNumber;
             $room->price = $request->price ?? $room->price;
             $room->status = $request->status ?? $room->status;
             $room->description = $request->description ?? $room->description;
-<<<<<<< HEAD
-
-            if ($request->hasFile('img')) {
-                $path =$this->verifyAndUpload($request->file('img'),'rooms');
-                if ($path) {
-                    $this->deleteImage($room->img);
-                    $room->img = $path;
-                } else {
-                    return redirect()->back()->with('error', 'Failed to upload image.');
-                }
-            }
-            $room->save();
-            return redirect()->route('rooms.index')->with('success', 'Room updated successfully!');
-=======
             $room->images = json_encode($existingImages);// Encode the updated images array to JSON and save to the database
             $room->save();
             return redirect()->route('rooms.index')->with('status', 'Room updated successfully!');
->>>>>>> repoB/main
 
         } catch (\Exception $e) {
             Log::error('Error in RoomController@update: ' . $e->getMessage());
@@ -218,27 +153,12 @@ class RoomController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-<<<<<<< HEAD
-    public function destroy(Room $room)
-    {
-=======
     public function destroy(Room $room){
->>>>>>> repoB/main
         try {
             $this->deleteImage($room->img);
             $room->delete();
             return redirect()->route('rooms.index')->with('success', 'Room deleted successfully.');
         } catch (\Exception $e) {
-<<<<<<< HEAD
-            Log::error('Error in RoomController@destroy: ' . $e->getMessage());
-            return redirect()->route('Admin.pages.dashboard.rooms.index')->with('error',$e->getMessage());
-        }
-    }
-    public function showCurrnetAvailableRooms()
-        {
-            try{
-            $rooms=Room::where('status','available')->get();
-=======
             Log::error('Error in RoomController@destroy:' . $e->getMessage());
             return redirect()->route('Admin.pages.dashboard.rooms.index')->with('error', $e->getMessage());
         }
@@ -248,21 +168,12 @@ class RoomController extends Controller
             try{
                 $bookedRooms = Reservation::pluck('room_id')->toArray();
                 $rooms=Room::whereNotIn('id',$bookedRooms)->get();
->>>>>>> repoB/main
             // dd($rooms);
             return view('Admin.pages.dashboard.rooms.index', ['rooms'=>$rooms]);
             }catch(\Exception $e){
                 Log::error('Error in RoomController@showCurrnetAvailableRooms: ' . $e->getMessage());
                 return redirect()->route('rooms.index')->with('error', $e->getMessage());
             }
-<<<<<<< HEAD
-
-        }
-
-        public function showAvailableRoomsInSpecificTime(Request $request)
-        {
-           try{
-=======
     }
 
     public function showCurrnetOccupiedRoomsWithguests(){
@@ -283,7 +194,6 @@ class RoomController extends Controller
     
     public function showAvailableRoomsInSpecificTime(Request $request){
         try{
->>>>>>> repoB/main
             $availableRooms=[];
             $rooms=Room::all();
             $specificDate = Carbon::parse($request->input('specificDate'));
@@ -304,23 +214,14 @@ class RoomController extends Controller
                     $avaliableRooms[]=$room;
                 }
             }
-<<<<<<< HEAD
-            $rooms=collect($avaliableRooms); # ali comment : i am just ensure convert it to collection before send it to view
-=======
             $rooms=collect($avaliableRooms); # ali comment : i am just ensure convert it to collection before send it to view (best practise)
->>>>>>> repoB/main
             return view('Admin.pages.dashboard.rooms.index',['rooms'=>$rooms]);
         }catch(\Exception $e){
             Log::error('Error in RoomController@showAvailableRoomsInSpecificTime: ' . $e->getMessage());
             return redirect()->route('rooms.index')->with('error', $e->getMessage());
         }
-<<<<<<< HEAD
-
-        }
-=======
     }
         
->>>>>>> repoB/main
         public function showAvailableRoomsInPeriod(DateRangeRequest $request)
         {  
            #Noura could use this time zone ( Asia/Dubai )
@@ -330,52 +231,6 @@ class RoomController extends Controller
            $reservations_endDates = Reservation::pluck('end_date')->toArray();
             $latestEndDate = max($reservations_endDates);
             $latestEndDate =Carbon::parse($latestEndDate);
-<<<<<<< HEAD
-            $startRange = Carbon::parse($request->input('start_range'), 'UTC')
-                                                ->setTimezone('Asia/Baghdad');
-            $endRange=$request->has('end_range') ? 
-            Carbon::parse($request->input('end_range'), 'UTC')
-                                    ->setTimezone('Asia/Baghdad') : null;
-            if(!$endRange)
-            {
-               $endRange= $latestEndDate;
-            }
-            
-            $availableRooms=[];
-            $rooms=Room::all();
-    
-            foreach($rooms as $room)
-            {
-                $reservations=Reservation::where('room_id',$room->id)->get();
-                $available=True;
-                foreach($reservations as $reservation)
-                {   
-                    if
-                    (
-                    $reservation->start_date <= $endRange &&
-                    $reservation->end_date   >= $startRange
-                    ) 
-                    {
-                        $available=False;
-                        break;
-                    }
-                    
-                }
-                if($available)
-                {
-                    $avaliableRooms[]=$room;
-                }
-  
-            }
-            $rooms=collect($avaliableRooms);
-            return view('Admin.pages.dashboard.rooms.index',['rooms'=>$rooms]);
-        }catch(\Exception $e){
-            Log::error('Error in RoomController@showAvailableRoomsInPeriod: ' . $e->getMessage());
-            return redirect()->route('rooms.index')->with('error', $e->getMessage());
-        }
-
-
-=======
             dd($latestEndDate);
             $startRange = Carbon::parse($request->input('start_range'), 'UTC')
                 ->setTimezone('Asia/Baghdad');
@@ -411,19 +266,13 @@ class RoomController extends Controller
             Log::error('Error in RoomController@showAvailableRoomsInPeriod: ' . $e->getMessage());
             return redirect()->route('rooms.index')->with('error', $e->getMessage());
         }
->>>>>>> repoB/main
         }
         
         public function showCurrnetReservedRooms()
         { 
-<<<<<<< HEAD
-         try{
-            $rooms=Room::where('status','booked')->get();
-=======
             try{
                 $bookedRooms = Reservation::pluck('room_id')->toArray();
                 $rooms=Room::whereIn('id',$bookedRooms)->get();
->>>>>>> repoB/main
             return view('Admin.pages.dashboard.rooms.index',['rooms'=>$rooms]);
             }catch(\Exception $e){
                 Log::error('Error in RoomController@showCurrnetReservedRooms: ' . $e->getMessage());
@@ -431,92 +280,11 @@ class RoomController extends Controller
             } 
         }
         
-<<<<<<< HEAD
-        public function showReservedRoomsInSpecificTime(Request $request)
-        {  
-=======
         public function showReservedRoomsInSpecificTime(Request $request){  
->>>>>>> repoB/main
          try{    
             $reservedRooms=[];
             $rooms=Room::all();
             $specificDate = Carbon::parse($request->input('specificDate'));
-<<<<<<< HEAD
-            foreach($rooms as $room)
-            {
-                $reservations=Reservation::where('room_id',$room->id)->get();
-                $available=False;
-                foreach($reservations as $reservation)
-                {   
-                    if($specificDate->between($reservation->start_date,$reservation->end_date))
-                    {
-                        $available=True;
-                        break;
-                    }      
-                }
-                if($available)
-                {
-                    $reservedRooms[]=$room;
-                }
-            }
-            $rooms=collect($reservedRooms);
-            return view('Admin.pages.dashboard.rooms.index',['rooms'=>$rooms]);
-        }catch(\Exception $e){
-            Log::error('Error in RoomController@showReservedRoomsInSpecificTime: ' . $e->getMessage());
-            return redirect()->route('rooms.index')->with('error', $e->getMessage());
-        }
-        }
-        
-        public function showReservedRoomsInPeriod(DateRangeRequest $request)
-        {   
-         try{
-            $reservations_endDates = Reservation::pluck('end_date')->toArray();
-            $latestEndDate = max($reservations_endDates);
-            $latestEndDate =Carbon::parse($latestEndDate);
-            $startRange = Carbon::parse($request->input('start_range'), 'UTC')
-                                                ->setTimezone('Asia/Baghdad');
-            $endRange=$request->has('end_range') ? 
-            Carbon::parse($request->input('end_range'), 'UTC')
-                                    ->setTimezone('Asia/Baghdad') : null;
-            if(!$endRange)
-            {
-               $endRange= $latestEndDate;
-            }
-            $reservedRooms=[];
-            $rooms=Room::all();
-             foreach($rooms as $room)
-                 {
-                $reservations=Reservation::where('room_id',$room->id)->get();
-                $available=False;
-                foreach($reservations as $reservation)
-                {   
-                    if
-                    (
-                    $reservation->start_date <= $endRange &&
-                    $reservation->end_date   >= $startRange
-                    ) 
-                    {
-                        $available=True;
-                        break;
-                    }
-                    
-                }
-                if($available)
-                {
-                    $reservedRooms[]=$room;
-                }
-            }
-            $rooms=collect($reservedRooms);
-            return view('Admin.pages.dashboard.rooms.index',['rooms'=>$rooms]);
-        }catch(\Exception $e){
-            Log::error('Error in RoomController@showReservedRoomsInPeriod: ' . $e->getMessage());
-            return redirect()->route('rooms.index')->with('error', $e->getMessage());
-        }
-        } 
-
-        public function roomsEndingIn24Hours()
-         {
-=======
             foreach ($rooms as $room) {
                 $reservations = Reservation::where('room_id', $room->id)->get();
                 $available = False;
@@ -583,7 +351,6 @@ class RoomController extends Controller
 
     public function roomsEndingIn24Hours()
     {
->>>>>>> repoB/main
         $now = Carbon::now();
         $endIn24Hours = $now->copy()->addDay();
 
@@ -597,24 +364,9 @@ class RoomController extends Controller
         }
 
         $rooms = $reservationsEndingIn24Hours->map(function ($reservation) {
-<<<<<<< HEAD
-            $room = $reservation->room;
-         $room->user_name = $reservation->user->name;
-        return $room;
-        });
-
-        return view('Admin.pages.dashboard.rooms.ending_soon', compact('rooms'));
-    } 
-        
-}
-
-
-       
-=======
             return $reservation->room;
         });
 
         return view('Admin.pages.dashboard.rooms.ending_soon', compact('rooms'));
     }
 }
->>>>>>> repoB/main
