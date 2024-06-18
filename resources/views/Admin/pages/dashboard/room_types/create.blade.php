@@ -5,11 +5,7 @@
     <ul>
         @foreach ($errors->all() as $error)
             <li>{{ $error }}</li>
-<<<<<<< HEAD
-        @endforeach
-=======
         @endforeach 
->>>>>>> repoB/main
     </ul>
 </div>
 @endif 

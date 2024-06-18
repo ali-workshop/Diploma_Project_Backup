@@ -1,13 +1,5 @@
 @extends('Admin.layouts.master')
 @section('index.rooms')
-<<<<<<< HEAD
-
-<!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Hotel Rooms</h1>
-
-<!-- DataTales -->
-<div class="card shadow mb-1" >
-=======
 <style>
     .table-image {
 
@@ -40,7 +32,6 @@
     @if(session('status'))
         <div class="alert alert-success">{{ session('status') }}</div>
     @endif
->>>>>>> repoB/main
     <div class="card-header py-2">
     <a href="{{ route('rooms.create') }}" class="btn btn-primary">New Room</a>
     <a href="{{ route('rooms.ending-in-24-hours') }}" class="btn btn-primary">Rooms that expire after 24 hours</a>
@@ -56,71 +47,6 @@
                 </div>
             </div>
         </form> 
-<<<<<<< HEAD
-        <form action="{{ route('rooms.available.specificTime') }}" method="GET">
-            <div class="row mb-3 my-1">
-                <div class="col-md-4">
-                    <input type="text" name="specificDate" id="specificDate" class="form-control" placeholder="Available Rooms in Specific Date">
-                </div>
-                <div >
-                    <button type="submit" class="btn btn-outline-secondary">Filter</button>
-                </div>
-            </div>
-        </form> 
-        <form action="{{ route('rooms.reserved.specificTime') }}" method="GET">
-            <div class="row mb-3 my-1">
-                <div class="col-md-4">
-                    <input type="text" name="specificDate" id="specificDate" class="form-control" placeholder="Booked Rooms in Specific Date ">
-                </div>
-                <div >
-                    <button type="submit" class="btn btn-outline-secondary">Filter</button>
-                </div>
-            </div>
-        </form> 
-        <form action="{{ route('rooms.available.period') }}" method="GET">
-            <div class="row mb-3 my-1">
-                <div class="col-md-5">
-                    <input type="text" name="start_range" id="start_range" class="form-control" placeholder="Enter Start Date For Available Rooms">
-                </div>
-                <div class="col-md-5">
-                    <input type="text" name="end_range" id="end_range" class="form-control" placeholder="Enter End Date For Available Rooms // default:NUll">
-                </div>
-                <div >
-                    <button type="submit" class="btn btn-outline-secondary">Filter</button>
-                </div>
-            </div>
-        </form> 
-        <form action="{{ route('rooms.reserved.period') }}" method="GET">
-            <div class="row mb-3 my-1">
-                <div class="col-md-5">
-                    <input type="text" name="start_range" id="start_range" class="form-control" placeholder="Enter Start Date For Reserved Rooms">
-                </div>
-                <div class="col-md-5">
-                    <input type="text" name="end_range" id="end_range" class="form-control" placeholder="Enter End Date For Reserved Rooms  // default:NUll">
-                </div>
-                <div >
-                    <button type="submit" class="btn btn-outline-secondary">Filter</button>
-                </div>
-            </div>
-        </form> 
-        <div class="table-responsive">
-            <table class="table table-bordered table-striped"  id="dataTable">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Room type</th>
-                        <th>Room code</th>
-                        <th>Floor Number</th>
-                        <th>Description</th>
-                        <th>status</th>
-                        <th>Image</th>
-                        <th>price</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
-                    </tr>
-                </thead>
-                <tbody >
-=======
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Room Filters</title>
@@ -240,7 +166,6 @@
                     </tr>
                 </thead>
                 <tbody>
->>>>>>> repoB/main
                     @foreach($rooms as $room)
                     <tr>
                         <td>{{ $loop->iteration}}</td>
@@ -249,10 +174,6 @@
                         <td>{{ $room->floorNumber}}</td>
                         <td>{{ $room->description}}</td>
                         <td>{{ $room->status}}</td>
-<<<<<<< HEAD
-                        <td><img src="{{ asset('images/' . $room->img) }}" alt="{{ $room->code }}" style="max-width: 100px;"></td>
-                        <td>{{ $room->price}}</td>
-=======
                         <td>{{ $room->price}}</td>
                         <td>
                             @if ($room->images)
@@ -261,7 +182,6 @@
                                 @endforeach
                             @endif
                         </td>
->>>>>>> repoB/main
                         <td><a href='{{route("rooms.edit", $room->id)}}' class="btn btn-outline-success">EDIT</a></td>
                         <td>
                             <form action="{{ route('rooms.destroy', $room->id) }}" method="POST">
@@ -277,9 +197,5 @@
         </div>
     </div>
 </div>
-<<<<<<< HEAD
-@endsection
-=======
 @endsection
 
->>>>>>> repoB/main

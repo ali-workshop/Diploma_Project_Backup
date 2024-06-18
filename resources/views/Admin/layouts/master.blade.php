@@ -11,26 +11,15 @@
     <title>Hotel Reservation Control Panel</title>
 
     <!-- Custom fonts for this template-->
-<<<<<<< HEAD
-    {{-- <link href="{{asset('assets/vendor/fontawsome/css/all.min.css')}}" rel="stylesheet" type="text/css"> --}}
-=======
->>>>>>> repoB/main
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet"
         type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-<<<<<<< HEAD
+
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('assets/css/sb-admin-2.css') }}" rel="stylesheet">
-    <!-- Custom styles for this page -->
-    <link href="{{ asset('assets/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet"> 
-=======
-    <!-- Custom styles for this template-->
-    <link href="{{ asset('assets/css/sb-admin-2.css') }}" rel="stylesheet">
-    <!-- Custom styles for this page -->
-    <link href="{{ asset('assets/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- clock style -->
     <style>
@@ -39,11 +28,10 @@
             font-weight: bold;
         } 
     </style>
->>>>>>> repoB/main
+
 </head>
 
 <body id="page-top">
-
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -75,17 +63,6 @@
             <div class="sidebar-heading">
                 Hotel Reservation Panel
             </div>
-<<<<<<< HEAD
-
-            <!-- Nav Item - Rooms Section Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fa-solid fa-door-open"></i>
-                    <span>Manage Rooms</span>
-                </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-=======
             <!-- Nav Item - Rooms Section Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link " href="#" data-toggle="collapse" data-target="#collapseRooms"
@@ -95,12 +72,11 @@
                 </a>
                 <div id="collapseRooms" class="collapse" aria-labelledby="headingRooms"
                     data-parent="#accordionSidebar">
->>>>>>> repoB/main
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Rooms:</h6>
                         <a class="collapse-item" href="{{ route('rooms.create') }}">Create New Room</a>
                         <a class="collapse-item" href="{{ route('rooms.index') }}">all rooms</a>
-<<<<<<< HEAD
+
                         <a class="collapse-item" href="{{ route('rooms.available.current') }}">Current Available Rooms</a>
                         <a class="collapse-item" href="{{ route('rooms.reserved.current') }}">Current Reserved Rooms</a>
                        
@@ -112,50 +88,23 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBooking"
                     aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fa-solid fa-file-invoice-dollar"></i>                    
-=======
-                        <a class="collapse-item" href="{{ route('rooms.available.current') }}">Current Available
-                            Rooms</a>
-                        <a class="collapse-item" href="{{ route('rooms.reserved.current') }}">Current Reserved Rooms</a>
-
-                    </div>
-                </div>
-            </li>
-
-            <!-- Nav Item - Booking section Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link " href="#" data-toggle="collapse" data-target="#collapseBooking"
-                    aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fa-solid fa-file-invoice-dollar"></i>
->>>>>>> repoB/main
+
                     <span>Booking Section</span>
                 </a>
                 <div id="collapseBooking" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Booking:</h6>
-<<<<<<< HEAD
-                        <a class="collapse-item" href="{{route('reservation.index')}}">Reservations List</a>
-=======
                         <a class="collapse-item" href="{{ route('reservation.index') }}">Reservations List</a>
->>>>>>> repoB/main
-                        <a class="collapse-item" href="#"></a>
                     </div>
                 </div>
             </li>
-<<<<<<< HEAD
-=======
-
->>>>>>> repoB/main
             <!-- Nav Item - Room Types Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
-<<<<<<< HEAD
-                    <i class="fa-solid fa-key"></i>
-=======
                     <i class="fas fa-bed"></i>
->>>>>>> repoB/main
                     <span>Room Types</span>
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
@@ -168,8 +117,6 @@
                     </div>
                 </div>
             </li>
-<<<<<<< HEAD
-=======
 
             <!-- Nav Item - Guests Section Collapse Menu -->
             <li class="nav-item">
@@ -188,7 +135,6 @@
                 </div>
             </li>
 
->>>>>>> repoB/main
             <!-- Divider -->
             {{-- <hr class="sidebar-divider"> --}}
 
@@ -204,11 +150,7 @@
                     <i class="fa-solid fa-utensils"></i>
                     <span>Room Services</span>
                 </a>
-<<<<<<< HEAD
-                <div id="collapsePages" class="collapse show" aria-labelledby="headingPages"
-=======
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages"
->>>>>>> repoB/main
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{ route('services.index') }}">All Services</a>
@@ -217,8 +159,6 @@
                 </div>
             </li>
 
-<<<<<<< HEAD
-=======
             <!-- Nav Item - User management  Collapse Menu -->
             <li class="nav-item ">
                 <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseUser"
@@ -236,7 +176,6 @@
                 </div>
             </li>
 
->>>>>>> repoB/main
             <!-- Nav Item - Messages Collapse Menu -->
             <li class="nav-item ">
                 <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseMessages"
@@ -244,11 +183,7 @@
                     <i class="fa-solid fa-envelope"></i>
                     <span>Messages</span>
                 </a>
-<<<<<<< HEAD
-                <div id="collapseMessages" class="collapse show" aria-labelledby="headingMessages"
-=======
                 <div id="collapseMessages" class="collapse " aria-labelledby="headingMessages"
->>>>>>> repoB/main
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{ route('messages.index') }}">All Messages</a>
@@ -281,23 +216,6 @@
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
                     </button>
-<<<<<<< HEAD
-
-                    <!-- Topbar Search -->
-                    {{-- <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                     --}}
-
-
-=======
                     <!-- Clock on the left side -->
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
@@ -307,7 +225,6 @@
                             </a>
                         </li>
                     </ul>
->>>>>>> repoB/main
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
@@ -500,15 +417,10 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-<<<<<<< HEAD
-
-                    <!-- Page Heading -->
-=======
                     <!-- Page Heading -->
                     @yield('index.users')
                     @yield('create.users')
                     @yield('edit.users')
->>>>>>> repoB/main
                     @yield('index.services')
                     @yield('create.services')
                     @yield('edit.services')
@@ -520,26 +432,18 @@
                     @yield('create.rooms')
                     @yield('edit.rooms')
                     @yield('show.rooms')
-<<<<<<< HEAD
-                    @yield('index.reservations')
-=======
                     @yield('ending_soon.rooms')
                     @yield('index.reservations')
                     @yield('create.reservations')
                     @yield('show.reservations')
->>>>>>> repoB/main
                     @yield('index.roomType')
                     @yield('create.roomType')
                     @yield('edit.roomType')
                     @yield('show.roomType')
-<<<<<<< HEAD
-                    @yield('ending_soon.rooms')
-=======
                     @yield('index.guests')
                     @yield('create.guests')
                     @yield('edit.guests')
                     @yield('show.guests')
->>>>>>> repoB/main
                 </div>
                 <!-- /.container-fluid -->
 
@@ -550,11 +454,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-<<<<<<< HEAD
-                        <span>Copyright &copy; Your Website 2020</span>
-=======
                         <span>Copyright &copy; Hotel Syria 2024</span>
->>>>>>> repoB/main
                     </div>
                 </div>
             </footer>
@@ -607,8 +507,6 @@
 
     <!-- Page level custom scripts -->
     <script src="{{ asset('assets/js/demo/datatables-demo.js') }}"></script>
-<<<<<<< HEAD
-=======
     <!-- Script for live time -->
     <script>
         function updateClock() {
@@ -627,7 +525,6 @@
         setInterval(updateClock, 1000);
         updateClock(); // initial call to set the clock immediately
     </script>
->>>>>>> repoB/main
 
 </body>
 

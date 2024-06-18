@@ -1,8 +1,5 @@
 @extends('Admin.layouts.master')
 @section('edit.rooms')
-<<<<<<< HEAD
-
-=======
 <style>
     .image-preview{
         display: inline-block;
@@ -20,7 +17,6 @@
         background: rgba(255,255,255,0.8);
     }
 </style>
->>>>>>> repoB/main
 <!-- Page Heading -->
 <h1 class="h3 mb-2 text-gray-800">Edit {{$room->code}} Room</h1>
 
@@ -32,10 +28,7 @@
                 @csrf
                 @method('PUT')
 
-<<<<<<< HEAD
-=======
                 <!-- Room Type Field -->
->>>>>>> repoB/main
                 <div class="row mb-3">
                     <label for="room_type" class="col-md-4 col-form-label text-md-end">{{ __('Room Type') }}</label>
                     <div class="col-md-6">
@@ -53,20 +46,13 @@
                         @enderror
                     </div>
                 </div>
-<<<<<<< HEAD
-=======
 
                 <!-- Room Code Field -->
->>>>>>> repoB/main
                 <div class="row mb-3">
                     <label for="code" class="col-md-4 col-form-label text-md-end">{{ __('Code') }}</label>
                     <div class="col-md-6">
                         <input id="code" type="text" class="form-control @error('code') is-invalid @enderror"
-<<<<<<< HEAD
-                            name="code" value="{{ $room->code }}" required autocomplete="code" autofocus>
-=======
                             name="code" value="{{ $room->code }}" autocomplete="code" autofocus>
->>>>>>> repoB/main
                         @error('code')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -75,20 +61,13 @@
                     </div>
                 </div>
 
-<<<<<<< HEAD
-=======
                 <!-- Floor Field -->
->>>>>>> repoB/main
                 <div class="row mb-3">
                     <label for="floorNumber" class="col-md-4 col-form-label text-md-end">{{ __('FloorNumber') }}</label>
                     <div class="col-md-6">
                         <input id="floorNumber" type="number" step="0.01"
                             class="form-control @error('floorNumber') is-invalid @enderror" name="floorNumber"
-<<<<<<< HEAD
-                            value="{{$room->floorNumber }}" required>
-=======
                             value="{{$room->floorNumber }}">
->>>>>>> repoB/main
                         @error('floorNumber')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -97,18 +76,11 @@
                     </div>
                 </div>
 
-<<<<<<< HEAD
-                <div class="row mb-3">
-                    <label for="description" class="col-md-4 col-form-label text-md-end">{{ __('Description') }}</label>
-                    <div class="col-md-6">
-                        <textarea id="description" class="form-control @error('description') is-invalid @enderror" name="description" required>{{ $room->description }}</textarea>
-=======
                 <!-- Description Field -->
                 <div class="row mb-3">
                     <label for="description" class="col-md-4 col-form-label text-md-end">{{ __('Description') }}</label>
                     <div class="col-md-6">
                         <textarea id="description" class="form-control @error('description') is-invalid @enderror" name="description" >{{ $room->description }}</textarea>
->>>>>>> repoB/main
                         @error('description')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -117,14 +89,6 @@
                     </div>
                 </div>
 
-<<<<<<< HEAD
-                <div class="row mb-3">
-                    <label for="img" class="col-md-4 col-form-label text-md-end">{{ __('Image') }}</label>
-                    <div class="col-md-6">
-                        <input id="img" type="file"  class="form-control @error('img') is-invalid @enderror" name="img" value={{$room->img}}>
-                        <img src={{ asset('images/' . $room->img) }} alt="my image" width="50%" heigh="50%"/>
-                        @error('img')
-=======
                 <!-- Display existing images with delete option -->
                 <div class="row mb-3">
                     <div class="col-md-6">
@@ -157,29 +121,20 @@
                         <input id="file-input" type="file"  class="form-control @error('images') is-invalid @enderror" name="images" >
                         <div id="preview-container"></div>
                         @error('images')
->>>>>>> repoB/main
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
                         @enderror
                     </div>
-<<<<<<< HEAD
-                </div>
-=======
                 </div> --}}
 
                 <!-- Status Field -->
->>>>>>> repoB/main
                 <div class="row mb-3">
                     <label for="status" class="col-md-4 col-form-label text-md-end">{{ __('Status') }}</label>
                     <div class="col-md-6">
                         <select name="status" id="status" class="form-control @error('status') is-invalid @enderror">
                             <option value="available" {{ $room->status == 'available' ? 'selected' : '' }}>Available</option>
-<<<<<<< HEAD
-                            <option value="booked" {{ $room->status == 'booked' ? 'selected' : '' }}>Booked</option>
-=======
                             <option value="unavailable" {{ $room->status == 'unavailable' ? 'selected' : '' }}>UnAvailable</option>
->>>>>>> repoB/main
                         </select>
                         @error('status')
                         <span class="invalid-feedback" role="alert">
@@ -188,20 +143,12 @@
                         @enderror
                     </div>
                 </div>
-<<<<<<< HEAD
-                
-                <div class="row mb-3">
-                    <label for="price" class="col-md-4 col-form-label text-md-end">{{ __('Price') }}</label>
-                    <div class="col-md-6">
-                        <input value='{{$room->price}}' id="price" type="number" step="0.01" class="form-control @error('price') is-invalid @enderror" name="price" required>
-=======
 
                 <!-- Price Field -->
                 <div class="row mb-3">
                     <label for="price" class="col-md-4 col-form-label text-md-end">{{ __('Price') }}</label>
                     <div class="col-md-6">
                         <input value='{{$room->price}}' id="price" type="number" step="0.01" class="form-control @error('price') is-invalid @enderror" name="price">
->>>>>>> repoB/main
                         @error('price')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -210,14 +157,7 @@
                     </div>
                 </div>
 
-<<<<<<< HEAD
-                
-
-                
-
-=======
                 <!-- Save Button -->
->>>>>>> repoB/main
                 <div class="row mb-0">
                     <div class="col-md-6 offset-md-4">
                         <button type="submit" class="btn btn-primary">
@@ -232,8 +172,6 @@
         </div>
     </div>
 </div>
-<<<<<<< HEAD
-=======
 <script>
 // $(document).ready(function(){
 //     $("#file-input").on("change", function(){
@@ -278,5 +216,4 @@ function previewImages(params) {
     }
 }
 </script>
->>>>>>> repoB/main
 @endsection

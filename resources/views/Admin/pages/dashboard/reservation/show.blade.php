@@ -1,10 +1,6 @@
 @extends('Admin.layouts.master')
 
-<<<<<<< HEAD
-@section('show.rooms')
-=======
 @section('show.reservations')
->>>>>>> repoB/main
     <!-- Page Heading -->
     <h1 class="h3 mb-2 text-gray-800">Reservation Details</h1>
 
@@ -14,21 +10,11 @@
             <div class="card-header py-3 d-flex justify-content-between align-items-center">
                 <h6 class="m-0 font-weight-bold text-primary">Reservation Bill Check</h6>
                 <div>
-<<<<<<< HEAD
-=======
                     <label class="m-3 font-weight-bold text-primary"> Date : {{now()}} </label>
->>>>>>> repoB/main
                     <a class="btn btn-outline-primary" href="{{ route('reservation.index') }}">Back</a>
                     <button class="btn btn-outline-info" onclick="printBill()">Print</button>
                 </div>
             </div>
-<<<<<<< HEAD
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-6">
-                        <h4><strong>Reservation Details</strong></h4>
-                        <table class="table table-bordered">
-=======
             {{-- {{$reservation}} --}}
             <div class="card-body">
                 <div class="row">
@@ -41,7 +27,6 @@
                                     <th>Details</th>
                                 </tr>
                             </thead>
->>>>>>> repoB/main
                             <tbody>
                                 <tr>
                                     <th>User Name</th>
@@ -79,11 +64,7 @@
                         </table>
                     </div>
                     <div class="col-md-6">
-<<<<<<< HEAD
-                        <h4><strong>Bill Details</strong></h4>
-=======
                         <h4><strong>Bill Details</strong></h4><br/>
->>>>>>> repoB/main
                         <table class="table table-bordered">
                             <thead class="thead-dark">
                                 <tr>
@@ -115,21 +96,6 @@
                                     </tr>
                                 @endforeach
                             </tbody>
-<<<<<<< HEAD
-                        </table>
-
-                        <table class="table table-bordered mt-5">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th>Sum</th>
-                                    <th>{{ $reservation->room->price }}</th>
-                                </tr>
-                                <tr>
-                                    <th>Total = ({{ $reservation->room->price }}) * ({{ $stayingNights }})</th>
-                                    <th>{{ $reservation->totalPrice }}</th>
-                                </tr>
-                            </thead>
-=======
                             <thead class="thead-dark">
                                 <tr>
                                     <th>Sum : Room Type + Room Services </th>
@@ -151,7 +117,6 @@
                                     <th>{{ $reservation->totalPrice }}</th>
                                 </tr>
                             </tbody>
->>>>>>> repoB/main
                         </table>
                     </div>
                 </div>
@@ -159,10 +124,6 @@
             </div>
         </div>
     </div>
-<<<<<<< HEAD
-
-    <script>
-=======
     <br>
     <!-- button to show reservation events better than show it  directly -->
     <!-- Reservation events section, it is initially hidden :) -->
@@ -192,7 +153,6 @@
     </table>
 </div>
  <script>
->>>>>>> repoB/main
         function printBill() {
             var printContents = document.getElementById('print-content').innerHTML;
             var originalContents = document.body.innerHTML;

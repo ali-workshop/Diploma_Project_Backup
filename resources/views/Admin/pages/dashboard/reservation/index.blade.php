@@ -3,12 +3,6 @@
 
 <!-- Page Heading -->
 <h1 class="h3 mb-2 text-gray-800">Reservations List</h1>
-<<<<<<< HEAD
-
-<!-- DataTales -->
-<div class="card shadow mb-4">
-    
-=======
 @if (session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
@@ -25,7 +19,6 @@
     <div class="card-header py-3">
         <a href="{{ route('reservation.create') }}" class="btn btn-primary">New Reservation</a>
     </div>
->>>>>>> repoB/main
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -58,11 +51,7 @@
                         <td><a href="{{ route('reservation.show', $reservation->id) }}" class="btn btn-outline-dark">DETAILS</a></td>
                         <td><a href='{{route("reservation.edit", $reservation->id)}}' class="btn btn-outline-success">EDIT</a></td>
                         <td>
-<<<<<<< HEAD
-                            <form action="{{ route('rooms.destroy', $reservation->id) }}" method="POST">
-=======
                             <form action="{{ route('reservation.destroy', $reservation->id) }}" method="POST">
->>>>>>> repoB/main
                                 @csrf
                                 @method ('DELETE')
                                 <button type="submit" class="btn btn-outline-danger">DELETE</button>

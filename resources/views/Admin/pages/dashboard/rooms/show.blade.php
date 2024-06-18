@@ -12,22 +12,14 @@
     <div class="card-body">
         <div class="row">
             <div class="col-md-4">
-<<<<<<< HEAD
-                <img src="{{ asset('images/'.$room->img) }}" alt="{{ $room->code }}" class="img-fluid">
-=======
                 @foreach(json_decode($room->images,true) as $image)
                         <img src={{asset('images/'.$image)}} alt="{{$room->code}}" class="img-fluid">
                 @endforeach
->>>>>>> repoB/main
             </div>
             <div class="col-md-8">
                 <p><strong>Room Number:</strong> {{ $room->code}}</p>
                 <p><strong>Floor:</strong> {{ $room->floorNumber }}</p>
                 <p><strong>Availability Status:</strong> {{ $room->status }}</p>
-<<<<<<< HEAD
-                <p><strong>Image of the Room:</strong> {{ $room->img }}</p>
-=======
->>>>>>> repoB/main
                 <p><strong>Description:</strong> {{ $room->description }}</p>
                 <p><strong>Price:</strong> {{ $room->price }}</p>
                 <div class="pull-right ">
