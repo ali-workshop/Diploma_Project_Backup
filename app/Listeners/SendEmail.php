@@ -9,8 +9,6 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-
-
 class SendEmail
 {
     /**
@@ -18,7 +16,6 @@ class SendEmail
      */
     public function __construct()
     {
-        //
     }
 
     /**
@@ -28,7 +25,6 @@ class SendEmail
     {
         $reservation = $event->reservation;
         $user = $reservation->user;
-
         $mail = new PHPMailer(true);
         try {
             $mail->isSMTP();
