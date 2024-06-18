@@ -1,37 +1,79 @@
 @extends('Admin.layouts.master')
 @section('edit.rooms')
 <style>
-    .image-preview{
-        display: inline-block;
-        position: relative;
-        margin: 10px;
+    .remove-image{
+        cursor: pointer;
     }
-    .image-preview img{
-        width: 60px;
-        height: 60px;
+    .existing-images {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 4px;
+    background-color: #f9f9f9;
     }
-    .image-preview .remove-image{
+    .image-item {
+    position: relative;
+    display: inline-block;
+    }
+
+    .image-item img {
+        width: 100px;
+        height: 100px;
+        border-radius: 4px;
+        display: block;
+        object-fit: cover;
+    }
+    .delete-btn {
         position: absolute;
-        top:0;
-        right: 0;
-        background: rgba(255,255,255,0.8);
+        top: 5px;
+        right: 5px;
+        background-color: #ff4d4d;
+        color: white;
+        border: none;
+        padding: 2px 6px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 12px;
     }
 </style>
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Edit {{$room->code}} Room</h1>
+<div class="row mb-2 ">
+    <div class="col-md-6">
+        <h1 class="h3 text-gray-800">Edit Room Number {{$room->code}} </h1>
+    </div>
+    <div class="col-md-6">
+        <!-- Save Button -->
+        <button type="submit" form="editform" class="btn btn-primary offset-5">
+            Save Changes
+        </button> 
+        <a role="button" href="{{route('rooms.index')}}" class="btn btn-outline-danger ">Discard Changes</a>
+    </div>
+</div>
 
 <!-- Form -->
 <div class="card shadow mb-4">
     <div class="card-body">
-        <div class="table-responsive">
-            <form method="POST" action="{{ route('rooms.update', $room->id) }}" enctype="multipart/form-data">
+            <form method="POST" id="editform" action="{{ route('rooms.update', $room->id) }}" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
-
-                <!-- Room Type Field -->
-                <div class="row mb-3">
-                    <label for="room_type" class="col-md-4 col-form-label text-md-end">{{ __('Room Type') }}</label>
-                    <div class="col-md-6">
+                <div class="row g-4 mb-4">
+                    <!-- Room Code Field -->
+                    <div class="col-md-3">
+                        <label for="code" class="form-label">{{ __('Code') }}</label>
+                        <input id="code" type="text" class="form-control @error('code') is-invalid @enderror"
+                            name="code" value="{{ $room->code }}" autocomplete="code" autofocus>
+                        @error('code')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                
+                    <!-- Room Type Field -->
+                    <div class="col-md-3">
+                        <label for="room_type" class="form-label">{{ __('Room Type') }}</label>
                         <select name="room_type" id="room_type"
                             class="form-control @error('room_type') is-invalid @enderror"
                             name="name">{{ old('status') }}
@@ -45,42 +87,71 @@
                             </span>
                         @enderror
                     </div>
-                </div>
-
-                <!-- Room Code Field -->
-                <div class="row mb-3">
-                    <label for="code" class="col-md-4 col-form-label text-md-end">{{ __('Code') }}</label>
-                    <div class="col-md-6">
-                        <input id="code" type="text" class="form-control @error('code') is-invalid @enderror"
-                            name="code" value="{{ $room->code }}" autocomplete="code" autofocus>
-                        @error('code')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
+                    <!-- Status Field -->
+                    <div class="col-md-2">
+                        <label for="status" class="form-label">{{ __('Status') }}</label>
+                        <select name="status" id="status" class="form-control @error('status') is-invalid @enderror">
+                            <option value="available" {{ $room->status == 'available' ? 'selected' : '' }}>Available</option>
+                            <option value="unavailable" {{ $room->status == 'unavailable' ? 'selected' : '' }}>UnAvailable</option>
+                        </select>
+                        @error('status')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
                         @enderror
                     </div>
-                </div>
 
-                <!-- Floor Field -->
-                <div class="row mb-3">
-                    <label for="floorNumber" class="col-md-4 col-form-label text-md-end">{{ __('FloorNumber') }}</label>
-                    <div class="col-md-6">
-                        <input id="floorNumber" type="number" step="0.01"
-                            class="form-control @error('floorNumber') is-invalid @enderror" name="floorNumber"
-                            value="{{$room->floorNumber }}">
+                    <!-- Price Field -->
+                    <div class="col-md-2">
+                        <label for="price" class="form-label">{{ __('Price') }}</label>
+                        <input value='{{$room->price}}' id="price" type="number" step="0.01" class="form-control @error('price') is-invalid @enderror" name="price">
+                        @error('price')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+
+                    <!-- Floor Field -->
+                    <div class="col-md-2">
+                        <label for="floorNumber" class="form-label">FloorNumber</label>
+                        <select name="floorNumber" id="floorNumber" class="form-control @error('floorNumber') is-invalid @enderror">
+                            <option value=""> Select Floor</option>
+                            <option value="0" {{ old('floorNumber') === 0 ? 'selected' : '' }}>Ground</option>
+                            @for ($floor=0;$floor<16;$floor++)
+                                <option value="{{ $floor }}"  {{ (old('floorNumber'))? "selected":"" }}>{{ $floor }}</option>
+                            @endfor 
+                        </select>
                         @error('floorNumber')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
                         @enderror
                     </div>
-                </div>
+                </div>     
 
-                <!-- Description Field -->
-                <div class="row mb-3">
-                    <label for="description" class="col-md-4 col-form-label text-md-end">{{ __('Description') }}</label>
+                <div class="row g-3 mb-4">
+                    <!-- Display existing images with delete option -->
                     <div class="col-md-6">
-                        <textarea id="description" class="form-control @error('description') is-invalid @enderror" name="description" >{{ $room->description }}</textarea>
+                        <label>Existing Images:</label>
+                        <div class="existing-images">
+                        @if ($room->images)
+                            @foreach (json_decode($room->images,true) as $image)
+                                <div class="image-item" id="Existing-images">
+                                    <img src={{asset('images/'.$image)}} alt="room {{$room->code}}">
+                                    {{-- <span class="remove-image" onclick="removeImage(this,'{{$image}}')">X</span> --}}
+                                    <button type="button" class="delete-btn" class="remove-image"  onclick="removeImage(this,'{{$image}}')">X</button>
+                                </div> 
+                            @endforeach
+                        @endif
+                        <!-- Hidden input to store images to delete-->
+                        <input type="hidden" name="delete_images" id="delete-images">
+                        </div>
+                    </div>
+                    <!-- Description Field -->
+                    <div class="col-md-6">
+                        <label for="description" class="form-label">{{ __('Description') }}</label>
+                        <textarea id="description" rows="6" class="form-control @error('description') is-invalid @enderror" name="description" >{{ $room->description }}</textarea>
                         @error('description')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -89,30 +160,14 @@
                     </div>
                 </div>
 
-                <!-- Display existing images with delete option -->
                 <div class="row mb-3">
+                    <!--File input for new images-->  
                     <div class="col-md-6">
-                        @if ($room->images)
-                            @foreach (json_decode($room->images,true) as $image)
-                                <div id="Existing-images">
-                                    <img src={{asset('images/'.$image)}} alt="room {{$room->code}}">
-                                    <span class="remove-image" onclick="removeImage(this,'{{$image}}')">X</span>
-                                </div> 
-                            @endforeach
-                        @endif
+                        <label for="new_images" class="form-label">Add New Images:</label>
+                        <input id="new_images" type="file"  class="form-control @error('images') is-invalid @enderror" name="new_images[]" multiple accept="image/*" onchange="previeImages(this)">
+                        <!-- Container for new Images preview-->
+                        <div id="new-images-preview"></div>
                     </div>
-                </div>
-
-                <!-- Hidden input to store images to delete-->
-                <input type="hidden" name="delete_images" id="delete-images">
-                <div class="row mb-3">
-                <!--File input for new images-->
-                    <label for="new_images" class="col-md-4 col-form-label text-md-end">Add New Images:</label>
-                <div class="col-md-6">
-                    <input id="new_images" type="file"  class="form-control @error('images') is-invalid @enderror" name="new_images[]" multiple accept="image/*" onchange="previeImages(this)">
-                    <!-- Container for new Images preview-->
-                    <div id="new-images-preview"></div>
-                </div>
                 </div>
 
                 {{-- <div class="row mb-3">
@@ -127,49 +182,10 @@
                         @enderror
                     </div>
                 </div> --}}
-
-                <!-- Status Field -->
-                <div class="row mb-3">
-                    <label for="status" class="col-md-4 col-form-label text-md-end">{{ __('Status') }}</label>
-                    <div class="col-md-6">
-                        <select name="status" id="status" class="form-control @error('status') is-invalid @enderror">
-                            <option value="available" {{ $room->status == 'available' ? 'selected' : '' }}>Available</option>
-                            <option value="unavailable" {{ $room->status == 'unavailable' ? 'selected' : '' }}>UnAvailable</option>
-                        </select>
-                        @error('status')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                    </div>
-                </div>
-
-                <!-- Price Field -->
-                <div class="row mb-3">
-                    <label for="price" class="col-md-4 col-form-label text-md-end">{{ __('Price') }}</label>
-                    <div class="col-md-6">
-                        <input value='{{$room->price}}' id="price" type="number" step="0.01" class="form-control @error('price') is-invalid @enderror" name="price">
-                        @error('price')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                    </div>
-                </div>
-
-                <!-- Save Button -->
-                <div class="row mb-0">
-                    <div class="col-md-6 offset-md-4">
-                        <button type="submit" class="btn btn-primary">
-                            {{ __('Save') }}
-                        </button>
-                    </div>
-                </div>
             </form>
             <br>
             <br>
             <br>
-        </div>
     </div>
 </div>
 <script>
