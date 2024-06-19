@@ -2,8 +2,10 @@
 @section('show.rooms')
 <style>
     .carousel-item img {
-    max-height: 500px;
-    object-fit: cover;
+        width: 300px;
+        height: 400px;
+        border-radius: 4px;
+        object-fit: cover;
 }
 </style>
 <!-- Page Heading -->
@@ -11,8 +13,13 @@
 
 <!-- Details -->
 <div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Room Number {{ $room->code }} Details</h6>
+    <div class="card-header row m-2">
+        <div class="col-md-4 py-1">
+        <h6 class=" font-weight-bold text-primary">Room Number {{ $room->code }} Details</h6>
+        </div>
+        <div class="col-md-1 offset-7">
+            <a class="btn btn-outline-primary py-1" href="{{ route('rooms.index') }}">Back</a>
+        </div>
     </div>
     <div class="card-body" >
         <div class="row">
@@ -45,7 +52,6 @@
                 <p><strong>Availability Status:</strong> {{ $room->status }}</p>
                 <p><strong>Description:</strong> {{ $room->description }}</p>
                 <p><strong>Price:</strong> {{ $room->price }}</p>
-                <a class="btn btn-outline-primary" href="{{ route('rooms.index') }}">Back</a>
             </div>
         </div>
     </div>   

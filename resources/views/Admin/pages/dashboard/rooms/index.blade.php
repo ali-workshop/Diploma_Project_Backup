@@ -14,6 +14,21 @@
     }
     .table-image td, .table-image th {
         vertical-align: middle;
+        text-align: center;
+    }
+    .image-item {
+        position: relative;
+        display: inline-block;
+    }
+
+    .image-item img {
+        width: 80px;
+        height: 60px;
+        border-radius: 4px;
+        display: block;
+        padding:5px;
+        float:left;
+        object-fit: cover;
     }
 </style>
 
@@ -70,18 +85,18 @@
             </div>
 
             <div class="table-responsive">
-                <table class="table table-bordered table-hover table-image" id="dataTable">
+                <table class=" table-bordered table-hover table-image" id="dataTable">
                     <thead>
                         <tr>
-                            <th>#</th>
-                            <th>Room type</th>
-                            <th>Room code</th>
-                            <th>Floor Number</th>
-                            <th>Description</th>
-                            <th>Status</th>
-                            <th>Price</th>
-                            <th class="col-2">Images</th>
-                            <th>Actions</th>
+                            <th class="col-md-1">#</th>
+                            <th class="col-md-1">Room type</th>
+                            <th class="col-md-1">Room code</th>
+                            <th class="col-md-1">Floor Number</th>
+                            <th class="col-md-1">Description</th>
+                            <th class="col-md-1">status</th>
+                            <th class="col-md-1">Price</th>
+                            <th class="col-md-4">Images</th>
+                            <th class="col-md-1">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -108,7 +123,9 @@
                             <td>
                                 @if ($room->images)
                                     @foreach (json_decode($room->images,true) as $image)
-                                        <img src="{{ asset('images/'.$image) }}" alt="{{ $room->code }}" class="img-responsive" style="max-width:110px; height:100px; padding:5px; display:inline; float:left;">
+                                    <div class="image-item">
+                                        <img src="{{ asset('images/'.$image) }}" alt="{{ $room->code }}" >
+                                    </div>
                                     @endforeach
                                 @endif
                             </td>
