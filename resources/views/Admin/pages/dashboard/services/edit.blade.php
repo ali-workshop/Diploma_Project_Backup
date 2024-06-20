@@ -61,12 +61,12 @@
                             <strong>{{ $message }}</strong>
                         </span>
                         @enderror
-                        <!-- Display current image
+                        <!-- Display current image -->
                         @if ($service->img)
                             <div class="mt-2">
-                                <img src="{{ asset('storage/' . $service->img) }}" alt="Current Image" width="100">
+                                <img src="{{ asset('images/' . $service->img) }}" alt="Current Image" width="100">
                             </div>
-                        @endif -->
+                        @endif
                     </div>
                 </div>
 
@@ -76,6 +76,7 @@
                         <button type="submit" class="btn btn-primary">
                             {{ __('Save') }}
                         </button>
+                        <a class="btn btn-outline-primary" href="{{ route('services.index') }}">Back</a>
                     </div>
                 </div>
             </form>

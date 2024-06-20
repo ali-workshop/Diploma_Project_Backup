@@ -7,16 +7,16 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class SuccessfulReservationNotification extends Notification
+class UpdateReservationNotification extends Notification
 {
     use Queueable;
-  //  private $reservation_code;
+
     /**
      * Create a new notification instance.
      */
     public function __construct()
     {
-     //   $this->reservation_code = $reservation_code;
+        //
     }
 
     /**
@@ -35,9 +35,9 @@ class SuccessfulReservationNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->line('The introduction to the notification.')
-            ->action('Notification Action', url('/'))
-            ->line('Thank you for using our application!');
+                    ->line('The introduction to the notification.')
+                    ->action('Notification Action', url('/'))
+                    ->line('Thank you for using our application!');
     }
 
     /**
@@ -48,8 +48,7 @@ class SuccessfulReservationNotification extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'message' => 'Your order accepted! The reservation has been successfully completed.',
-        //    'reservation_code' => $this->reservation_code,
+            'message' => 'Your reservation has been successfully updated.'
         ];
     }
 }
