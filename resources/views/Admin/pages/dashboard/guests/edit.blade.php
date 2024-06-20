@@ -4,7 +4,8 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">Edit Guest <a href="{{route('guests.index')}}" class="btn btn-outline-danger" style="float:right;">X</a></div>
+                    <div class="card-header">Edit Guest <a href="{{route('guests.index')}}" class="btn btn-outline-danger" style="float:right;">X</a>
+                    </div>
 
                     <div class="card-body">
                         <form method="POST" action="{{ route('guests.update', $guest->id) }}">
@@ -17,7 +18,7 @@
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
-                            @enderror
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label for="birthDate">Birth Date</label>
@@ -26,7 +27,7 @@
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
-                            @enderror
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label for="phone_number">Phone Number</label>
@@ -35,7 +36,7 @@
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
-                            @enderror
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label for="identificationNumber">Identification Number</label>
@@ -44,7 +45,7 @@
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
-                            @enderror
+                                @enderror
                             </div>
                             <button type="submit" class="btn btn-primary">Update</button>
                         </form>

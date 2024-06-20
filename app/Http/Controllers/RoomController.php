@@ -38,8 +38,7 @@ class RoomController extends Controller
                         $query->where('name', 'like', '%' . $request->name . '%');
                     }
                 })
-                ->orderBy('floorNumber', 'asc')
-                ->paginate(10);
+                ->orderBy('floorNumber', 'asc')->get();
 
             return view('Admin.pages.dashboard.rooms.index', compact('rooms'));
         } catch (\Exception $e) {
@@ -85,7 +84,7 @@ class RoomController extends Controller
             "status" => $validatedData['status'],
             "price" => $typeOfThisRoom->price +$sumPricesOfAllAvailableServices,
         ]);
-        return redirect()->route('rooms.index')->with('status','Guest Created Successfully');
+        return redirect()->route('rooms.index')->with('status','Room Created Successfully');
     }
 
     /**
@@ -155,25 +154,40 @@ class RoomController extends Controller
      */
     public function destroy(Room $room){
         try {
-            $this->deleteImage($room->img);
+            $images=json_decode($room->images,true);
+            foreach ($images as $image) {
+                // Remove the image file from the server
+                $filePath = public_path('images/'.$image);
+                if (file_exists($filePath)) {
+                    $this->deleteImage($image);
+                }
+            }
             $room->delete();
-            return redirect()->route('rooms.index')->with('success', 'Room deleted successfully.');
+            return redirect()->route('rooms.index')->with('status', 'Room deleted successfully.');
         } catch (\Exception $e) {
             Log::error('Error in RoomController@destroy:' . $e->getMessage());
-            return redirect()->route('Admin.pages.dashboard.rooms.index')->with('error', $e->getMessage());
+            return redirect()->route('rooms.index')->with('error', $e->getMessage());
         }
     }
 
     public function showCurrnetAvailableRooms(){
-            try{
-                $bookedRooms = Reservation::pluck('room_id')->toArray();
-                $rooms=Room::whereNotIn('id',$bookedRooms)->get();
-            // dd($rooms);
-            return view('Admin.pages.dashboard.rooms.index', ['rooms'=>$rooms]);
-            }catch(\Exception $e){
-                Log::error('Error in RoomController@showCurrnetAvailableRooms: ' . $e->getMessage());
-                return redirect()->route('rooms.index')->with('error', $e->getMessage());
-            }
+        try {
+            $currentDateTime = now();
+    
+            // gett room IDs that are currently reserved
+            $reservedRoomIds = Reservation::where('start_date', '<=', $currentDateTime)
+                                            ->where('end_date', '>=', $currentDateTime)
+                                            ->pluck('room_id')
+                                            ->toArray();
+            $availableRooms = Room::whereNotIn('id', $reservedRoomIds)
+                                  ->where('status', 'available')
+                                  ->get();
+    
+            return view('Admin.pages.dashboard.rooms.index', ['rooms' => $availableRooms]);
+        } catch (\Exception $e) {
+            Log::error('Error in RoomController@showCurrentAvailableRooms: ' . $e->getMessage());
+            return redirect()->route('rooms.index')->with('error', $e->getMessage());
+        }
     }
 
     public function showCurrnetOccupiedRoomsWithguests(){
@@ -231,7 +245,7 @@ class RoomController extends Controller
            $reservations_endDates = Reservation::pluck('end_date')->toArray();
             $latestEndDate = max($reservations_endDates);
             $latestEndDate =Carbon::parse($latestEndDate);
-            dd($latestEndDate);
+            // dd($latestEndDate);
             $startRange = Carbon::parse($request->input('start_range'), 'UTC')
                 ->setTimezone('Asia/Baghdad');
             $endRange = $request->has('end_range') ?
@@ -270,9 +284,15 @@ class RoomController extends Controller
         
         public function showCurrnetReservedRooms()
         { 
-            try{
-                $bookedRooms = Reservation::pluck('room_id')->toArray();
-                $rooms=Room::whereIn('id',$bookedRooms)->get();
+            try {
+                $currentDateTime = now();
+                Log::info('Current DateTime: ' . $currentDateTime);
+                $bookedRooms = Reservation::where('start_date', '<=', $currentDateTime)
+                                            ->where('end_date', '>=', $currentDateTime)
+                                            ->pluck('room_id')
+                                            ->toArray();
+                Log::info('Booked rooms: ' . implode(', ', $bookedRooms));
+                $rooms = Room::whereIn('id', $bookedRooms)->get();
             return view('Admin.pages.dashboard.rooms.index',['rooms'=>$rooms]);
             }catch(\Exception $e){
                 Log::error('Error in RoomController@showCurrnetReservedRooms: ' . $e->getMessage());
