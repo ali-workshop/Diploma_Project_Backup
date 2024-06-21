@@ -5,6 +5,9 @@ namespace App\Http\Traits;
 use Carbon\Carbon;
 use App\Models\Reservation;
 use App\Http\Traits\ApiResponserTrait;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\Api\UpdateReservationNotification;
+use App\Notifications\Api\SuccessfulReservationNotification;
 
 trait ApiReservationTrait
 {
@@ -56,7 +59,10 @@ trait ApiReservationTrait
         $this->fillReservationData($reservation, $user, $room, $request, $total_price);
         $reservation->update();
 
-        return $this->prepareReservationResponse($user, $reservation, $room, $days);
+        // Tuka: calling sendUserNotification to send the update reservation notification
+        $notificationData = $this->sendUserNotification($user, $reservation, true);
+
+        return $this->prepareReservationResponse($user, $reservation, $room, $days, $notificationData);
     }
 
     protected function makeNewReservation($user, $room, $request)
@@ -69,7 +75,27 @@ trait ApiReservationTrait
         $reservation->code = $this->generateUniqueReservationCode();
         $reservation->save();
 
-        return $this->prepareReservationResponse($user, $reservation, $room, $days);
+        // Tuka: calling sendUserNotification to send the successful reservation notification
+        $notificationData = $this->sendUserNotification($user, $reservation);
+
+        return $this->prepareReservationResponse($user, $reservation, $room, $days, $notificationData);
+    }
+
+    // Tuka: Sending notification to the user in 2 cases
+    // 1- When he uppdating his reservation details successfully
+    // 2- When he complete his reservation operation successfully
+    protected function sendUserNotification($user, $reservation, $isUpdate = false)
+    {
+        if ($reservation) {
+            if ($isUpdate) {
+                $notificationData = (new UpdateReservationNotification())->toArray($user);
+                Notification::send($user, new UpdateReservationNotification());
+            } else {
+                $notificationData = (new SuccessfulReservationNotification())->toArray($user);
+                Notification::send($user, new SuccessfulReservationNotification());
+            }
+            return $notificationData;
+        }
     }
 
     private function fillReservationData($reservation, $user, $room, $request, $total_price)
@@ -82,11 +108,12 @@ trait ApiReservationTrait
         $reservation->totalPrice = $total_price;
     }
 
-    private function prepareReservationResponse($user, $reservation, $room, $days)
+    private function prepareReservationResponse($user, $reservation, $room, $days, $notificationData)
     {
         // the shape of response I want it to look like in Api response 
         $typeOThisRoom = $room->roomType;
         return [
+            'notification' => $notificationData,
             'user_name' => $user->name,
             'reservation_code' => $reservation->code,
             'guest_number' => $reservation->guestNumber,
