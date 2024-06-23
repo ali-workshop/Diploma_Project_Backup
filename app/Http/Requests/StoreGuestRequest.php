@@ -26,6 +26,8 @@ class StoreGuestRequest extends FormRequest
             'birthDate' => 'required|date',
             'phone_number' => 'nullable|string|regex:/^[0-9]{10}$/',
             'identificationNumber' => 'required|string|max:50|unique:guests',
+            'reservations' => 'required|array',
+            'reservations.*' => 'exists:reservations,id',
         ];
     }
 }

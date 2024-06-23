@@ -47,6 +47,10 @@
                                 </span>
                             @enderror
                         </div>
+                        <div>
+                            <label>Reservations:</label>
+                            <select name="reservations[]" id="reservations" multiple required></select>
+                        </div>
                         <button type="submit" class="btn btn-primary">Save</button>
                     </form>
                 </div>
