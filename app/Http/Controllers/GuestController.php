@@ -41,13 +41,16 @@ class GuestController extends Controller
     {   
         try{
             $validatedData=$request->validated();
+            // Create the guest
             $guest=Guest::create([
                 'name'=>$validatedData['name'],
                 'birthDate'=>$validatedData['birthDate'],
                 'phone_number'=>$validatedData['phone_number'],
                 'identificationNumber'=> $validatedData['identificationNumber'],
             ]);
-            return redirect()->route('guests.index')->with('status','Guest Created Successfully');
+            // Attach the reservation
+            $guest->reservations()->attach($request->reservation);
+            return redirect()->route('guests.index')->with('status','Guest created and reservation associated successfully.');
         }catch (\Exception $e) {
             Log::error('Error in GuestsController@store: ' . $e->getMessage());
             return redirect()->route('guests.index')->with('error', 'An error occurred: ' . $e->getMessage());
@@ -83,6 +86,10 @@ class GuestController extends Controller
                 "phone_number"=>$validated->phone_number ?? $guest->phone_number,
                 "identificationNumber"=> $validated->identificationNumber ?? $guest->identificationNumber,
             ]);
+            // Update the guest with validated data
+            //$guest->update($request->validated());
+            // Sync reservations
+            $guest->reservations()->sync($validated['reservations']);
             return redirect()->route('guests.index')->with('status','Guest Updateded Successfully');
         }catch (\Exception $e) {
             Log::error('Error in GuestsController@update: ' . $e->getMessage());

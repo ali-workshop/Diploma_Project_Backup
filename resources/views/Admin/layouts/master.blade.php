@@ -20,12 +20,31 @@
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('assets/css/sb-admin-2.css') }}" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Custom styles for this page -->
+    <link href="{{ asset('assets/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+    <!-- Include Select2 CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
     <!-- clock style -->
     <style>
-         #live-clock,#live-clock1 {
+        #live-clock,#live-clock1 {
             font-size: 1.2rem;
             font-weight: bold;
+        }
+        .select2-container .select2-selection--single,
+        .select2-container .select2-selection--multiple {
+            height: auto;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            padding: 8px;
+        }
+        .select2-container--default .select2-selection--single .select2-selection__rendered,
+        .select2-container--default .select2-selection--multiple .select2-selection__rendered {
+            color: #495057;
+            line-height: 24px;
+        }
+        .select2-container--default .select2-selection--single .select2-selection__arrow,
+        .select2-container--default .select2-selection--multiple .select2-selection__arrow {
+            height: 40px;
         } 
     </style>
 
@@ -507,6 +526,11 @@
 
     <!-- Page level custom scripts -->
     <script src="{{ asset('assets/js/demo/datatables-demo.js') }}"></script>
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Include Select2 JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    @yield('scripts')
     <!-- Script for live time -->
     <script>
         function updateClock() {

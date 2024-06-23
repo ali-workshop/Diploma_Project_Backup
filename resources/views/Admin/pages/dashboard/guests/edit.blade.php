@@ -47,6 +47,21 @@
                                 </span>
                                 @enderror
                             </div>
+                            <div class="form-group">
+                                <label for="reservations">Reservations</label>
+                                <select name="reservations[]" id="reservations" class="form-control @error('reservations') is-invalid @enderror" multiple>
+                                    @if(isset($guest) && $guest->reservations)
+                                        @foreach ($guest->reservations as $reservation)
+                                            <option value="{{ $reservation->id }}" selected>{{ $reservation->code }} in {{ $reservation->start_date }}</option>
+                                        @endforeach
+                                    @endif
+                                </select>
+                                @error('reservations')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
                             <button type="submit" class="btn btn-primary">Update</button>
                         </form>
                     </div>
@@ -56,4 +71,33 @@
     </div>
 
 
+@endsection
+@section('scripts')
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#reservations').select2({
+                ajax: {
+                    url: '{{ route('reservations.search') }}',
+                    dataType: 'json',
+                    delay: 250,
+                    data: function (params) {
+                        return {
+                            q: params.term // The search query is sent as 'q'
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: data.map(function(item) {
+                                return { id: item.id, text: item.code + ' in ' + item.start_date };
+                            })
+                        };
+                    },
+                    cache: true
+                },
+                minimumInputLength: 1,
+                placeholder: 'Search for a reservation',
+                allowClear: true,
+            });
+        });
+    </script>
 @endsection

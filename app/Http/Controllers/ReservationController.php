@@ -12,6 +12,7 @@ use App\Models\ReservationStatusEvent;
 use App\Http\Traits\BladeReservationTrait;
 use App\Http\Requests\StoreReservationRequest;
 use App\Http\Requests\UpdateReservationRequest;
+use Illuminate\Http\Request;
 
 class ReservationController extends Controller
 {
@@ -148,5 +149,15 @@ class ReservationController extends Controller
     {
         $reservation->delete();
         return redirect()->route('reservation.index')->with('success', 'Reservation deleted successfully.');
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->input('q');
+        $reservations = Reservation::where('start_date', 'like', "%{$search}%")
+                                    ->orWhere('code', 'like', "%{$search}%")
+                                    ->get(['id', 'code', 'start_date']);
+
+        return response()->json($reservations);
     }
 }

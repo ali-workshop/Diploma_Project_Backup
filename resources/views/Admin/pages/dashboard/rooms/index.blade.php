@@ -85,7 +85,7 @@
             </div>
 
             <div class="table-responsive">
-                <table class=" table-bordered table-hover table-image" id="dataTable">
+                <table class="table-bordered table-hover table-image" id="dataTable">
                     <thead>
                         <tr>
                             <th class="col-md-1">#</th>
@@ -93,7 +93,7 @@
                             <th class="col-md-1">Room code</th>
                             <th class="col-md-1">Floor Number</th>
                             <th class="col-md-1">Description</th>
-                            <th class="col-md-1">status</th>
+                            <th class="col-md-1">Status</th>
                             <th class="col-md-1">Price</th>
                             <th class="col-md-4">Images</th>
                             <th class="col-md-1">Action</th>
