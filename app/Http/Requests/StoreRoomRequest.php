@@ -28,9 +28,10 @@ class StoreRoomRequest extends FormRequest
             'code' => ['required','string','regex:/^([0-9]|[1-9][0-9])[A-D]?([0-9]|1[0-5])\b$/','max:100'],
             'floorNumber' => 'required|numeric|integer|max:15',
             'description' => 'required|string|max:800',
-            'images' => 'required', // fot the field
+            'images' => 'array', // fot the field
             'images.*' => 'image|max:2048', // for the files themselves
             'status' => 'required|string|in:available,unavailable',
+            'room_type'=>'exists:roomtypes,id',
         ];
     }
 }

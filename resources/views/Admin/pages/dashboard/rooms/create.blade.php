@@ -92,6 +92,7 @@
                                 </span>
                             @enderror
                         </div>
+                        <!-- images Field -->
                         <div class="col-md-6">
                             <label for="img" class="form-label">{{ __('Images') }}</label>
                             <input id="img" type="file" class="form-control @error('images') is-invalid @enderror"
