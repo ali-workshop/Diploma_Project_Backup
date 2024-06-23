@@ -85,13 +85,14 @@
                         <div class="col-6">
                             <label for="description"
                             class="form-label">{{ __('Description') }}</label>
-                            <textarea id="description" class="form-control @error('description') is-invalid @enderror" name="description" ></textarea>
+                            <textarea id="description" class="form-control @error('description') is-invalid @enderror" name="description" value="{{old('description')}}"></textarea>
                             @error('description')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
                         </div>
+                        <!-- images Field -->
                         <div class="col-md-6">
                             <label for="img" class="form-label">{{ __('Images') }}</label>
                             <input id="img" type="file" class="form-control @error('images') is-invalid @enderror"

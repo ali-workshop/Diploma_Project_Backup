@@ -27,10 +27,12 @@ class UpdateRoomRequest extends FormRequest
                         Rule::unique('rooms')->ignore($this->room)],
             'floorNumber' => 'nullable|numeric|integer|max:15',
             'description' => 'nullable|string|max:800',
-            'images' => 'nullable|image',
+            'images' => 'nullable|array|max_array_size:6',
             'images.*' => 'nullable|image|max:2048',
+            'new_images' => 'nullable|array|max_array_size:6',
             'new_images.*' => 'nullable|image|max:2048',
             'status' => 'nullable|string|in:available,unavailable',
+            'room_type'=>'exists:roomtypes,id',
         ];
     }
 }

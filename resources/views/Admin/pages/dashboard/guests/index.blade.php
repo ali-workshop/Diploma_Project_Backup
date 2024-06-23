@@ -1,5 +1,10 @@
 @extends('Admin.layouts.master')
 @section('index.guests')
+<style>
+    .table td,.table th {
+        text-align: center;
+    }
+</style>
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">
@@ -13,26 +18,26 @@
                             <div class="alert alert-success">{{ session('status') }}</div>
                         @endif
                         
-                        <table class="table">
+                        <table class="table table-bordered table-hover">
                             <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Birth Date</th>
-                                    <th>Phone Number</th>
-                                    <th>Identification Number</th>
-                                    <th>visitings</th>
-                                    <th>Action</th>
+                                <tr class="row">
+                                    <th class="col-2">Full Name</th>
+                                    <th class="col-2">Birth Date</th>
+                                    <th class="col-2">Phone Number</th>
+                                    <th class="col-2">Identification Number</th>
+                                    <th class="col-2">visitings</th>
+                                    <th class="col-2">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($guests as $guest)
-                                    <tr>
-                                        <td>{{ $guest->name }}</td>
-                                        <td>{{ $guest->birthDate }}</td>
-                                        <td>{{ $guest->phone_number }}</td>
-                                        <td> {{ $guest->identificationNumber }}</td>
-                                        <td>Associated with <strong>{{ $guest->reservations_count }}</strong> reservations</td>
-                                        <td>
+                                    <tr class="row">
+                                        <td class="col-2">{{ $guest->name }}</td>
+                                        <td class="col-2">{{ $guest->birthDate }}</td>
+                                        <td class="col-2">{{ $guest->phone_number }}</td>
+                                        <td class="col-2"> {{ $guest->identificationNumber }}</td>
+                                        <td class="col-2">Associated with <strong>{{ $guest->reservations_count }}</strong> reservations</td>
+                                        <td class="col-2">
                                             <a href="{{ route('guests.edit', $guest->id) }}" class="btn btn-sm btn-primary">Edit</a>
                                             <form action="{{ route('guests.destroy', $guest->id) }}" method="POST" style="display: inline-block;">
                                                 @csrf

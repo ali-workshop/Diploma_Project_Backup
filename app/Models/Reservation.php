@@ -20,7 +20,6 @@ class Reservation extends Model
         'guestNumber',
         'totalPrice',
     ];
-
     public function user()
     {
         return $this->belongsTo(User::class);

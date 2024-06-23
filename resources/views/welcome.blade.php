@@ -12,6 +12,7 @@
 </head>
 
 <body class="antialiased">
+    <img class="image" src="{{ asset('images/backgrounds/hotel.png') }}" alt="hotel">
     <div class="top-right">
         @if (Route::has('login'))
         <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right">
