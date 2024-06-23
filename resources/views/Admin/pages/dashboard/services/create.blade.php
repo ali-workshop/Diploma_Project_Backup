@@ -4,8 +4,6 @@
 <!-- Page Heading -->
 <h1 class="h3 mb-2 text-gray-800">Create a New Room Service</h1>
 
-<<<<<<< HEAD
-=======
 @if (session('success'))
 <div class="alert alert-success">
     {{ session('success') }}
@@ -18,7 +16,6 @@
 </div>
 @endif
 
->>>>>>> repoB/main
 <!-- Form -->
 <div class="card shadow mb-4">
     <div class="card-body">
