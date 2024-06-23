@@ -40,30 +40,37 @@ class ServicesController extends Controller
     public function store(StoreServicesRequest $request)
     {
         try {
-            // Store image in session before validation to avoid re-upload it if there is any validation error
-            if ($request->hasFile('img')) {
-                $request->session()->put('img', $request->file('img'));
+            // Check if there is an image in the session and use it if exist
+            if ($request->session()->has('img')) {
+                $img = $request->session()->get('img');
+            } elseif ($request->hasFile('img')) {
+                // Store image in session to avoid re-upload if there's a validation error
+                $img = $request->file('img');
+                $request->session()->put('img', $img);
             }
-
             $request->validated();
-            $path = $this->storeImage($request->file('img'), 'services');
 
-            if ($path) {
-                Service::create([
-                    'name' => $request->name,
-                    'price' => $request->price,
-                    'description' => $request->description,
-                    'img' => $path,
-                ]);
-                // Clear the image from the session after save the new service
-                $request->session()->forget('img');
-                
-                return redirect()->route('services.index')->with('success', 'Service created successfully!');
+            if ($img) {
+                $path = $this->storeImage($img, 'services');
+                if ($path) {
+                    Service::create([
+                        'name' => $request->name,
+                        'price' => $request->price,
+                        'description' => $request->description,
+                        'img' => $path,
+                    ]);
+
+                    // Clearing the image from the session after saving the new service
+                    $request->session()->forget('img');
+
+                    return redirect()->route('services.index')->with('success', 'Service created successfully!');
+                }
+                return redirect()->back()->with('error', 'Failed! Image was not stored.');
             }
-            return redirect()->back()->with('error', 'Failed!. Image was not stored');
         } catch (\Exception $e) {
             Log::error('Error in ServicesController@store: ' . $e->getMessage());
-            return redirect()->route('Admin.pages.dashboard.services.index')->with('error', 'An error occurred: ' . $e->getMessage());
+            return redirect()->route('Admin.pages.dashboard.services.index')
+                ->with('error', 'An error occurred: ' . $e->getMessage());
         }
     }
     /**
