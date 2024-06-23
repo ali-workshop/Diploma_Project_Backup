@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 
 class StoreServicesRequest extends FormRequest
 {
@@ -19,8 +20,15 @@ class StoreServicesRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+    public function rules(Request $request)
     {
+        // if ($request->session()->has('img')) {
+        //     $img = $request->session()->get('img');
+        // } elseif ($request->hasFile('img')) {
+        //     // Store image in session to avoid re-upload if there's a validation error
+        //     $img = $request->file('img');
+        //     $request->session()->put('img', $img);
+        // }
         return [
             'name' => 'required|string|max:100|regex:/^(?=.*[a-zA-Z])[a-zA-Z0-9\s\-]+$/',
             'price' => 'required|numeric|between:0,9999.99',

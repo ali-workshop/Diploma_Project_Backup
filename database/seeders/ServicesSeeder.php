@@ -17,25 +17,25 @@ class ServicesSeeder extends Seeder
             'name' => 'Single Bed',
             'price'=> '20.00',
             'description' => 'A simple single bed for one person.',
-            'img' => 'services/SingleBed.jpg',
+            'img' => 'services/SingleBed.png',
         ]);
         Service::create([
             'name' => 'Double Bed',
             'price'=> '40.00',
             'description' => 'A comfortable double bed for two person.',
-            'img' => 'services/DoubleBed.jpg',
+            'img' => 'services/DoubleBed.png',
         ]);
         Service::create([
             'name' => 'King-size Bed',
             'price'=> '60.00',
             'description' => 'Luxery experience',
-            'img' => 'services/KingSizeBed.jpg',
+            'img' => 'services/KingSizeBed.png',
         ]);
         Service::create([
             'name' => 'TV',
             'price'=> '00.00',
             'description' => 'Full access to all channels',
-            'img' => 'services/TV.jpg',
+            'img' => 'services/TV.png',
         ]);
         Service::create([
             'name' => 'Fitness Center',
@@ -47,25 +47,25 @@ class ServicesSeeder extends Seeder
             'name' => 'Outdoor Swimming Pool',
             'price'=> '30.00',
             'description' => 'An Outdoor Swimming Pool offers refreshing swims, sun lounging, and poolside service.',
-            'img' => 'services/OutdoorSwimmingPool.jpg',
+            'img' => 'services/OutdoorSwimmingPool.png',
         ]);
         Service::create([
             'name' => 'Indoor Swimming Pool',
             'price'=> '20.00',
             'description' => 'An Indoor Swimming Pool offers relaxation and fun.',
-            'img' => 'services/IndoorSwimmingPool.jpg',
+            'img' => 'services/IndoorSwimmingPool.png',
         ]);
         Service::create([
             'name' => 'Breakfast',
             'price'=> '40.00',
             'description' => 'Our hotel offers a diverse breakfast buffet with local and international delicacies.',
-            'img' => 'services/Breakfast.jpg',
+            'img' => 'services/Breakfast.png',
         ]);
         Service::create([
             'name' => 'Lunch',
             'price'=> '70.00',
             'description' => 'Our hotel offers a variety of delicious lunch options in a relaxing atmosphere.',
-            'img' => 'services/Lunch.jpg',
+            'img' => 'services/Lunch.png',
         ]);
         Service::create([
             'name' => 'Dinner',
