@@ -22,3 +22,7 @@
 .link:hover {
     text-decoration: underline;
 }
+body{
+    height: 100%;
+    overflow: hidden; 
+}

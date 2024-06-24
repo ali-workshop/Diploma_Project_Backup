@@ -13,25 +13,6 @@ class MessageController extends Controller
     /**
      * Display a listing of the resource.
      */
-    // public function index(Request $request)
-    // {
-    //     try {
-    //         // dd($request->all());
-    //         if ($request->has('contact_id') && $request->contact_id != '') {
-    //             $messages = Message::where('contact_id', 'like', '%' . $request->contact_id . '%')->paginate(10);
-    //         } elseif ($request->has('title') && $request->title != '') {
-    //             $messages = Message::where('title', 'like', '%' . $request->title . '%')->paginate(10);
-    //         } else {
-    //             $messages = Message::paginate(10);
-    //         }
-    //         $contacts = Contact::all();
-    //         return view('Admin.pages.dashboard.messages.index', compact('messages', 'contacts'));
-    //     } catch (\Exception $e) {
-    //         Log::error('Error in MessageController@index: ' . $e->getMessage());
-    //         return redirect()->route('messages.index')->with('error', 'An error occurred: ' . $e->getMessage());
-    //     }
-    // }
-
     
     public function index(Request $request)
     {
