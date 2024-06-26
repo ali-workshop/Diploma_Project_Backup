@@ -3,6 +3,17 @@
 
 <!-- Page Heading -->
 <h1 class="h3 mb-2 text-gray-800">Edit this Room Service</h1>
+@if (session('success'))
+<div class="alert alert-success">
+    {{ session('success') }}
+</div>
+@endif
+
+@if (session('error'))
+<div class="alert alert-danger">
+    {{ session('error') }}
+</div>
+@endif
 
 <!-- Form -->
 <div class="card shadow mb-4">
@@ -61,12 +72,12 @@
                             <strong>{{ $message }}</strong>
                         </span>
                         @enderror
-                        <!-- Display current image
+                        <!-- Display current image -->
                         @if ($service->img)
                             <div class="mt-2">
-                                <img src="{{ asset('storage/' . $service->img) }}" alt="Current Image" width="100">
+                                <img src="{{ asset('images/' . $service->img) }}" alt="Current Image" width="100">
                             </div>
-                        @endif -->
+                        @endif
                     </div>
                 </div>
 
@@ -76,6 +87,7 @@
                         <button type="submit" class="btn btn-primary">
                             {{ __('Save') }}
                         </button>
+                        <a class="btn btn-outline-primary" href="{{ route('services.index') }}">Back</a>
                     </div>
                 </div>
             </form>

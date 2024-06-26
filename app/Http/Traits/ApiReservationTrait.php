@@ -5,6 +5,9 @@ namespace App\Http\Traits;
 use Carbon\Carbon;
 use App\Models\Reservation;
 use App\Http\Traits\ApiResponserTrait;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\Api\UpdateReservationNotification;
+use App\Notifications\Api\SuccessfulReservationNotification;
 
 trait ApiReservationTrait
 {
@@ -18,11 +21,11 @@ trait ApiReservationTrait
         if ($validationResponse !== true) {
             return $validationResponse;
         }
-    
+
         // if no issues with date then check if room is unavailable and if it is not available then return the proper response
         // notice that in case of update the reservation then I pass the reservation in calling to except it and doesn't tell the user that the room he  trying to update is unavailable 
         $roomAvailabilityData = $this->isRoomUnavailable($room->id, $request->start_date, $request->end_date, $reservation?->id);
-    
+
         if ($roomAvailabilityData['roomUnavailable']) {
             return $this->errorResponse(
                 'Room is not available for the selected dates',
@@ -46,7 +49,7 @@ trait ApiReservationTrait
             $reservation ? 200 : 201
         );
     }
-    
+
     protected function updateReservation($user, $room, $request, $reservation)
     {
         // before updating calculate the total price of the reservation
@@ -56,7 +59,10 @@ trait ApiReservationTrait
         $this->fillReservationData($reservation, $user, $room, $request, $total_price);
         $reservation->update();
 
-        return $this->prepareReservationResponse($user, $reservation, $room, $days);
+        // Tuka: calling sendUserNotification to send the update reservation notification
+        $notificationData = $this->sendUserNotification($user, $reservation, true);
+
+        return $this->prepareReservationResponse($user, $reservation, $room, $days, $notificationData);
     }
 
     protected function makeNewReservation($user, $room, $request)
@@ -69,7 +75,27 @@ trait ApiReservationTrait
         $reservation->code = $this->generateUniqueReservationCode();
         $reservation->save();
 
-        return $this->prepareReservationResponse($user, $reservation, $room, $days);
+        // Tuka: calling sendUserNotification to send the successful reservation notification
+        $notificationData = $this->sendUserNotification($user, $reservation);
+
+        return $this->prepareReservationResponse($user, $reservation, $room, $days, $notificationData);
+    }
+
+    // Tuka: Sending notification to the user in 2 cases
+    // 1- When he uppdating his reservation details successfully
+    // 2- When he complete his reservation operation successfully
+    protected function sendUserNotification($user, $reservation, $isUpdate = false)
+    {
+        if ($reservation) {
+            if ($isUpdate) {
+                $notificationData = (new UpdateReservationNotification())->toArray($user);
+                Notification::send($user, new UpdateReservationNotification());
+            } else {
+                $notificationData = (new SuccessfulReservationNotification())->toArray($user);
+                Notification::send($user, new SuccessfulReservationNotification());
+            }
+            return $notificationData;
+        }
     }
 
     private function fillReservationData($reservation, $user, $room, $request, $total_price)
@@ -82,11 +108,12 @@ trait ApiReservationTrait
         $reservation->totalPrice = $total_price;
     }
 
-    private function prepareReservationResponse($user, $reservation, $room, $days)
+    private function prepareReservationResponse($user, $reservation, $room, $days, $notificationData)
     {
         // the shape of response I want it to look like in Api response 
         $typeOThisRoom = $room->roomType;
         return [
+            'notification' => $notificationData,
             'user_name' => $user->name,
             'reservation_code' => $reservation->code,
             'guest_number' => $reservation->guestNumber,
@@ -148,33 +175,31 @@ trait ApiReservationTrait
         return true;
     }
 
-    
+
     protected function isRoomUnavailable($room_id, $start_date, $end_date, $reservation_id = null)
     {
         $query = Reservation::where('room_id', $room_id)
             ->where(function ($query) use ($start_date, $end_date) {
                 $query->whereBetween('start_date', [$start_date, $end_date])
-                    ->orWhereBetween('end_date', [$start_date, $end_date])
-                    ->orWhereRaw('? BETWEEN start_date AND end_date', [$start_date])
-                    ->orWhereRaw('? BETWEEN start_date AND end_date', [$end_date]);
+                    ->orWhereBetween('end_date', [$start_date, $end_date]);
             });
-    
+
         if ($reservation_id) {
             $query->where('id', '!=', $reservation_id);
         }
-    
+
         $reservations = $query->select('start_date', 'end_date')->get();
-    
+
         $roomUnavailable = $reservations->isNotEmpty();
         $allReservationForRoom = Reservation::where('room_id', $room_id)->select('start_date', 'end_date')->get();
-    
+
         return [
             'roomUnavailable' => $roomUnavailable,
             'reservations' => $reservations,
             'all resevations for Room' => $allReservationForRoom,
         ];
     }
-    
+
     protected function calculateDateTime($start_date, $end_date)
     {
         // calcaulating days of staying so we can calculate the total price of reservation 

@@ -10,13 +10,13 @@ use Illuminate\Notifications\Notification;
 class SuccessfulReservationNotification extends Notification
 {
     use Queueable;
-    private $reservation_code;
+  //  private $reservation_code;
     /**
      * Create a new notification instance.
      */
-    public function __construct($reservation_code)
+    public function __construct()
     {
-        $this->reservation_code = $reservation_code;
+     //   $this->reservation_code = $reservation_code;
     }
 
     /**
@@ -49,7 +49,7 @@ class SuccessfulReservationNotification extends Notification
     {
         return [
             'message' => 'Your order accepted! The reservation has been successfully completed.',
-            'reservation_code' => $this->reservation_code,
+        //    'reservation_code' => $this->reservation_code,
         ];
     }
 }

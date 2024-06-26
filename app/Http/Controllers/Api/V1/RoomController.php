@@ -10,20 +10,21 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Traits\ApiResponserTrait;
 use App\Http\Requests\DateRangeRequest;
+
 use App\Http\Resources\RoomResource;
+
 
 class RoomController extends Controller
 {
     use ApiResponserTrait;
 
-    /**
-     * Display a listing of the room resource.
-     */
+
     // public function index()
     // {
     //     $rooms = Room::with('roomType')->paginate(5);
     //     return $this->successResponseTest('success',RoomResource::collection($rooms));
     // }
+
         public function index(Request $request)
     {
         try {
@@ -96,7 +97,9 @@ class RoomController extends Controller
         } catch (\Throwable $th) {
             return $this->errorResponse('Server error probably.', [$th->getMessage()], 500);
         }
+
     }
+    
     public function showAvailableRoomsInPeriod(DateRangeRequest $request)
     {
         #Noura could use this time zone ( Asia/Dubai )
@@ -106,7 +109,6 @@ class RoomController extends Controller
             $reservations_endDates = Reservation::pluck('end_date')->toArray();
             $latestEndDate = max($reservations_endDates);
             $latestEndDate = Carbon::parse($latestEndDate);
-            
             $startRange = Carbon::parse($request->input('start_range'), 'UTC')
                                                 ->setTimezone('Asia/Baghdad');
             $endRange = $request->has('end_range') ?
@@ -131,6 +133,7 @@ class RoomController extends Controller
 
                         $available = False;
                         break;
+
                       }
 
                 }
@@ -146,6 +149,7 @@ class RoomController extends Controller
 
 
     }
+
     public function showCurrnetReservedRooms()
     {
         try {
@@ -156,7 +160,6 @@ class RoomController extends Controller
             return $this->errorResponse('Server error probably.', [$th->getMessage()], 500);
         }
     }
-    
     public function showReservedRoomsInSpecificTime(Request $request)
     {
         try {

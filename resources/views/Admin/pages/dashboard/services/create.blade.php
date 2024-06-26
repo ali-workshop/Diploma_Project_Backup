@@ -3,7 +3,6 @@
 
 <!-- Page Heading -->
 <h1 class="h3 mb-2 text-gray-800">Create a New Room Service</h1>
-
 @if (session('success'))
 <div class="alert alert-success">
     {{ session('success') }}
@@ -66,7 +65,14 @@
                 <div class="row mb-3">
                     <label for="img" class="col-md-4 col-form-label text-md-end">{{ __('Image') }}</label>
                     <div class="col-md-6">
-                        <input id="img" type="file" class="form-control @error('img') is-invalid @enderror" name="img" required>
+                        <input id="img" type="file" class="form-control @error('img') is-invalid @enderror" name="img">
+                        <!-- @if (session('temp_img'))
+                        <img src="{{ session('temp_img') }}" alt="Uploaded Image" class="img-thumbnail mt-2">
+                        @endif -->
+
+                        <!-- @if (session('img'))
+                            <img src="{{ session('img') }}" alt="Uploaded Image" class="img-thumbnail mt-2">
+                        @endif -->
                         @error('img')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -74,12 +80,14 @@
                         @enderror
                     </div>
                 </div>
-                <!-- Save Button -->
+
+                <!-- Save & Back Buttons -->
                 <div class="row mb-0">
                     <div class="col-md-6 offset-md-4">
                         <button type="submit" class="btn btn-primary">
                             {{ __('Save') }}
                         </button>
+                        <a class="btn btn-outline-primary" href="{{ route('services.index') }}">Back</a>
                     </div>
                 </div>
 

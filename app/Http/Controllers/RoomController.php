@@ -38,8 +38,7 @@ class RoomController extends Controller
                         $query->where('name', 'like', '%' . $request->name . '%');
                     }
                 })
-                ->orderBy('floorNumber', 'asc')
-                ->paginate(20);
+                ->orderBy('floorNumber', 'asc')->get();
 
             return view('Admin.pages.dashboard.rooms.index', compact('rooms'));
         } catch (\Exception $e) {
@@ -175,14 +174,14 @@ class RoomController extends Controller
         try {
             $currentDateTime = now();
     
-            // gett room IDs that are currently reserved
+            // get room IDs that are currently reserved
             $reservedRoomIds = Reservation::where('start_date', '<=', $currentDateTime)
                                             ->where('end_date', '>=', $currentDateTime)
                                             ->pluck('room_id')
                                             ->toArray();
             $availableRooms = Room::whereNotIn('id', $reservedRoomIds)
-                                  ->where('status', 'available')
-                                  ->get();
+                                ->where('status', 'available')
+                                ->get();
     
             return view('Admin.pages.dashboard.rooms.index', ['rooms' => $availableRooms]);
         } catch (\Exception $e) {
@@ -198,7 +197,12 @@ class RoomController extends Controller
                 $todayDate = date("Y-m-d");
                 return ($todayDate >= $reservation->start_date && $todayDate <= $reservation->end_date );
             });
-            $todayBookingsWithRoomsAndGuestsInfo=$todayExistingReservations->load('room','guests');
+            // $currentDate = Carbon::now();
+            // $todayExistingReservations = Reservation::whereDate([
+            //     ['start_date','<=', $currentDate->format('Y-m-d') ],
+            //     ['end_date', '>=', $currentDate->format('Y-m-d')]
+            //     ])->get();
+            $todayBookingsWithRoomsAndGuestsInfo=$todayExistingReservations->load(['room','guests']);
             //return view('Admin.pages.dashboard.rooms.index', ['rooms'=>$rooms]);
         }catch(\Exception $e){
             Log::error('Error in RoomController@showCurrnetAvailableRooms: ' . $e->getMessage());

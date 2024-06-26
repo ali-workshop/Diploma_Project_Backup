@@ -16,22 +16,62 @@
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
+
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template-->
     <link href="{{ asset('assets/css/sb-admin-2.css') }}" rel="stylesheet">
     <!-- Custom styles for this page -->
     <link href="{{ asset('assets/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Include Select2 CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
     <!-- clock style -->
     <style>
-         #live-clock,#live-clock1 {
+        #live-clock,#live-clock1 {
             font-size: 1.2rem;
             font-weight: bold;
-        } 
+        }
+        .card-custom {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .card-header-custom {
+            font-weight: bold;
+            font-size: 1rem;
+            background-color: #007bff;
+            color: white;
+            border-radius: 10px 10px 0 0;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+        }
+        .card-body-custom {
+            padding: 1rem;
+        }
+        .icon {
+            font-size: 2rem;
+            margin-right: 1rem;
+            color: #007bff;
+        }
+        .stat {
+            display: flex;
+            flex-direction: column;
+        }
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0;
+        }
+        .stat-label {
+            font-size: 0.875rem;
+            color: #6c757d;
+            margin: 0;
+        }
     </style>
+
 </head>
 
 <body id="page-top">
-
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -76,19 +116,20 @@
                         <h6 class="collapse-header">Rooms:</h6>
                         <a class="collapse-item" href="{{ route('rooms.create') }}">Create New Room</a>
                         <a class="collapse-item" href="{{ route('rooms.index') }}">all rooms</a>
-                        <a class="collapse-item" href="{{ route('rooms.available.current') }}">Current Available
-                            Rooms</a>
-                        <a class="collapse-item" href="{{ route('rooms.reserved.current') }}">Current Reserved Rooms</a>
 
+                        <a class="collapse-item" href="{{ route('rooms.available.current') }}">Current Available Rooms</a>
+                        <a class="collapse-item" href="{{ route('rooms.reserved.current') }}">Current Reserved Rooms</a>
+                       
                     </div>
                 </div>
             </li>
-
+            
             <!-- Nav Item - Booking section Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link " href="#" data-toggle="collapse" data-target="#collapseBooking"
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBooking"
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fa-solid fa-file-invoice-dollar"></i>
+
                     <span>Booking Section</span>
                 </a>
                 <div id="collapseBooking" class="collapse" aria-labelledby="headingUtilities"
@@ -96,11 +137,9 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Booking:</h6>
                         <a class="collapse-item" href="{{ route('reservation.index') }}">Reservations List</a>
-                        <a class="collapse-item" href="#"></a>
                     </div>
                 </div>
             </li>
-
             <!-- Nav Item - Room Types Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
@@ -445,6 +484,7 @@
                     @yield('create.guests')
                     @yield('edit.guests')
                     @yield('show.guests')
+                    @yield('dashboardContent')
                 </div>
                 <!-- /.container-fluid -->
 
@@ -508,6 +548,12 @@
 
     <!-- Page level custom scripts -->
     <script src="{{ asset('assets/js/demo/datatables-demo.js') }}"></script>
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Include Select2 JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    @yield('scripts')
     <!-- Script for live time -->
     <script>
         function updateClock() {
