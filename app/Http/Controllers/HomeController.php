@@ -22,14 +22,8 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
-    {
-        $user = Auth::user();
-        
-        if ($user->hasRole('admin')) {
-            return view('Admin.pages.Dashboard.index');
-        } else {
+    public function index(){
             return view('home');
         }
     }
-}
+

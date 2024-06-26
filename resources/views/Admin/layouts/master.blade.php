@@ -17,7 +17,7 @@
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
-
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template-->
     <link href="{{ asset('assets/css/sb-admin-2.css') }}" rel="stylesheet">
     <!-- Custom styles for this page -->
@@ -30,22 +30,43 @@
             font-size: 1.2rem;
             font-weight: bold;
         }
-        .select2-container .select2-selection--single,
-        .select2-container .select2-selection--multiple {
-            height: auto;
-            border: 1px solid #ced4da;
-            border-radius: 4px;
-            padding: 8px;
+        .card-custom {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 1rem;
+            text-align: center;
         }
-        .select2-container--default .select2-selection--single .select2-selection__rendered,
-        .select2-container--default .select2-selection--multiple .select2-selection__rendered {
-            color: #495057;
-            line-height: 24px;
+        .card-header-custom {
+            font-weight: bold;
+            font-size: 1rem;
+            background-color: #007bff;
+            color: white;
+            border-radius: 10px 10px 0 0;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
         }
-        .select2-container--default .select2-selection--single .select2-selection__arrow,
-        .select2-container--default .select2-selection--multiple .select2-selection__arrow {
-            height: 40px;
-        } 
+        .card-body-custom {
+            padding: 1rem;
+        }
+        .icon {
+            font-size: 2rem;
+            margin-right: 1rem;
+            color: #007bff;
+        }
+        .stat {
+            display: flex;
+            flex-direction: column;
+        }
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0;
+        }
+        .stat-label {
+            font-size: 0.875rem;
+            color: #6c757d;
+            margin: 0;
+        }
     </style>
 
 </head>
@@ -463,6 +484,7 @@
                     @yield('create.guests')
                     @yield('edit.guests')
                     @yield('show.guests')
+                    @yield('dashboardContent')
                 </div>
                 <!-- /.container-fluid -->
 
@@ -530,6 +552,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Include Select2 JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
     @yield('scripts')
     <!-- Script for live time -->
     <script>
