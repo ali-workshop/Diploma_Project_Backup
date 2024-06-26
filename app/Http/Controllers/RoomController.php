@@ -226,7 +226,7 @@ class RoomController extends Controller
                 }
                 if($available)
                 {
-                    $avaliableRooms[]=$room;
+                    $avaliableRooms[]=$room; 
                 }
             }
             $rooms=collect($avaliableRooms); # ali comment : i am just ensure convert it to collection before send it to view (best practise)
@@ -244,7 +244,7 @@ class RoomController extends Controller
            # Mr.Hashim Europe/Berlin
            try{
            $reservations_endDates = Reservation::pluck('end_date')->toArray();
-            $latestEndDate = max($reservations_endDates);
+            $latestEndDate = max($reservations_endDates);# TODO consider add now
             $latestEndDate =Carbon::parse($latestEndDate);
             // dd($latestEndDate);
             $startRange = Carbon::parse($request->input('start_range'), 'UTC')

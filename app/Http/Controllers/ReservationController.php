@@ -61,7 +61,6 @@ class ReservationController extends Controller
             return $response;
         }
         return redirect()->route('reservation.index')->with('success', 'Reservation created successfully.');
-
         $roomId = $request->input('room_id');
         $reservationStartDate = Carbon::parse($request->input('start_date'));
         $room = Room::findOrFail($roomId);
