@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Traits\ApiResponserTrait;
 use App\Http\Requests\Api\StoreContactRequest;
+use App\Http\Resources\ContactResource;
 
 class ContactController extends Controller
 {
@@ -44,7 +45,9 @@ class ContactController extends Controller
                 $contact->phone = $request->phone;
             }
             $contact->save();
-            return $this->successResponse($contact->toArray(), 'Contact created successfully.', 201);
+            $contactResource = new ContactResource($contact);
+
+            return $this->successResponse($contactResource->toArray($request), 'Contact created successfully.', 201);
         } catch (\Exception $e) {
             Log::error('Error in ContactController@store: ' . $e->getMessage());
             return $this->errorResponse('An error occurred: ' . $e->getMessage(), [], 500);
