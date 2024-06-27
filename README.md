@@ -17,7 +17,7 @@ This system allows hotel administrators to manage bookings, guest information, r
 ## Requirements
 
 - PHP 8.2+
-- Laravel 9.x +
+- Laravel 10.x +
 - MySQL 5.7+
 - Docker 4.28+
 - composer
