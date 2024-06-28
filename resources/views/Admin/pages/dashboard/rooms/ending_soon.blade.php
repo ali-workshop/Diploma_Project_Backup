@@ -13,11 +13,9 @@
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th>id</th>
+                        <th>#</th>
                         <th>Code</th>
                         <th>floorNumber</th>
-                        <th>status  </th>
-                        <th>description</th>
                         <th>Price</th>
                         
                        
@@ -26,11 +24,9 @@
                 <tbody>
                     @foreach($rooms as $room)
                     <tr>
-                        <td>{{ $room->id}}</td>
+                        <td>{{ $loop->iteration }}</td>
                         <td>{{ $room->code}}</td>
                         <td>{{ $room->floorNumber}}</td>
-                        <td>{{ $room->status}}</td>
-                        <td>{{ $room->description}}</td>
                         <td>{{ $room->price}}</td>
                       
                     </tr>

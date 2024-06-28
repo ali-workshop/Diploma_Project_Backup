@@ -380,9 +380,9 @@ class RoomController extends Controller
             ->with('room', 'user')
             ->get();
 
-        foreach ($reservationsEndingIn24Hours as $reservation) {
-            event(new EndingSoonEvent($reservation));
-        }
+        // foreach ($reservationsEndingIn24Hours as $reservation) {
+        //     event(new EndingSoonEvent($reservation));
+        // }
 
         $rooms = $reservationsEndingIn24Hours->map(function ($reservation) {
             return $reservation->room;
