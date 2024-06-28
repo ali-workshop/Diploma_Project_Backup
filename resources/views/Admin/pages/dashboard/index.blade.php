@@ -28,6 +28,7 @@
         </div>
         <div class="col-md-3 mb-3">
             <div class="card card-custom">
+                <div class="card-header card-header-custom">ِAvaliable Rooms</div>
                 <div class="card-body card-body-custom">
                     <i class="icon fas fa-door-open"></i>
                     <div class="stat">
@@ -39,6 +40,7 @@
         </div>
         <div class="col-md-3 mb-3">
             <div class="card card-custom">
+                <div class="card-header card-header-custom"> Rooms under Maintenance</div>
                 <div class="card-body card-body-custom">
                     <i class="icon fas fa-tools"></i>
                     <div class="stat">
