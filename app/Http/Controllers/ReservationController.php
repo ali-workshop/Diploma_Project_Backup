@@ -61,14 +61,14 @@ class ReservationController extends Controller
             return $response;
         }
         return redirect()->route('reservation.index')->with('success', 'Reservation created successfully.');
-        $roomId = $request->input('room_id');
-        $reservationStartDate = Carbon::parse($request->input('start_date'));
-        $room = Room::findOrFail($roomId);
+        // $roomId = $request->input('room_id');
+        // $reservationStartDate = Carbon::parse($request->input('start_date'));
+        // $room = Room::findOrFail($roomId);
 
-        // trigger  the event to check room availability before make the reservation.
+        // // trigger  the event to check room availability before make the reservation.
 
-        event(new ReservationAttempting($room, $reservationStartDate));
-        return view('reservation.index');
+        // event(new ReservationAttempting($room, $reservationStartDate));
+        // return view('reservation.index');
     }
 
     /**
