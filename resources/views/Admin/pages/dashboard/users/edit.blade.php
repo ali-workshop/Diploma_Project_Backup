@@ -1,7 +1,7 @@
 @extends('Admin.layouts.master')
 @section('edit.users')
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Create a New User</h1>
+    <h1 class="h3 mb-2 text-gray-800">Edit User</h1>
 
     <!-- Form -->
     <div class="card shadow mb-4">
@@ -58,6 +58,7 @@
                             <button type="submit" class="btn btn-primary">
                                 {{ __('Save') }}
                             </button>
+                            <a class="btn btn-outline-primary" href="{{ route('users.index') }}">Back</a>
                         </div>
                     </div>
 

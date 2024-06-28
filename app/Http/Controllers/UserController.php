@@ -42,11 +42,13 @@ class UserController extends Controller
     {
         try {
             $request->validated();
-            User::create([
+            $user= User::create([
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password)
             ]);
+            $user->assignRole('client');
+            
             return redirect()->route('users.index')->with('success', 'User added successfully');
         } catch (\Exception $e) {
             Log::error('Error in UserController@store: ' . $e->getMessage());
