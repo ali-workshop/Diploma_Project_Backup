@@ -22,17 +22,15 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index(){
-        {   
+    public function index()
+    { {
             /** @var App\Models\User */
             $user = Auth::user();
             if ($user->hasRole('admin')) {
                 return redirect()->route('dashboard');
             }
-    
-            return view('home'); 
+
+            return view('home');
         }
-        
     }
 }
-

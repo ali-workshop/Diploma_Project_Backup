@@ -1,5 +1,4 @@
 @extends('Admin.layouts.master')
-
 @section('dashboardContent')
 <div class="container">
     <div class="row">
