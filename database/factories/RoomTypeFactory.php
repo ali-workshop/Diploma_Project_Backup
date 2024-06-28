@@ -20,7 +20,6 @@ class RoomTypeFactory extends Factory
             'Standard Single Room' => [
                 'descriptions' => [
                     'The room area is two square meters and contains a small bed',
-                    
                 ],
                 'prices' => [75], 
                 'capacities' => [1] 
