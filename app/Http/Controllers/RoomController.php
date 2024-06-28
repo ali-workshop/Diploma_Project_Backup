@@ -38,7 +38,8 @@ class RoomController extends Controller
                         $query->where('name', 'like', '%' . $request->name . '%');
                     }
                 })
-                ->orderBy('floorNumber', 'asc')->get();
+                ->orderBy('floorNumber', 'asc')
+                ->paginate(20);
 
             return view('Admin.pages.dashboard.rooms.index', compact('rooms'));
         } catch (\Exception $e) {
@@ -174,14 +175,14 @@ class RoomController extends Controller
         try {
             $currentDateTime = now();
     
-            // get room IDs that are currently reserved
+            // gett room IDs that are currently reserved
             $reservedRoomIds = Reservation::where('start_date', '<=', $currentDateTime)
                                             ->where('end_date', '>=', $currentDateTime)
                                             ->pluck('room_id')
                                             ->toArray();
             $availableRooms = Room::whereNotIn('id', $reservedRoomIds)
-                                ->where('status', 'available')
-                                ->get();
+                                  ->where('status', 'available')
+                                  ->get();
     
             return view('Admin.pages.dashboard.rooms.index', ['rooms' => $availableRooms]);
         } catch (\Exception $e) {
@@ -197,12 +198,7 @@ class RoomController extends Controller
                 $todayDate = date("Y-m-d");
                 return ($todayDate >= $reservation->start_date && $todayDate <= $reservation->end_date );
             });
-            // $currentDate = Carbon::now();
-            // $todayExistingReservations = Reservation::whereDate([
-            //     ['start_date','<=', $currentDate->format('Y-m-d') ],
-            //     ['end_date', '>=', $currentDate->format('Y-m-d')]
-            //     ])->get();
-            $todayBookingsWithRoomsAndGuestsInfo=$todayExistingReservations->load(['room','guests']);
+            $todayBookingsWithRoomsAndGuestsInfo=$todayExistingReservations->load('room','guests');
             //return view('Admin.pages.dashboard.rooms.index', ['rooms'=>$rooms]);
         }catch(\Exception $e){
             Log::error('Error in RoomController@showCurrnetAvailableRooms: ' . $e->getMessage());
@@ -248,8 +244,8 @@ class RoomController extends Controller
            # Mr.Hashim Europe/Berlin
            try{
            $reservations_endDates = Reservation::pluck('end_date')->toArray();
-            $latestEndDate = max($reservations_endDates);# TODO consider add now
-            $latestEndDate =Carbon::parse($latestEndDate);
+            $latestEndDate = Carbon::now()->toDateTimeString();
+            $latestEndDate =Carbon::parse($latestEndDate); # ensure date string using parsing
             // dd($latestEndDate);
             $startRange = Carbon::parse($request->input('start_range'), 'UTC')
                 ->setTimezone('Asia/Baghdad');
@@ -335,7 +331,7 @@ class RoomController extends Controller
     {
         try {
             $reservations_endDates = Reservation::pluck('end_date')->toArray();
-            $latestEndDate = max($reservations_endDates);
+            $latestEndDate = Carbon::now()->toDateTimeString();
             $latestEndDate = Carbon::parse($latestEndDate);
             $startRange = Carbon::parse($request->input('start_range'), 'UTC')
                 ->setTimezone('Asia/Baghdad');

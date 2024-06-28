@@ -165,6 +165,7 @@ class RoomController extends Controller
         try {
 
             $reservedRooms = [];
+            
             $rooms = Room::all();
             $specificDate = Carbon::parse( $request->input('specificDate'));
             foreach ($rooms as $room) {
