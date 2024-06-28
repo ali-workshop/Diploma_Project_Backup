@@ -64,9 +64,17 @@ class RoomController extends Controller
     public function showCurrnetAvailableRooms()
     {
         try {
-            $bookedRooms = Reservation::pluck('room_id')->toArray();
-            $rooms=Room::whereNotIn('id',$bookedRooms)->get();
-            return $this->successResponse([$rooms], 'Availabe Rooms Returned Successfully');
+            $currentDateTime = now();
+    
+            // gett room IDs that are currently reserved
+            $reservedRoomIds = Reservation::where('start_date', '<=', $currentDateTime)
+                                            ->where('end_date', '>=', $currentDateTime)
+                                            ->pluck('room_id')
+                                            ->toArray();
+            $availableRooms = Room::whereNotIn('id', $reservedRoomIds)
+                                  ->where('status', 'available')
+                                  ->get();
+            return $this->successResponse([$availableRooms], 'Availabe Rooms Returned Successfully');
         } catch (\Throwable $th) {
             return $this->errorResponse('Server error probably.', [$th->getMessage()], 500);
         }
@@ -106,8 +114,7 @@ class RoomController extends Controller
         # other members 'Asia/Damascus'
         # Mr.Hashim Europe/Berlin
         try {
-            $reservations_endDates = Reservation::pluck('end_date')->toArray();
-            $latestEndDate = max($reservations_endDates);
+            $latestEndDate = Carbon::now()->toDateTimeString();
             $latestEndDate = Carbon::parse($latestEndDate);
             $startRange = Carbon::parse($request->input('start_range'), 'UTC')
                                                 ->setTimezone('Asia/Baghdad');
@@ -153,8 +160,14 @@ class RoomController extends Controller
     public function showCurrnetReservedRooms()
     {
         try {
-            $bookedRooms = Reservation::pluck('room_id')->toArray();
-            $rooms=Room::whereIn('id',$bookedRooms)->get();
+            $currentDateTime = now();
+                Log::info('Current DateTime: ' . $currentDateTime);
+                $bookedRooms = Reservation::where('start_date', '<=', $currentDateTime)
+                                            ->where('end_date', '>=', $currentDateTime)
+                                            ->pluck('room_id')
+                                            ->toArray();
+                Log::info('Booked rooms: ' . implode(', ', $bookedRooms));
+                $rooms = Room::whereIn('id', $bookedRooms)->get();
             return $this->successResponse([$rooms], 'Booked Rooms Returned Successfully');
         } catch (\Throwable $th) {
             return $this->errorResponse('Server error probably.', [$th->getMessage()], 500);
@@ -165,7 +178,7 @@ class RoomController extends Controller
         try {
 
             $reservedRooms = [];
-            
+
             $rooms = Room::all();
             $specificDate = Carbon::parse( $request->input('specificDate'));
             foreach ($rooms as $room) {
@@ -190,9 +203,7 @@ class RoomController extends Controller
     public function showReservedRoomsInPeriod(DateRangeRequest $request)
     {
         try {
-            $reservations_endDates = Reservation::pluck('end_date')
-                                                ->toArray();
-            $latestEndDate = max($reservations_endDates);
+            $latestEndDate = Carbon::now()->toDateTimeString();
             $latestEndDate = Carbon::parse($latestEndDate);
             $startRange = Carbon::parse($request->input('start_range'), 'UTC')
                                                 ->setTimezone('Asia/Baghdad');

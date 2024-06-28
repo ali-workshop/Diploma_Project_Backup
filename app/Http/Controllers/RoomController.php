@@ -243,7 +243,6 @@ class RoomController extends Controller
            # other members 'Asia/Damascus'
            # Mr.Hashim Europe/Berlin
            try{
-           $reservations_endDates = Reservation::pluck('end_date')->toArray();
             $latestEndDate = Carbon::now()->toDateTimeString();
             $latestEndDate =Carbon::parse($latestEndDate); # ensure date string using parsing
             // dd($latestEndDate);
@@ -330,7 +329,6 @@ class RoomController extends Controller
     public function showReservedRoomsInPeriod(DateRangeRequest $request)
     {
         try {
-            $reservations_endDates = Reservation::pluck('end_date')->toArray();
             $latestEndDate = Carbon::now()->toDateTimeString();
             $latestEndDate = Carbon::parse($latestEndDate);
             $startRange = Carbon::parse($request->input('start_range'), 'UTC')
