@@ -4,7 +4,7 @@ A comprehensive system for managing hotel operations built with Laravel.
 
 ## Overview
 
-This system allows hotel administrators to manage bookings, guest information, room availability, and more rubost features.
+This system allows hotel administrators to manage bookings, guest information, room availability, and more robust features.
 
 ## Features
 
@@ -57,9 +57,9 @@ php artisan key:generate --ansi
 
 ```
 
-### Run migrations 
+### Run migrations and seed the data
 ```bash
-php artisan migrate
+php artisan migrate:fresh --seed
 ```
 
 ### Start local server by executing 
@@ -94,9 +94,9 @@ DB_PASSWORD=rootpassword
 docker-compose up -d --build
 
 ``` 
-### run the migrations
+### run the migrations and seed the data
 ```bash
-docker-compose exec web php artisan migrate
+docker-compose exec web php artisan migrate:fresh --seed
 
 ``` 
 ## Done! See http://localhost:8000
