@@ -125,7 +125,7 @@ class ReservationController extends Controller
     {
          $users = User::all();
          $rooms = Room::all();
-         return view('Admin.reservations.edit', compact('reservation', 'users', 'rooms'));
+         return view('admin.pages.dashboard.reservation.edit', compact('reservation', 'users', 'rooms'));
     }
 
     /**

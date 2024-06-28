@@ -507,6 +507,7 @@
                     @yield('ending_soon.rooms')
                     @yield('index.reservations')
                     @yield('create.reservations')
+                    @yield('edit.reservations')
                     @yield('show.reservations')
                     @yield('index.roomType')
                     @yield('create.roomType')
