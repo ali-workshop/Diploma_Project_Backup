@@ -138,18 +138,18 @@ This project is used by the following companies:
 
 # DEMO
 
-![screenshot](https://github.com/ali-workshop/diploma_project_backup/blob/main/Demo/hotel1.png)
+![screenshot](https://github.com/ali-workshop/Diploma_Project_Backup/blob/main/Demo/hotel1.PNG)
 
-![screenshot](https://github.com/ali-workshop/diploma_project_backup/blob/main/Demo/hotel2.png)
+![screenshot](https://github.com/ali-workshop/diploma_project_backup/blob/main/Demo/hotel2.PNG)
 
-![screenshot](https://github.com/ali-workshop/diploma_project_backup/blob/main/Demo/hotel3.png)
+![screenshot](https://github.com/ali-workshop/diploma_project_backup/blob/main/Demo/hotel3.PNG)
 
-![screenshot](https://github.com/ali-workshop/diploma_project_backup/blob/main/Demo/hotel4.png)
+![screenshot](https://github.com/ali-workshop/diploma_project_backup/blob/main/Demo/hotel4.PNG)
 
-![screenshot](https://github.com/ali-workshop/diploma_project_backup/blob/main/Demo/hotel5.png)
+![screenshot](https://github.com/ali-workshop/diploma_project_backup/blob/main/Demo/hotel5.PNG)
 
 ### Dokcer img
-![screenshot](https://github.com/ali-workshop/diploma_project_backup/blob/main/Demo/hotel6.png)
+![screenshot](https://github.com/ali-workshop/diploma_project_backup/blob/main/Demo/hotel6.PNG)
 
 
 
