@@ -99,7 +99,6 @@ class ReservationController extends Controller
             foreach ($reservationEvents as $reservationEvent) {
                 $reservationCurrentStatus = optional($reservationEvent->reservationStatusCatalogs)->name;
                 $reservationCurrentEventDate = $reservationEvent->created_at->format('d-m-Y H:i:s');
-
                 $reservationStatusOverTime[] = [
                     'currentStatus' => $reservationCurrentStatus ?? 'UnKnown',
                     'currentEventDate' => $reservationCurrentEventDate,
