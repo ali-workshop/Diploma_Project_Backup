@@ -113,7 +113,7 @@ docker-compose exec web php artisan migrate:fresh --seed
 ## Documentation
 ###  Documentation avaliable via Postman
 
-[click to post man collection ](https://documenter.getpostman.com/view/34493470/2sA3duEsiP)
+[click to Postman collection ](https://documenter.getpostman.com/view/34493470/2sA3duEsiP)
 
 ## Contributing
 
